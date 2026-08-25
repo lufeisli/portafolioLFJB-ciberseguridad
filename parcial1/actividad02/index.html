@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Actividad 02 | Portafolio LFJB</title>
+    <!-- CSS Principal -->
+    <link rel="stylesheet" href="../../style.css">
+    <!-- Librería de Iconos: FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <header class="top-nav">
+        <div class="nav-brand">
+            <!-- Logo de la universidad-->
+            <img src="../../assets/img/logo-upslp.png" alt="Logo UPSLP" class="logo">
+            <span class="brand-title">Portafolio CNO IV</span>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="../../index.html">Inicio</a></li>
+                <li><a href="../index.html" style="color: var(--text-main);">Parcial 1</a></li>
+                <li><a href="../../parcial2/index.html">Parcial 2</a></li>
+                <li><a href="../../parcial3/index.html">Parcial 3</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="activity-main">
+        <!-- CABECERA DE LA ACTIVIDAD -->
+        <div class="activity-header">
+            <a href="../index.html" class="back-link"><i class="fa-solid fa-arrow-left"></i> Volver a Parcial 1</a>
+            <p class="overline"><span class="line"></span> PARCIAL 1 · ACTIVIDAD 2</p>
+            <h1 class="activity-title">Aquí empieza mi portafolio</h1>
+        </div>
+
+        <!-- INTRODUCCIÓN FULL WIDTH -->
+        <section class="card intro-card">
+            <p>Diseño, implementación y publicación de la <strong style="color: var(--accent-color);">estructura base del portafolio digital</strong>, mediante un sitio web funcional, accesible y correctamente organizado.</p>
+            <br>
+            <p>Este sitio sirve como contenedor oficial de las evidencias académicas del curso de Seguridad Informática, aplicando principios de documentación técnica, orden lógico y presentación profesional.</p>
+        </section>
+
+        <!-- GRID 2 COLUMNAS (Objetivos y Requisitos) -->
+        <div class="grid-2-cols" style="margin-top: 2rem;">
+            <section class="card">
+                <h2 class="card-title-icon"><i class="fa-solid fa-bullseye"></i> Objetivos específicos</h2>
+                <ul class="custom-list">
+                    <li>Implementar un sitio web funcional (apartado Inicio) con navegación clara.</li>
+                    <li>Establecer la identidad técnica y académica del estudiante.</li>
+                    <li>Preparar la base estructural para los siguientes parciales.</li>
+                    <li>Desplegar el sitio mediante una URL pública con certificado HTTPS.</li>
+                </ul>
+            </section>
+
+            <section class="card">
+                <h2 class="card-title-icon"><i class="fa-solid fa-server"></i> Requisitos técnicos</h2>
+                <ul class="custom-list">
+                    <li>Desarrollo web nativo (HTML5 / CSS3).</li>
+                    <li>Plataforma de despliegue: GitHub Pages.</li>
+                    <li>Control de versiones mediante Git.</li>
+                    <li>Integración de formulario estático con Autoresponder (FormSubmit).</li>
+                </ul>
+            </section>
+        </div>
+
+        <!-- LAYOUT ASIMÉTRICO (Contenido Izquierda / Sidebar Derecha) -->
+        <div class="layout-sidebar" style="margin-top: 2rem;">
+            
+            <!-- COLUMNA IZQUIERDA -->
+            <div class="main-content">
+                <h2 class="section-heading"><i class="fa-solid fa-layer-group"></i> Desarrollo de la Práctica</h2>
+                <div class="grid-2-cols">
+                    <div class="mini-card">
+                        <h3><i class="fa-brands fa-github"></i> Repositorio y Hosting</h3>
+                        <p>Se inicializó un repositorio público en GitHub configurando GitHub Pages en la rama <code>main</code>, lo que generó automáticamente el certificado SSL (HTTPS).</p>
+                    </div>
+                    <div class="mini-card">
+                        <h3><i class="fa-solid fa-code"></i> Estructura y Estilos</h3>
+                        <p>Se desarrolló una interfaz basada en Grid y Flexbox utilizando CSS puro, implementando una paleta de colores oscura acorde a la ciberseguridad.</p>
+                    </div>
+                </div>
+
+                <h2 class="section-heading" style="margin-top: 3rem;"><i class="fa-solid fa-camera"></i> Evidencias del Proceso</h2>
+                
+                <div class="evidence-grid">
+                    <div>
+                        <!-- Agrega una captura de tu repositorio en GitHub aquí -->
+                        <img src="img/evidencia_github.jpg" alt="Repositorio en GitHub" class="evidence-img">
+                        <p style="text-align: center; font-size: 0.85rem; color: var(--text-muted); margin-top: 5px;">Fig 1: Configuración del Repositorio</p>
+                    </div>
+                    <div>
+                        <!-- Agrega una captura de tu código en VS Code aquí -->
+                        <img src="img/evidencia_vscode.jpg" alt="Código en VS Code" class="evidence-img">
+                        <p style="text-align: center; font-size: 0.85rem; color: var(--text-muted); margin-top: 5px;">Fig 2: Estructura HTML y CSS</p>
+                    </div>
+                </div>
+
+                <h2 class="section-heading" style="margin-top: 3rem;"><i class="fa-solid fa-flag-checkered"></i> Conclusión</h2>
+                <div class="conclusion-box">
+                    <p>La creación de este portafolio no solo cumple con un requisito académico, sino que representa el establecimiento de una identidad digital profesional. Comprender el flujo de trabajo con Git, el despliegue de sitios estáticos en GitHub Pages y la correcta estructuración de información (UI/UX) son habilidades fundamentales para documentar y presentar futuros hallazgos en auditorías de seguridad y pruebas de penetración.</p>
+                </div>
+            </div>
+
+            <!-- COLUMNA DERECHA (SIDEBAR) -->
+            <aside class="sidebar">
+                <div class="card data-card">
+                    <h3 style="text-align: center; margin-bottom: 1.5rem; color: var(--text-main);">Datos de la actividad</h3>
+                    
+                    <div class="data-pill">
+                        <span class="data-label">Duración aprox.</span>
+                        <span class="data-value">01 hora y 45 minutos</span>
+                    </div>
+                    
+                    <div class="data-pill">
+                        <span class="data-label">Tecnologías</span>
+                        <span class="data-value">HTML · CSS · Git · GitHub</span>
+                    </div>
+
+                    <div class="data-pill">
+                        <span class="data-label">Entregable</span>
+                        <span class="data-value">Sitio Web</span>
+                    </div>
+                </div>
+            </aside>
+        </div>
+    </main>
+
+</body>
+</html>

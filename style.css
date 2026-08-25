@@ -1,0 +1,327 @@
+/* =========================================
+   VARIABLES DE COLOR 
+   ========================================= */
+:root {
+    --bg-dark: #0d1117;
+    --bg-card: #161b22;
+    --text-main: #c9d1d9;
+    --text-muted: #8b949e;
+    --accent-color: #2ea043; /* Verde principal */
+    --accent-blue: #58a6ff;  /* Azul para textos destacados */
+    --border-color: #30363d;
+}
+
+/* =========================================
+   RESET Y BASE
+   ========================================= */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+    background: radial-gradient(circle at 50% 0%, #102a1e 0%, var(--bg-dark) 40%);
+    background-attachment: fixed;
+    background-color: var(--bg-dark);
+    color: var(--text-main);
+    line-height: 1.6;
+}
+
+main {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 2rem 1rem;
+}
+
+h1 { color: var(--text-main); }
+
+/* =========================================
+   HEADER Y NAVEGACIÓN
+   ========================================= */
+.top-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+    background-color: rgba(22, 27, 34, 0.95);
+    backdrop-filter: blur(5px);
+    border-bottom: 1px solid var(--border-color);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.nav-brand {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.logo { height: 45px; }
+
+.brand-title {
+    font-weight: bold;
+    font-size: 1.2rem;
+    color: #fff;
+    font-family: monospace;
+}
+
+nav ul {
+    list-style: none;
+    display: flex;
+    gap: 2rem;
+}
+
+nav a {
+    color: var(--text-main);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.95rem;
+    transition: color 0.3s;
+}
+
+nav a:hover { color: var(--accent-color); }
+
+/* =========================================
+   SECCIÓN HERO Y TARJETAS GLOBALES
+   ========================================= */
+.hero-section {
+    text-align: center;
+    margin: 4rem 0;
+}
+
+.course-title {
+    color: var(--accent-blue);
+    text-transform: uppercase;
+    font-size: 0.9rem;
+    letter-spacing: 1px;
+}
+
+.alias-title { color: var(--accent-blue); }
+
+.grid-3-cols {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    margin-bottom: 3rem;
+}
+
+.card {
+    background-color: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 2rem;
+    transition: transform 0.2s, border-color 0.2s;
+}
+
+.card:hover {
+    transform: translateY(-2px);
+    border-color: var(--accent-color);
+}
+
+.card h2 {
+    color: var(--accent-color);
+    margin-bottom: 1rem;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 0.5rem;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+/* =========================================
+   ESTILOS ESPECÍFICOS PARA LAS ACTIVIDADES
+   ========================================= */
+.activity-header { margin-bottom: 3rem; }
+
+.back-link {
+    color: var(--accent-color);
+    text-decoration: none;
+    font-family: monospace;
+    font-size: 0.9rem;
+    transition: color 0.3s;
+}
+
+.back-link:hover { color: var(--accent-blue); }
+
+.overline {
+    color: var(--accent-color);
+    font-family: monospace;
+    font-size: 0.85rem;
+    letter-spacing: 2px;
+    margin: 2rem 0 1rem 0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.overline .line {
+    display: inline-block;
+    width: 40px;
+    height: 1px;
+    background-color: var(--accent-color);
+}
+
+.activity-title {
+    font-family: 'Courier New', monospace;
+    font-size: 3rem;
+    color: var(--accent-blue);
+    text-shadow: 0 0 15px rgba(88, 166, 255, 0.1);
+}
+
+.layout-sidebar {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 2rem;
+}
+
+/* Bloque de Código */
+.code-block {
+    background-color: #0d1117;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 1.5rem;
+    overflow-x: auto;
+    font-family: 'Consolas', 'Courier New', monospace;
+    font-size: 0.9rem;
+    color: #e6edf3;
+    line-height: 1.5;
+}
+
+.code-keyword { color: #ff7b72; } /* Rojo/Rosa */
+.code-function { color: #d2a8ff; } /* Morado */
+.code-string { color: #a5d6ff; } /* Azul claro */
+.code-comment { color: #8b949e; font-style: italic; }
+
+/* Grid para Fotos de Evidencia */
+.evidence-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin-top: 1.5rem;
+}
+
+.evidence-img {
+    width: 100%;
+    border-radius: 6px;
+    border: 1px solid var(--border-color);
+    transition: transform 0.3s;
+}
+
+.evidence-img:hover {
+    transform: scale(1.02);
+    border-color: var(--accent-blue);
+}
+/* =========================================
+   FORMULARIO DE CONTACTO Y FOOTER
+   ========================================= */
+.form-section {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.contact-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+}
+
+.form-group input, 
+.form-group textarea {
+    width: 100%;
+    padding: 1rem;
+    background-color: rgba(13, 17, 23, 0.7);
+    border: 1px solid var(--border-color);
+    color: var(--text-main);
+    border-radius: 6px;
+    font-family: inherit;
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.form-group input:focus, 
+.form-group textarea:focus {
+    outline: none;
+    border-color: var(--accent-blue);
+    box-shadow: 0 0 8px rgba(88, 166, 255, 0.2);
+}
+
+.btn-submit {
+    background-color: var(--bg-card);
+    color: var(--text-main);
+    border: 1px solid var(--accent-color);
+    padding: 1rem;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+.btn-submit:hover {
+    background-color: var(--accent-color);
+    color: #fff;
+    box-shadow: 0 0 15px rgba(46, 160, 67, 0.4);
+}
+
+footer {
+    text-align: center;
+    padding: 2rem;
+    border-top: 1px solid var(--border-color);
+    color: var(--text-muted);
+    margin-top: 4rem;
+    font-size: 0.9rem;
+}
+/* Sidebar (PDF) */
+.data-pill {
+    background-color: #1c2128;
+    border: 1px solid var(--border-color);
+    border-radius: 20px;
+    padding: 10px 15px;
+    margin-bottom: 1rem;
+    text-align: center;
+}
+
+.data-label {
+    display: block;
+    color: var(--accent-color);
+    font-size: 0.8rem;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.pdf-card {
+    text-align: center;
+    padding: 2rem 1.5rem;
+    background: linear-gradient(145deg, var(--bg-card) 0%, rgba(46,160,67,0.1) 100%);
+}
+
+.btn-download {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    border: 1px solid var(--accent-color);
+    color: var(--text-main);
+    border-radius: 25px;
+    text-decoration: none;
+    margin-top: 1rem;
+    transition: background-color 0.3s;
+}
+
+.btn-download:hover {
+    background-color: var(--accent-color);
+    color: #fff;
+}
+
+@media (max-width: 900px) {
+    .grid-3-cols, .layout-sidebar, .evidence-grid {
+        grid-template-columns: 1fr;
+    }
+}

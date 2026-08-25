@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Actividad 03 | Portafolio LFJB</title>
+    <!-- CSS Principal -->
+    <link rel="stylesheet" href="../../style.css">
+    <!-- Librería de Iconos: FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <header class="top-nav">
+        <div class="nav-brand">
+            <span class="brand-title" style="color: var(--text-main); font-family: monospace;">lufeisli <span style="color: var(--accent-color);">—</span> Portafolio</span>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="../../index.html">Inicio</a></li>
+                <li><a href="../index.html" style="color: var(--text-main);">Parcial 1</a></li>
+                <li><a href="../../parcial2/index.html">Parcial 2</a></li>
+                <li><a href="../../parcial3/index.html">Parcial 3</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="activity-main">
+        <!-- CABECERA DE LA ACTIVIDAD -->
+        <div class="activity-header">
+            <a href="../index.html" class="back-link"><i class="fa-solid fa-arrow-left"></i> Volver a Parcial 1</a>
+            <p class="overline"><span class="line"></span> PARCIAL 1 · ACTIVIDAD 3</p>
+            <h1 class="activity-title">No presiones Esc... todavía</h1>
+        </div>
+
+        <!-- INTRODUCCIÓN FULL WIDTH -->
+        <section class="card intro-card">
+            <p>Implementación de un programa basado en <strong style="color: var(--accent-color);">event hooks y callbacks</strong> que registra eventos de teclado y los asocia a una marca temporal dentro de un entorno de laboratorio controlado.</p>
+            <br>
+            <p>El objetivo es comprender el funcionamiento técnico de una técnica de captura de entrada y reconocer sus implicaciones en ciberseguridad, documentando cada paso del proceso.</p>
+        </section>
+
+        <!-- GRID 2 COLUMNAS (Objetivos y Requisitos) -->
+        <div class="grid-2-cols" style="margin-top: 2rem;">
+            <section class="card">
+                <h2 class="card-title-icon"><i class="fa-solid fa-bullseye"></i> Objetivos específicos</h2>
+                <ul class="custom-list">
+                    <li>Modificar el código base para incorporar persistencia del registro.</li>
+                    <li>Agregar asociación temporal a cada evento capturado.</li>
+                    <li>Comprobar el funcionamiento mediante pruebas y capturas.</li>
+                </ul>
+            </section>
+
+            <section class="card">
+                <h2 class="card-title-icon"><i class="fa-solid fa-server"></i> Requisitos técnicos</h2>
+                <ul class="custom-list">
+                    <li>Python 3.x con librería <code>pynput</code></li>
+                    <li>Librería nativa <code>datetime</code></li>
+                    <li>Permisos de ejecución en el entorno de prueba local</li>
+                </ul>
+            </section>
+        </div>
+
+    </main>
+
+</body>
+</html>

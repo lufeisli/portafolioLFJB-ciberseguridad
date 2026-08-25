@@ -3,68 +3,91 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portafolio - Seguridad Informática</title>
-    <!-- Aquí puedes enlazar tu CSS después: <link rel="stylesheet" href="style.css"> -->
+    <title>Portafolio | Seguridad Informática</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- FontAwesome para iconos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
 
-    <!-- 1. Encabezado (Header) -->
-    <header>
+    <header class="top-nav">
+        <div class="nav-brand">
+            <!-- Logo de la universidad-->
+            <img src="assets/img/logo-upslp.png" alt="Logo UPSLP" class="logo">
+            <span class="brand-title">Portafolio CNO IV</span>
+        </div>
         <nav>
             <ul>
-                <li><a href="#inicio">Inicio</a></li>
-                <li><a href="#evidencias">Evidencias</a></li>
-                <li><a href="#practicas">Prácticas</a></li>
+                <li><a href="index.html">Inicio</a></li>
+                <li><a href="parcial1/index.html">Parcial 1</a></li>
+                <li><a href="parcial2/index.html">Parcial 2</a></li>
+                <li><a href="parcial3/index.html">Parcial 3</a></li>
                 <li><a href="#contacto">Contacto</a></li>
             </ul>
         </nav>
-        <h1>Luis Felipe Jaramillo Barajas</h1>
-        <h2>CNO IV – Seguridad Informática</h2>
-        <h3>Universidad Politécnica de San Luis Potosí | Semestre [Tu Semestre]</h3>
     </header>
 
     <main>
-        <!-- 2. Presentación del portafolio -->
-        <section id="presentacion">
-            <h2>Presentación</h2>
-            <p>Este sitio funciona como contenedor oficial de las evidencias académicas del curso. El enfoque principal abarca la seguridad informática, ejecución de pruebas de penetración y el análisis de vulnerabilidades. Documentar este proceso es vital para evidenciar la evolución y madurez técnica adquirida durante el semestre.</p>
-        </section>
+        <div class="hero-section">
+            <h3 class="course-title">CNO IV – SEGURIDAD INFORMÁTICA</h3>
+            <h1>Luis Felipe Jaramillo Barajas</h1>
+            <h2 class="alias-title">Alias: Lufeisli</h2>
+            <p class="hero-details">Universidad Politécnica de San Luis Potosí<br>Periodo: Otoño 2026</p>
+        </div>
 
-        <!-- 3. Perfil del estudiante -->
-        <section id="perfil">
-            <h2>Perfil del Estudiante</h2>
-            <p>Estudiante de Ingeniería en Tecnologías de la Información con fuerte interés en el desarrollo de soluciones robustas. Mis áreas de interés principales incluyen la Ciberseguridad, Ingeniería de Software, Bases de Datos y Gestión de Proyectos.</p>
-        </section>
+        <div class="grid-3-cols">
+            <section class="card">
+                <h2><i class="fa-solid fa-bullseye"></i> Presentación</h2>
+                <p><strong>Propósito:</strong> Contenedor oficial de las evidencias académicas del curso.</p>
+                <p><strong>Enfoque:</strong> Seguridad informática, pruebas de penetración y análisis de vulnerabilidades.</p>
+                <!-- ¡NUEVO! Punto obligatorio de la rúbrica agregado aquí abajo -->
+                <p><strong>Importancia:</strong> Documentar este proceso es fundamental para evidenciar la evolución, madurez técnica y el aprendizaje adquirido durante el semestre.</p>
+            </section>
 
-        <!-- 4. Información técnica básica -->
-        <section id="tecnologia">
-            <h2>Información Técnica del Sitio</h2>
-            <ul>
-                <li><strong>Lenguajes:</strong> HTML5, CSS3, JavaScript</li>
-                <li><strong>Plataforma de publicación:</strong> GitHub Pages</li>
-                <li><strong>Control de versiones:</strong> Git / GitHub</li>
-            </ul>
-        </section>
+            <section class="card">
+                <h2><i class="fa-solid fa-user-shield"></i> Mi Perfil</h2>
+                <p><strong>Semblanza:</strong> Estudiante de Ingeniería en Tecnologías de la Información enfocado en ciberseguridad y bases de datos.</p>
+                <p><strong>Intereses:</strong> Ciberseguridad, Análisis de Datos, Ingeniería de Software.</p>
+            </section>
 
-        <!-- 5. Formulario de contacto (Configurado con Formsubmit para el autoresponder) -->
-        <section id="contacto">
-            <h2>Contacto</h2>
-            <!-- Reemplaza TU_CORREO por tu email real para recibir los mensajes -->
-            <form action="https://formsubmit.co/TU_CORREO@ejemplo.com" method="POST">
-                <input type="text" name="name" placeholder="Nombre completo" required>
-                <input type="email" name="email" placeholder="Correo electrónico" required>
-                <textarea name="message" placeholder="Tu mensaje..." required></textarea>
-                <!-- Activa el autoresponder al cliente (Obligatorio en tu rúbrica) -->
-                <input type="hidden" name="_autoresponse" value="Gracias por tu mensaje. He recibido tu solicitud y me pondré en contacto contigo a la brevedad. Atte: Luis Felipe.">
-                <button type="submit">Enviar Mensaje</button>
+            <section class="card">
+                <h2><i class="fa-solid fa-code"></i> Ficha Técnica</h2>
+                <p><strong>Lenguajes/Tecnologías:</strong> HTML5, CSS</p>
+                <p><strong>Plataforma:</strong> GitHub Pages.</p>
+                <p><strong>Control de versiones:</strong> Git / GitHub.</p>
+            </section>
+        </div>
+
+        <!-- SECCIÓN DE CONTACTO -->
+        <section id="contacto" class="card form-section" style="margin-top: 4rem; border-top: 4px solid var(--accent-color);">
+            <h2><i class="fa-solid fa-envelope"></i> Contacto</h2>
+            <p style="margin-bottom: 1.5rem; color: var(--text-muted);">¿Tienes alguna duda, comentario o propuesta? Envíame un mensaje y me pondré en contacto contigo.</p>
+            
+            <form action="https://formsubmit.co/lufeislijaramillo@gmail.com" method="POST" class="contact-form">
+                <div class="form-group">
+                    <input type="text" name="name" placeholder="Nombre completo" required>
+                </div>
+                <div class="form-group">
+                    <input type="email" name="email" placeholder="Correo electrónico" required>
+                </div>
+                <div class="form-group">
+                    <textarea name="message" placeholder="Tu mensaje..." rows="4" required></textarea>
+                </div>
+                
+                <!-- Truco para cumplir la rúbrica: Activa el autoresponder al usuario -->
+                <input type="hidden" name="_autoresponse" value="Gracias por tu mensaje. He recibido tu solicitud en mi portafolio de Seguridad Informática. - Luis Felipe.">
+                
+                <!-- Desactiva el captcha visual para que luzca más profesional (opcional) -->
+                <input type="hidden" name="_captcha" value="false">
+                
+                <button type="submit" class="btn-submit"><i class="fa-solid fa-paper-plane"></i> Enviar Mensaje</button>
             </form>
         </section>
     </main>
 
-    <!-- 6. Pie de página (Footer) -->
+    <!-- PIE DE PÁGINA (FOOTER) -->
     <footer>
         <p>&copy; 2026 Luis Felipe Jaramillo Barajas. Todos los derechos reservados.</p>
     </footer>
-
 </body>
 </html>
