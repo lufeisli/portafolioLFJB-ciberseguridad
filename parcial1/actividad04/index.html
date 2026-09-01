@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Actividad 04 | Portafolio LFJB</title>
+    <!-- CSS Principal -->
+    <link rel="stylesheet" href="../../style.css">
+    <!-- Librería de Iconos: FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <header class="top-nav">
+        <div class="nav-brand">
+            <!-- Logo de la universidad-->
+            <img src="../../assets/img/logo-upslp.png" alt="Logo UPSLP" class="logo">
+            <span class="brand-title">Portafolio CNO IV</span>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="../../index.html">Inicio</a></li>
+                <li><a href="../index.html" style="color: var(--text-main);">Parcial 1</a></li>
+                <li><a href="../../parcial2/index.html">Parcial 2</a></li>
+                <li><a href="../../parcial3/index.html">Parcial 3</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="activity-main">
+        <!-- CABECERA DE LA ACTIVIDAD -->
+        <div class="activity-header">
+            <a href="../index.html" class="back-link"><i class="fa-solid fa-arrow-left"></i> Volver a Parcial 1</a>
+            <p class="overline"><span class="line"></span> PARCIAL 1 · ACTIVIDAD 4</p>
+            <h1 class="activity-title">Una página demasiado convincente</h1>
+        </div>
+
+        <!-- INTRODUCCIÓN FULL WIDTH -->
+        <section class="card intro-card">
+            <p>Implementación y análisis, en un entorno de laboratorio controlado, de una simulación de <strong style="color: var(--accent-color);">ingeniería social</strong> mediante Social-Engineer Toolkit (SET), utilizando una página web ficticia (WatchLF) para comprender el funcionamiento de una técnica de captura de información.</p>
+            <br>
+            <p>El objetivo es reconocer los elementos técnicos y visuales que permiten identificar un intento de phishing, y documentar el flujo completo desde la configuración de red hasta la captura y el análisis de los resultados.</p>
+        </section>
+
+        <!-- GRID 2 COLUMNAS (Objetivos y Requisitos) -->
+        <div class="grid-2-cols" style="margin-top: 2rem;">
+            <section class="card">
+                <h2 class="card-title-icon"><i class="fa-solid fa-bullseye"></i> Objetivos específicos</h2>
+                <ul class="custom-list">
+                    <li>Configurar un escenario básico de ingeniería social utilizando Social-Engineer Toolkit (SET).</li>
+                    <li>Implementar una página web ficticia mediante el módulo Credential Harvester.</li>
+                    <li>Analizar el proceso mediante el cual la información introducida en un formulario web es transmitida y registrada por un servidor.</li>
+                    <li>Identificar indicadores técnicos y visuales de una página potencialmente fraudulenta.</li>
+                    <li>Proponer controles de seguridad orientados a prevenir ataques de phishing.</li>
+                </ul>
+            </section>
+
+            <section class="card">
+                <h2 class="card-title-icon"><i class="fa-solid fa-server"></i> Requisitos técnicos</h2>
+                <ul class="custom-list">
+                    <li>Kali Linux con <code>Social-Engineer Toolkit (SET)</code></li>
+                    <li>Adaptador de red <code>Host-Only</code> (VirtualBox)</li>
+                    <li>Página web propia (Custom Import, sin clonar servicios reales)</li>
+                    <li>Navegador en el equipo host para simular a la víctima</li>
+                </ul>
+            </section>
+        </div>
+
+        <!-- LAYOUT ASIMÉTRICO (Contenido Izquierda / Sidebar Derecha) -->
+        <div class="layout-sidebar" style="margin-top: 2rem;">
+
+            <!-- COLUMNA IZQUIERDA -->
+            <div class="main-content">
+                <h2 class="section-heading"><i class="fa-solid fa-layer-group"></i> Conceptos principales</h2>
+                <div class="grid-2-cols">
+                    <div class="mini-card">
+                        <h3><i class="fa-solid fa-user-secret"></i> Credential Harvester</h3>
+                        <p>Módulo de SET que levanta un servidor web temporal, sirve una página con formulario y captura cualquier dato enviado mediante <code>POST</code>, registrándolo en un reporte local.</p>
+                    </div>
+                    <div class="mini-card">
+                        <h3><i class="fa-solid fa-network-wired"></i> Red Host-Only</h3>
+                        <p>Adaptador de VirtualBox que aísla la comunicación entre el equipo host y la VM de Kali, sin ruta hacia Internet ni hacia la red física, cumpliendo la restricción de no exponer el servidor.</p>
+                    </div>
+                </div>
+                <div class="grid-2-cols" style="margin-top: 1rem;">
+                    <div class="mini-card">
+                        <h3><i class="fa-solid fa-triangle-exclamation"></i> Indicadores de phishing</h3>
+                        <p>Señales verificables como dominio no oficial, ausencia de HTTPS, mensajes de urgencia y lógica de autenticación expuesta en el cliente.</p>
+                    </div>
+                    <div class="mini-card">
+                        <h3><i class="fa-solid fa-shield-halved"></i> Ingeniería social vs. vulneración técnica</h3>
+                        <p>La credencial no se obtiene rompiendo cifrado ni explotando software, sino por la confianza del usuario en la apariencia legítima del portal.</p>
+                    </div>
+                </div>
+
+                <h2 class="section-heading" style="margin-top: 3rem;"><i class="fa-solid fa-file-code"></i> Configuración del entorno</h2>
+                <p style="margin-bottom: 1rem;">Red host-only entre el equipo host (víctima) y la VM de Kali (servidor del ataque simulado), y flujo de configuración de SET con Custom Import:</p>
+
+                <div class="code-block">
+                <pre><code><span class="code-comment"># Verificar la interfaz host-only en Kali</span>
+ip a
+
+<span class="code-comment"># Asignar IP estática dentro del segmento host-only</span>
+sudo ip addr add 192.168.56.101/24 dev eth1
+
+<span class="code-comment"># Verificar aislamiento (no debe responder)</span>
+ping -c 3 8.8.8.8
+
+<span class="code-comment"># Iniciar Social-Engineer Toolkit</span>
+sudo setoolkit
+
+<span class="code-comment"># Flujo dentro de SET:</span>
+<span class="code-comment"># 1) Social-Engineering Attacks</span>
+<span class="code-comment"># 2) Website Attack Vectors</span>
+<span class="code-comment"># 3) Credential Harvester Attack Method</span>
+<span class="code-comment"># 4) Custom Import -&gt; ruta de la carpeta con index.html</span>
+<span class="code-comment"># 5) IP de POST back -&gt; IP host-only de Kali (192.168.56.101)</span>
+
+<span class="code-comment"># Al finalizar, generar el reporte</span>
+<span class="code-comment"># Ctrl + C dentro de SET</span>
+ls -la /root/.set/reports/
+</code></pre>
+                </div>
+
+                <h2 class="section-heading" style="margin-top: 3rem;"><i class="fa-solid fa-diagram-project"></i> Flujo de captura de información</h2>
+                <p style="margin-bottom: 1rem;">El siguiente diagrama resume el recorrido técnico completo, desde que la víctima abre la página hasta que SET registra el reporte final:</p>
+                <img src="img/diagrama_flujo_watchlf.png" alt="Diagrama del flujo de captura de credenciales" class="evidence-img" style="width:100%; margin-bottom: 2rem;">
+
+                <h2 class="section-heading" style="margin-top: 3rem;"><i class="fa-solid fa-terminal"></i> Ejecución y Evidencias</h2>
+                <p>El servidor de Credential Harvester se levantó en el puerto 80 sobre la IP host-only de Kali. Desde el navegador del equipo host se accedió a la página ficticia de WatchLF y se envió un formulario con datos de prueba, los cuales fueron capturados en tiempo real por SET.</p>
+
+                <!-- Galería de Evidencias -->
+                <div class="evidence-grid">
+                    <div>
+                        <img src="img/evidencia_red_hostonly.png" alt="Configuración de red host-only" class="evidence-img">
+                        <p style="text-align: center; font-size: 0.85rem; color: var(--text-muted); margin-top: 5px;">Fig 1: Configuración de red host-only</p>
+                    </div>
+                    <div>
+                        <img src="img/evidencia_watchlf_login.png" alt="Página de inicio de sesión ficticia WatchLF" class="evidence-img">
+                        <p style="text-align: center; font-size: 0.85rem; color: var(--text-muted); margin-top: 5px;">Fig 2: Página ficticia de WatchLF</p>
+                    </div>
+                    <div>
+                        <img src="img/evidencia_terminal_set.png" alt="Captura de credenciales en terminal" class="evidence-img">
+                        <p style="text-align: center; font-size: 0.85rem; color: var(--text-muted); margin-top: 5px;">Fig 3: Captura en terminal de Kali</p>
+                    </div>
+                    <div>
+                        <img src="img/evidencia_reporte_set.png" alt="Reporte generado por SET" class="evidence-img">
+                        <p style="text-align: center; font-size: 0.85rem; color: var(--text-muted); margin-top: 5px;">Fig 4: Reporte generado en /root/.set/reports/</p>
+                    </div>
+                </div>
+
+                <h2 class="section-heading" style="margin-top: 3rem;"><i class="fa-solid fa-list-check"></i> Indicadores de phishing identificados</h2>
+                <ul class="diamond-list">
+                    <li><strong>URL / dominio no oficial:</strong> el portal no pertenece al dominio real del servicio.</li>
+                    <li><strong>Ausencia de HTTPS válido:</strong> el sitio corre sobre HTTP plano, sin certificado emitido por una autoridad reconocida.</li>
+                    <li><strong>Mensaje de urgencia:</strong> el aviso de "sesión expirada" busca una reacción rápida del usuario.</li>
+                    <li><strong>Lógica de autenticación expuesta en el cliente:</strong> visible en el código fuente del navegador.</li>
+                    <li><strong>Destino de envío no verificado:</strong> el formulario reenvía los datos a una IP interna, no a un servidor institucional conocido.</li>
+                </ul>
+
+                <h2 class="section-heading" style="margin-top: 3rem;"><i class="fa-solid fa-shield-halved"></i> Controles de seguridad propuestos</h2>
+                <ul class="diamond-list">
+                    <li>Verificación del certificado TLS/SSL antes de introducir credenciales.</li>
+                    <li>Autenticación multifactor (MFA) como segunda barrera ante credenciales comprometidas.</li>
+                    <li>Capacitación continua en concientización de phishing.</li>
+                    <li>Filtrado de correo y bloqueo de dominios maliciosos (SPF/DKIM/DMARC).</li>
+                    <li>Monitoreo y proceso definido de respuesta ante incidentes.</li>
+                </ul>
+
+                <h2 class="section-heading" style="margin-top: 3rem;"><i class="fa-solid fa-lightbulb"></i> Aprendizajes obtenidos</h2>
+                <ul class="diamond-list">
+                    <li>Comprendí cómo un adaptador host-only aísla completamente la comunicación entre el host y una VM, cumpliendo restricciones de laboratorio sin exponer el entorno a Internet.</li>
+                    <li>Aprendí el flujo técnico completo de un Credential Harvester: desde la petición POST del formulario hasta el registro del reporte en SET.</li>
+                    <li>Reforcé la diferencia entre ingeniería social y vulneración técnica: la contraseña fue entregada voluntariamente por confianza en la apariencia del portal.</li>
+                </ul>
+
+                <h2 class="section-heading" style="margin-top: 3rem;"><i class="fa-solid fa-flag-checkered"></i> Conclusión</h2>
+                <div class="conclusion-box">
+                    <p>Esta actividad permitió comprender, de forma directa y controlada, por qué la ingeniería social continúa siendo una de las técnicas de ataque más efectivas dentro de la ciberseguridad, incluso cuando existen controles técnicos robustos. El proceso de captura no depende de vulnerar ningún sistema criptográfico, sino de aprovechar la confianza del usuario en la apariencia visual de un sitio. La concientización constante del usuario final, junto con controles como la autenticación multifactor, sigue siendo la línea de defensa más determinante frente al phishing.</p>
+                </div>
+            </div>
+
+            <!-- COLUMNA DERECHA (SIDEBAR) -->
+            <aside class="sidebar">
+                <div class="card data-card">
+                    <h3 style="text-align: center; margin-bottom: 1.5rem; color: var(--text-main);">Datos de la actividad</h3>
+
+                    <div class="data-pill">
+                        <span class="data-label">Fecha de entrega</span>
+                        <span class="data-value">Por definir</span>
+                    </div>
+
+                    <div class="data-pill">
+                        <span class="data-label">Tecnologías</span>
+                        <span class="data-value">Kali Linux · SET · VirtualBox</span>
+                    </div>
+
+                    <div class="data-pill">
+                        <span class="data-label">Entregable</span>
+                        <span class="data-value">Informe en PDF y HTML</span>
+                    </div>
+                </div>
+
+                <div class="card pdf-card">
+                    <div class="pdf-icon"><i class="fa-regular fa-file-pdf"></i></div>
+                    <h3>PDF de la actividad</h3>
+                    <a href="Reporte_Actividad04_WatchLF.pdf" download class="btn-download">
+                        <i class="fa-solid fa-download"></i> Descargar PDF
+                    </a>
+                </div>
+            </aside>
+        </div>
+    </main>
+
+</body>
+</html>
