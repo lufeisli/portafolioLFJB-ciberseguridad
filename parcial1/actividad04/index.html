@@ -125,26 +125,67 @@ ls -la /root/.set/reports/
                 <p style="margin-bottom: 1rem;">El siguiente diagrama resume el recorrido técnico completo, desde que la víctima abre la página hasta que SET registra el reporte final:</p>
                 <img src="img/diagrama_flujo_watchlf.png" alt="Diagrama del flujo de captura de credenciales" class="evidence-img" style="width:100%; margin-bottom: 2rem;">
 
+                <h2 class="section-heading" style="margin-top: 3rem;"><i class="fa-solid fa-eye"></i> Vista previa de la página ficticia (no funcional)</h2>
+ 
+                <div class="card" style="background: #fff4e5; border: 1px solid #e0b33c; margin-bottom: 1.5rem;">
+                    <p style="margin: 0; display: flex; gap: 0.6rem; align-items: flex-start;">
+                        <i class="fa-solid fa-triangle-exclamation" style="color: #b8860b; margin-top: 3px;"></i>
+                        <span style="color: #b8860b; font-size: 0.85rem;">
+                            <strong>Advertencia ética:</strong> la siguiente réplica se muestra únicamente con fines de documentación académica. El formulario está deshabilitado a propósito: no envía, procesa ni almacena ningún dato, y no se conecta a ningún servidor. Esta actividad se realizó en un entorno de laboratorio aislado (red host-only) siguiendo restricciones estrictas de uso ético. <strong>Reproducir esta técnica fuera de un entorno controlado, contra personas o sistemas reales, constituye una actividad ilegal y no autorizada.</strong> Este contenido no debe ser replicado con fines maliciosos.
+                        </span>
+                    </p>
+                </div>
+ 
+                <div style="max-width: 420px; margin: 0 auto 1rem auto; background: #04331f; border-radius: 24px; padding: 2rem; box-shadow: 0 20px 40px rgba(0,0,0,0.25);">
+                    <div style="margin-bottom: 1.2rem; padding: 0.9rem 1rem; border-radius: 14px; background: rgba(224,179,60,0.12); border: 1px solid rgba(224,179,60,0.4); color: #f0d385; font-size: 0.85rem; display:flex; gap:0.6rem; align-items:center;">
+                        <i class="fa-solid fa-triangle-exclamation"></i>
+                        <span>Tu sesión ha expirado por inactividad. Vuelve a ingresar tu cuenta.</span>
+                    </div>
+                    <div style="text-align:center; margin-bottom: 1.6rem;">
+                        <h3 style="color:#bbf7d0; font-size:2.2rem; margin:0; letter-spacing:-1px;">WatchLF</h3>
+                        <p style="color: rgba(187,247,208,0.6); font-size:0.75rem; letter-spacing:2px; text-transform:uppercase; margin-top:0.2rem;">Inicio de sesión</p>
+                    </div>
+                    <form id="demo-form" onsubmit="return false;" autocomplete="off">
+                        <label style="display:block; color:#bbf7d0; font-size:0.85rem; margin-bottom:0.4rem;">Correo electrónico o usuario</label>
+                        <input type="text" disabled placeholder="usuario@watchlf.com" style="width:100%; box-sizing:border-box; padding:0.8rem 1rem; border-radius:14px; border:1px solid rgba(187,247,208,0.2); background:rgba(0,0,0,0.35); color:#bbf7d0; margin-bottom:1rem;">
+                        <label style="display:block; color:#bbf7d0; font-size:0.85rem; margin-bottom:0.4rem;">Contraseña</label>
+                        <input type="password" disabled placeholder="••••••••" style="width:100%; box-sizing:border-box; padding:0.8rem 1rem; border-radius:14px; border:1px solid rgba(187,247,208,0.2); background:rgba(0,0,0,0.35); color:#bbf7d0; margin-bottom:1.4rem;">
+                        <button type="button" onclick="document.getElementById('demo-msg').style.display='block'; return false;" style="width:100%; padding:1rem; border:none; border-radius:14px; background:#bbf7d0; color:#04331f; font-weight:800; font-size:1rem; cursor:pointer;">Reingresar a WatchLF</button>
+                    </form>
+                    <p id="demo-msg" style="display:none; margin-top:1rem; padding:0.8rem 1rem; border-radius:12px; background:rgba(187,247,208,0.1); color:#bbf7d0; font-size:0.85rem; text-align:center;">
+                        Este botón no envía información real: es solo una vista de referencia para fines de documentación académica.
+                    </p>
+                </div>
+                <p style="text-align:center; font-size:0.85rem; color: var(--text-muted); margin-bottom: 2rem;">Réplica visual no funcional de la página utilizada en el laboratorio — los campos están deshabilitados y el botón no realiza ninguna acción real.</p>
+ 
                 <h2 class="section-heading" style="margin-top: 3rem;"><i class="fa-solid fa-terminal"></i> Ejecución y Evidencias</h2>
                 <p>El servidor de Credential Harvester se levantó en el puerto 80 sobre la IP host-only de Kali. Desde el navegador del equipo host se accedió a la página ficticia de WatchLF y se envió un formulario con datos de prueba, los cuales fueron capturados en tiempo real por SET.</p>
-
+ 
                 <!-- Galería de Evidencias -->
                 <div class="evidence-grid">
                     <div>
                         <img src="img/evidencia_red_hostonly.png" alt="Configuración de red host-only" class="evidence-img">
-                        <p style="text-align: center; font-size: 0.85rem; color: var(--text-muted); margin-top: 5px;">Fig 1: Configuración de red host-only</p>
+                        <p style="text-align: center; font-size: 0.85rem; color: var(--text-muted); margin-top: 5px;">Fig 1: Saber ip de Kali</p>
+                    </div>
+                    <div>
+                        <img src="img/evidencia_red_hostonly2.png" alt="Configuración de red host-only" class="evidence-img">
+                        <p style="text-align: center; font-size: 0.85rem; color: var(--text-muted); margin-top: 5px;">Fig 2: Hacer ping a la IP de Kali</p>
+                    </div>
+                     <div>
+                        <img src="img/evidencia_red_hostonly3.png" alt="Configuración de red host-only" class="evidence-img">
+                        <p style="text-align: center; font-size: 0.85rem; color: var(--text-muted); margin-top: 5px;">Fig 3: Configuración de red host-only validada desde Kali</p>
                     </div>
                     <div>
                         <img src="img/evidencia_watchlf_login.png" alt="Página de inicio de sesión ficticia WatchLF" class="evidence-img">
-                        <p style="text-align: center; font-size: 0.85rem; color: var(--text-muted); margin-top: 5px;">Fig 2: Página ficticia de WatchLF</p>
+                        <p style="text-align: center; font-size: 0.85rem; color: var(--text-muted); margin-top: 5px;">Fig 4: Página ficticia de WatchLF</p>
                     </div>
                     <div>
                         <img src="img/evidencia_terminal_set.png" alt="Captura de credenciales en terminal" class="evidence-img">
-                        <p style="text-align: center; font-size: 0.85rem; color: var(--text-muted); margin-top: 5px;">Fig 3: Captura en terminal de Kali</p>
+                        <p style="text-align: center; font-size: 0.85rem; color: var(--text-muted); margin-top: 5px;">Fig 5: Captura en terminal de Kali</p>
                     </div>
                     <div>
                         <img src="img/evidencia_reporte_set.png" alt="Reporte generado por SET" class="evidence-img">
-                        <p style="text-align: center; font-size: 0.85rem; color: var(--text-muted); margin-top: 5px;">Fig 4: Reporte generado en /root/.set/reports/</p>
+                        <p style="text-align: center; font-size: 0.85rem; color: var(--text-muted); margin-top: 5px;">Fig 6: Reporte generado en /root/.set/reports/</p>
                     </div>
                 </div>
 
@@ -186,7 +227,7 @@ ls -la /root/.set/reports/
 
                     <div class="data-pill">
                         <span class="data-label">Fecha de entrega</span>
-                        <span class="data-value">Por definir</span>
+                        <span class="data-value">31 de agosto de 2026</span>
                     </div>
 
                     <div class="data-pill">
@@ -205,6 +246,13 @@ ls -la /root/.set/reports/
                     <h3>PDF de la actividad</h3>
                     <a href="Reporte_Actividad04_WatchLF.pdf" download class="btn-download">
                         <i class="fa-solid fa-download"></i> Descargar PDF
+                    </a>
+                </div>
+                <div class="card pdf-card">
+                    <div class="html-icon"><i class="fa-regular fa-file-code"></i></div>
+                    <h3>HTML de la actividad</h3>
+                    <a href="Actividad04_WatchLF.html" download class="btn-download">
+                        <i class="fa-solid fa-download"></i> Descargar HTML
                     </a>
                 </div>
             </aside>
