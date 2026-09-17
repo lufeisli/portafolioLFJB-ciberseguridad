@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Road to Hall of Fame | Portafolio LFJB</title>
+    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Tipografías -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+    
+    <!-- AOS: animaciones al hacer scroll -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" rel="stylesheet">
+
+    <style>
+        /* ---- Estilos propios de esta página: mapa de niveles ---- */
+        .path-wrap {
+            position: relative;
+            max-width: 640px;
+            margin: 4rem auto 0 auto;
+            height: 1050px; /* Ajustado para 6 nodos */
+        }
+        .path-svg {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            z-index: 0;
+        }
+
+        /* Animación de latido para nodos en progreso */
+        @keyframes pulseNodeBlue {
+            0% { box-shadow: 0 0 0 0 rgba(88, 166, 255, 0.6); }
+            70% { box-shadow: 0 0 0 12px rgba(88, 166, 255, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(88, 166, 255, 0); }
+        }
+
+        .node {
+            position: absolute;
+            transform: translate(-50%, -50%);
+            z-index: 2;
+            text-align: center;
+        }
+        
+        .node summary {
+            list-style: none;
+            cursor: pointer;
+            width: 68px; height: 68px;
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-weight: bold; font-size: 1.3rem;
+            color: #0d1117;
+            border: 4px solid #0d1117;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            font-family: var(--font-display);
+        }
+        .node summary::-webkit-details-marker { display: none; }
+        
+        /* Estado: COMPLETADO (Verde) */
+        .node.completed summary {
+            background: var(--accent-color);
+            box-shadow: 0 0 0 3px var(--accent-color);
+        }
+        .node.completed summary:hover { 
+            transform: scale(1.1); 
+            box-shadow: 0 0 20px var(--accent-color);
+        }
+
+        /* Estado: EN PROGRESO (Azul) */
+        .node.progress summary {
+            background: var(--accent-blue);
+            box-shadow: 0 0 0 3px var(--accent-blue);
+            animation: pulseNodeBlue 2.5s infinite;
+        }
+        .node.progress summary:hover { 
+            transform: scale(1.1); 
+            box-shadow: 0 0 20px var(--accent-blue);
+            animation: none; 
+        }
+
+        /* Estado: BLOQUEADO (Gris) */
+        .node.locked summary {
+            background: #2a2f3a;
+            color: var(--text-muted);
+            box-shadow: 0 0 0 3px #2a2f3a;
+        }
+        .node.locked summary:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 10px #2a2f3a;
+        }
+        
+        /* Etiquetas debajo de los nodos */
+        .node-label {
+            margin-top: 0.8rem;
+            font-size: 0.85rem;
+            color: var(--text-main);
+            width: 160px;
+            margin-left: auto; margin-right: auto;
+            font-family: var(--font-mono);
+            background: rgba(13, 17, 23, 0.8);
+            padding: 4px 8px;
+            border-radius: 6px;
+        }
+        .node.locked .node-label { color: var(--text-muted); background: transparent; }
+        
+        /* Estilos del Popup (Morado) */
+        .node-popup {
+            position: absolute;
+            top: 115%; left: 50%;
+            transform: translateX(-50%);
+            width: 240px;
+            background: var(--bg-card);
+            border: 1px solid var(--accent-purple); /* Borde Morado */
+            border-radius: 10px;
+            padding: 1.2rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.8);
+            z-index: 10;
+        }
+        .node-popup h4 {
+            margin: 0 0 1rem 0;
+            font-size: 0.95rem;
+            color: var(--accent-purple); /* Título Morado */
+            font-family: var(--font-display);
+        }
+        .node-popup a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            text-decoration: none;
+            padding: 0.6rem;
+            margin-bottom: 0.6rem;
+            border-radius: 6px;
+            border: 1px solid var(--accent-purple); /* Botones Morados */
+            color: var(--text-main);
+            font-size: 0.85rem;
+            transition: all 0.2s;
+        }
+        .node-popup a:last-child { margin-bottom: 0; }
+        .node-popup a:hover { 
+            background: rgba(163, 113, 247, 0.15); /* Fondo Morado Semitransparente */
+            color: #fff;
+        }
+
+        /* Botones desactivados dentro de popups bloqueados */
+        .node.locked .node-popup a {
+            border-color: #30363d;
+            color: #555;
+            background: rgba(0,0,0,0.2);
+            cursor: not-allowed;
+            pointer-events: none; /* Evita cualquier clic */
+        }
+        .node.locked .node-popup h4 {
+            color: var(--text-muted);
+        }
+        
+        /* Leyenda */
+        .legend {
+            display: flex; gap: 2rem; justify-content: center;
+            margin-top: 2rem; flex-wrap: wrap; font-size: 0.85rem; color: var(--text-muted);
+            font-family: var(--font-mono);
+        }
+        .legend span { display: inline-flex; align-items: center; gap: 0.5rem; }
+        .dot { width: 14px; height: 14px; border-radius: 50%; display: inline-block; }
+        /* Animación de flujo de datos en la línea */
+
+        @keyframes dataFlow {
+            to { stroke-dashoffset: -1000; }
+        }
+
+        .inactive-path {
+            animation: dataFlow 80s linear infinite;
+        }
+    </style>
+</head>
+<body>
+    <header class="top-nav">
+        <div class="nav-brand">
+            <img src="../assets/img/logo-upslp.png" alt="Logo UPSLP" class="logo">
+            <span class="brand-title">Portafolio CNO IV</span>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="../index.html">Inicio</a></li>
+                <li><a href="../parcial1/index.html">Parcial 1</a></li>
+                <li><a href="../parcial2/index.html">Parcial 2</a></li>
+                <li><a href="../parcial3/index.html">Parcial 3</a></li>
+                <li><a href="index.html" style="color: var(--accent-blue);">Road to Hall of Fame</a></li>
+                <li><a href="../index.html#contacto">Contacto</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="activity-main">
+        <div class="activity-header hero-decorated" style="text-align: center;">
+            <div class="orb orb-green"></div>
+            <div class="orb orb-blue"></div>
+            <div class="orb orb-purple"></div>
+            <div class="orb-ring"></div>
+
+            <p class="overline" style="justify-content: center;"><span class="line"></span> ACTIVIDAD 6: LABORATORIOS · SEGURIDAD OFENSIVA <span class="line"></span></p>
+            <h1 class="activity-title" style="color: var(--accent-blue);">ROAD TO HALL OF FAME</h1>
+            <p style="margin-top: 1rem; color: var(--text-muted); max-width: 600px; margin-left:auto; margin-right:auto;">
+                Cada nivel es un laboratorio resuelto durante el curso. Da clic en un nodo para ver la práctica o descargar el documento de evidencia.
+            </p>
+        </div>
+
+        <div class="legend" data-aos="fade-up">
+            <span><span class="dot" style="background: var(--accent-color); box-shadow: 0 0 8px var(--accent-color);"></span> Completado</span>
+            <span><span class="dot" style="background: var(--accent-blue); box-shadow: 0 0 8px var(--accent-blue);"></span> En progreso</span>
+            <span><span class="dot" style="background: #2a2f3a;"></span> Próximamente / Bloqueado</span>
+        </div>
+
+        <!-- MAPA DE NIVELES (Solo 6 nodos) -->
+        <div class="path-wrap">
+            <svg class="path-svg" viewBox="0 0 100 1050" preserveAspectRatio="none">
+                <!-- Camino inactivo general (Gris) -->
+                <path class="inactive-path"
+                    d="M 20,70 C 20,155 50,155 50,240 C 50,325 80,325 80,410 C 80,495 50,495 50,580 C 50,665 20,665 20,750 C 20,835 50,835 50,920"
+                    fill="none" stroke="#2a2f3a" stroke-width="1.5" stroke-dasharray="6,6" vector-effect="non-scaling-stroke" />
+            </svg>
+
+            <!-- NIVEL 1: EN PROGRESO (Azul) -->
+            <!-- Puedes cambiar la clase "progress" a "completed" cuando lo termines -->
+            <div class="node progress" data-aos="zoom-in" style="left:20%; top:70px;">
+                <details>
+                    <summary>1</summary>
+                    <div class="node-popup">
+                        <h4>Simple Case</h4>
+                        <a href="#"><i class="fa-solid fa-eye"></i> Ver práctica</a>
+                        <a href="#" onclick="return false;" download><i class="fa-solid fa-download"></i> Descargar</a>
+                        <!-- <a href="#" download><i class="fa-solid fa-download"></i> Descargar</a> -->
+                    </div>
+                </details>
+                <div class="node-label">File Path Traversal: Simple Case</div>
+            </div>
+
+            <!-- NIVEL 2: BLOQUEADO (Gris) -->
+            <div class="node locked" data-aos="zoom-in" style="left:50%; top:240px;">
+                <details>
+                    <summary><i class="fa-solid fa-lock"></i></summary>
+                    <div class="node-popup">
+                        <h4>Absolute Path Bypass</h4>
+                        <a href="#" onclick="return false;"><i class="fa-solid fa-eye"></i> Ver práctica</a>
+                        <a href="#" onclick="return false;" download><i class="fa-solid fa-download"></i> Descargar</a>
+                    </div>
+                </details>
+                <div class="node-label">Traversal Blocked: Absolute Path Bypass</div>
+            </div>
+
+            <!-- NIVEL 3: BLOQUEADO (Gris) -->
+            <div class="node locked" data-aos="zoom-in" style="left:80%; top:410px;">
+                <details>
+                    <summary><i class="fa-solid fa-lock"></i></summary>
+                    <div class="node-popup">
+                        <h4>Stripped Non-Recursively</h4>
+                        <a href="#" onclick="return false;"><i class="fa-solid fa-eye"></i> Ver práctica</a>
+                        <a href="#" onclick="return false;" download><i class="fa-solid fa-download"></i> Descargar</a>
+                    </div>
+                </details>
+                <div class="node-label">Traversal Stripped Non-Recursively</div>
+            </div>
+
+            <!-- NIVEL 4: BLOQUEADO (Gris) -->
+            <div class="node locked" data-aos="zoom-in" style="left:50%; top:580px;">
+                <details>
+                    <summary><i class="fa-solid fa-lock"></i></summary>
+                    <div class="node-popup">
+                        <h4>Superfluous URL-Decode</h4>
+                        <a href="#" onclick="return false;"><i class="fa-solid fa-eye"></i> Ver práctica</a>
+                        <a href="#" onclick="return false;" download><i class="fa-solid fa-download"></i> Descargar</a>
+                    </div>
+                </details>
+                <div class="node-label">Traversal Stripped w/ Superfluous URL-Decode</div>
+            </div>
+
+            <!-- NIVEL 5: BLOQUEADO (Gris) -->
+            <div class="node locked" data-aos="zoom-in" style="left:20%; top:750px;">
+                <details>
+                    <summary><i class="fa-solid fa-lock"></i></summary>
+                    <div class="node-popup">
+                        <h4>Validation of Start of Path</h4>
+                        <a href="#" onclick="return false;"><i class="fa-solid fa-eye"></i> Ver práctica</a>
+                        <a href="#" onclick="return false;" download><i class="fa-solid fa-download"></i> Descargar</a>
+                    </div>
+                </details>
+                <div class="node-label">Validation of Start of Path</div>
+            </div>
+
+            <!-- NIVEL 6: BLOQUEADO (Gris) -->
+            <div class="node locked" data-aos="zoom-in" style="left:50%; top:920px;">
+                <details>
+                    <summary><i class="fa-solid fa-lock"></i></summary>
+                    <div class="node-popup">
+                        <h4>Null Byte Bypass</h4>
+                        <a href="#" onclick="return false;"><i class="fa-solid fa-eye"></i> Ver práctica</a>
+                        <a href="#" onclick="return false;" download><i class="fa-solid fa-download"></i> Descargar</a>
+                    </div>
+                </details>
+                <div class="node-label">Validation of File Extension: Null Byte Bypass</div>
+            </div>
+
+        </div>
+    </main>
+
+    <footer style="margin-top: 3rem; border-top: none;">
+        <p>&copy; 2026 Luis Felipe Jaramillo Barajas. Todos los derechos reservados.</p>
+    </footer>
+
+    <!-- SCRIPTS PARA ANIMACIONES -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+    <script>
+        AOS.init({ duration: 700, once: true });
+        
+        // Script para cerrar otros popups al abrir uno nuevo
+        const detailsElements = document.querySelectorAll('details');
+        detailsElements.forEach(targetDetail => {
+            targetDetail.addEventListener('click', () => {
+                detailsElements.forEach(detail => {
+                    if (detail !== targetDetail) {
+                        detail.removeAttribute('open');
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

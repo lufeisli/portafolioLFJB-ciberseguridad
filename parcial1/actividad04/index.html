@@ -8,6 +8,13 @@
     <link rel="stylesheet" href="../../style.css">
     <!-- Librería de Iconos: FontAwesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Tipografías -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+    
+    <!-- AOS: animaciones al hacer scroll -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" rel="stylesheet">
 </head>
 <body>
     <header class="top-nav">
@@ -22,28 +29,35 @@
                 <li><a href="../index.html" style="color: var(--text-main);">Parcial 1</a></li>
                 <li><a href="../../parcial2/index.html">Parcial 2</a></li>
                 <li><a href="../../parcial3/index.html">Parcial 3</a></li>
+                <li><a href="../../road-to-hall-of-fame/index.html">Road to Hall of Fame</a></li>
             </ul>
         </nav>
     </header>
 
     <main class="activity-main">
         <!-- CABECERA DE LA ACTIVIDAD -->
-        <div class="activity-header">
-            <a href="../index.html" class="back-link"><i class="fa-solid fa-arrow-left"></i> Volver a Parcial 1</a>
-            <p class="overline"><span class="line"></span> PARCIAL 1 · ACTIVIDAD 4</p>
-            <h1 class="activity-title">Una página demasiado convincente</h1>
+        <div class="activity-header hero-decorated" style="text-align: center;">
+            <!-- Efectos Visuales -->
+            <div class="orb orb-green"></div>
+            <div class="orb orb-blue"></div>
+            <div class="orb orb-purple"></div>
+            <div class="orb-ring"></div>
+
+            <a href="../index.html" class="back-link" style="position: absolute; top: 1rem; left: 1.5rem;"><i class="fa-solid fa-arrow-left"></i> Volver a Parcial 1</a>
+            <p class="overline" style="justify-content: center;"><span class="line"></span> PARCIAL 1 · ACTIVIDAD 4 <span class="line"></span></p>
+            <h1 class="activity-title" style="color: var(--accent-blue);">Una página demasiado convincente</h1>
         </div>
 
         <!-- INTRODUCCIÓN FULL WIDTH -->
-        <section class="card intro-card">
-            <p>Implementación y análisis, en un entorno de laboratorio controlado, de una simulación de <strong style="color: var(--accent-color);">ingeniería social</strong> mediante Social-Engineer Toolkit (SET), utilizando una página web ficticia (WatchLF) para comprender el funcionamiento de una técnica de captura de información.</p>
+        <section class="card intro-card" data-aos="fade-up" style="border-left-color: var(--accent-blue);">
+            <p>Implementación y análisis, en un entorno de laboratorio controlado, de una simulación de <strong style="color: var(--accent-blue);">ingeniería social</strong> mediante Social-Engineer Toolkit (SET), utilizando una página web ficticia (WatchLF) para comprender el funcionamiento de una técnica de captura de información.</p>
             <br>
             <p>El objetivo es reconocer los elementos técnicos y visuales que permiten identificar un intento de phishing, y documentar el flujo completo desde la configuración de red hasta la captura y el análisis de los resultados.</p>
         </section>
 
         <!-- GRID 2 COLUMNAS (Objetivos y Requisitos) -->
         <div class="grid-2-cols" style="margin-top: 2rem;">
-            <section class="card">
+            <section class="card" data-aos="fade-up" data-aos-delay="100">
                 <h2 class="card-title-icon"><i class="fa-solid fa-bullseye"></i> Objetivos específicos</h2>
                 <ul class="custom-list">
                     <li>Configurar un escenario básico de ingeniería social utilizando Social-Engineer Toolkit (SET).</li>
@@ -54,7 +68,7 @@
                 </ul>
             </section>
 
-            <section class="card">
+            <section class="card" data-aos="fade-up" data-aos-delay="200">
                 <h2 class="card-title-icon"><i class="fa-solid fa-server"></i> Requisitos técnicos</h2>
                 <ul class="custom-list">
                     <li>Kali Linux con <code>Social-Engineer Toolkit (SET)</code></li>
@@ -70,32 +84,34 @@
 
             <!-- COLUMNA IZQUIERDA -->
             <div class="main-content">
-                <h2 class="section-heading"><i class="fa-solid fa-layer-group"></i> Conceptos principales</h2>
-                <div class="grid-2-cols">
+                <h2 class="section-heading" data-aos="fade-up"><i class="fa-solid fa-layer-group"></i> Conceptos principales</h2>
+                
+                <div class="grid-2-cols" data-aos="fade-up">
                     <div class="mini-card">
-                        <h3><i class="fa-solid fa-user-secret"></i> Credential Harvester</h3>
+                        <h3 style="color: var(--accent-blue);"><i class="fa-solid fa-user-secret"></i> Credential Harvester</h3>
                         <p>Módulo de SET que levanta un servidor web temporal, sirve una página con formulario y captura cualquier dato enviado mediante <code>POST</code>, registrándolo en un reporte local.</p>
                     </div>
                     <div class="mini-card">
-                        <h3><i class="fa-solid fa-network-wired"></i> Red Host-Only</h3>
+                        <h3 style="color: var(--accent-blue);"><i class="fa-solid fa-network-wired"></i> Red Host-Only</h3>
                         <p>Adaptador de VirtualBox que aísla la comunicación entre el equipo host y la VM de Kali, sin ruta hacia Internet ni hacia la red física, cumpliendo la restricción de no exponer el servidor.</p>
                     </div>
                 </div>
-                <div class="grid-2-cols" style="margin-top: 1rem;">
+                
+                <div class="grid-2-cols" data-aos="fade-up" style="margin-top: 1rem;">
                     <div class="mini-card">
-                        <h3><i class="fa-solid fa-triangle-exclamation"></i> Indicadores de phishing</h3>
+                        <h3 style="color: var(--accent-blue);"><i class="fa-solid fa-triangle-exclamation"></i> Indicadores de phishing</h3>
                         <p>Señales verificables como dominio no oficial, ausencia de HTTPS, mensajes de urgencia y lógica de autenticación expuesta en el cliente.</p>
                     </div>
                     <div class="mini-card">
-                        <h3><i class="fa-solid fa-shield-halved"></i> Ingeniería social vs. vulneración técnica</h3>
+                        <h3 style="color: var(--accent-blue);"><i class="fa-solid fa-shield-halved"></i> Ingeniería social vs. vulneración</h3>
                         <p>La credencial no se obtiene rompiendo cifrado ni explotando software, sino por la confianza del usuario en la apariencia legítima del portal.</p>
                     </div>
                 </div>
 
-                <h2 class="section-heading" style="margin-top: 3rem;"><i class="fa-solid fa-file-code"></i> Configuración del entorno</h2>
-                <p style="margin-bottom: 1rem;">Red host-only entre el equipo host (víctima) y la VM de Kali (servidor del ataque simulado), y flujo de configuración de SET con Custom Import:</p>
+                <h2 class="section-heading" data-aos="fade-up" style="margin-top: 3rem;"><i class="fa-solid fa-file-code"></i> Configuración del entorno</h2>
+                <p data-aos="fade-up" style="margin-bottom: 1rem;">Red host-only entre el equipo host (víctima) y la VM de Kali (servidor del ataque simulado), y flujo de configuración de SET con Custom Import:</p>
 
-                <div class="code-block">
+                <div class="code-block" data-aos="fade-up">
                 <pre><code><span class="code-comment"># Verificar la interfaz host-only en Kali</span>
 ip a
 
@@ -117,33 +133,35 @@ sudo setoolkit
 
 <span class="code-comment"># Al finalizar, generar el reporte</span>
 <span class="code-comment"># Ctrl + C dentro de SET</span>
-ls -la /root/.set/reports/
-</code></pre>
+ls -la /root/.set/reports/</code></pre>
                 </div>
 
-                <h2 class="section-heading" style="margin-top: 3rem;"><i class="fa-solid fa-diagram-project"></i> Flujo de captura de información</h2>
-                <p style="margin-bottom: 1rem;">El siguiente diagrama resume el recorrido técnico completo, desde que la víctima abre la página hasta que SET registra el reporte final:</p>
-                <img src="img/diagrama_flujo_watchlf.png" alt="Diagrama del flujo de captura de credenciales" class="evidence-img" style="width:100%; margin-bottom: 2rem;">
+                <h2 class="section-heading" data-aos="fade-up" style="margin-top: 3rem;"><i class="fa-solid fa-diagram-project"></i> Flujo de captura de información</h2>
+                <p data-aos="fade-up" style="margin-bottom: 1rem;">El siguiente diagrama resume el recorrido técnico completo, desde que la víctima abre la página hasta que SET registra el reporte final:</p>
+                
+                <div data-aos="fade-up">
+                    <img src="img/diagrama_flujo_watchlf.png" alt="Diagrama del flujo de captura de credenciales" class="evidence-img" style="width:100%; margin-bottom: 2rem;">
+                </div>
 
-                <h2 class="section-heading" style="margin-top: 3rem;"><i class="fa-solid fa-eye"></i> Vista previa de la página ficticia (no funcional)</h2>
+                <h2 class="section-heading" data-aos="fade-up" style="margin-top: 3rem;"><i class="fa-solid fa-eye"></i> Vista previa de la página ficticia (no funcional)</h2>
  
-                <div class="card" style="background: #fff4e5; border: 1px solid #e0b33c; margin-bottom: 1.5rem;">
+                <div class="conclusion-box" data-aos="fade-up" style="background: rgba(224, 179, 60, 0.05); border-left-color: #e0b33c; margin-bottom: 1.5rem;">
                     <p style="margin: 0; display: flex; gap: 0.6rem; align-items: flex-start;">
-                        <i class="fa-solid fa-triangle-exclamation" style="color: #b8860b; margin-top: 3px;"></i>
-                        <span style="color: #b8860b; font-size: 0.85rem;">
+                        <i class="fa-solid fa-triangle-exclamation" style="color: #e0b33c; margin-top: 3px;"></i>
+                        <span style="color: #f0d385; font-size: 0.85rem;">
                             <strong>Advertencia ética:</strong> la siguiente réplica se muestra únicamente con fines de documentación académica. El formulario está deshabilitado a propósito: no envía, procesa ni almacena ningún dato, y no se conecta a ningún servidor. Esta actividad se realizó en un entorno de laboratorio aislado (red host-only) siguiendo restricciones estrictas de uso ético. <strong>Reproducir esta técnica fuera de un entorno controlado, contra personas o sistemas reales, constituye una actividad ilegal y no autorizada.</strong> Este contenido no debe ser replicado con fines maliciosos.
                         </span>
                     </p>
                 </div>
  
-                <div style="max-width: 420px; margin: 0 auto 1rem auto; background: #04331f; border-radius: 24px; padding: 2rem; box-shadow: 0 20px 40px rgba(0,0,0,0.25);">
+                <div data-aos="fade-up" style="max-width: 420px; margin: 0 auto 1rem auto; background: #04331f; border-radius: 24px; padding: 2rem; box-shadow: 0 20px 40px rgba(0,0,0,0.25);">
                     <div style="margin-bottom: 1.2rem; padding: 0.9rem 1rem; border-radius: 14px; background: rgba(224,179,60,0.12); border: 1px solid rgba(224,179,60,0.4); color: #f0d385; font-size: 0.85rem; display:flex; gap:0.6rem; align-items:center;">
                         <i class="fa-solid fa-triangle-exclamation"></i>
                         <span>Tu sesión ha expirado por inactividad. Vuelve a ingresar tu cuenta.</span>
                     </div>
                     <div style="text-align:center; margin-bottom: 1.6rem;">
-                        <h3 style="color:#bbf7d0; font-size:2.2rem; margin:0; letter-spacing:-1px;">WatchLF</h3>
-                        <p style="color: rgba(187,247,208,0.6); font-size:0.75rem; letter-spacing:2px; text-transform:uppercase; margin-top:0.2rem;">Inicio de sesión</p>
+                        <h3 style="color:#bbf7d0; font-family: var(--font-display); font-size:2.2rem; margin:0; letter-spacing:-1px;">WatchLF</h3>
+                        <p style="color: rgba(187,247,208,0.6); font-family: var(--font-mono); font-size:0.75rem; letter-spacing:2px; text-transform:uppercase; margin-top:0.2rem;">Inicio de sesión</p>
                     </div>
                     <form id="demo-form" onsubmit="return false;" autocomplete="off">
                         <label style="display:block; color:#bbf7d0; font-size:0.85rem; margin-bottom:0.4rem;">Correo electrónico o usuario</label>
@@ -156,13 +174,13 @@ ls -la /root/.set/reports/
                         Este botón no envía información real: es solo una vista de referencia para fines de documentación académica.
                     </p>
                 </div>
-                <p style="text-align:center; font-size:0.85rem; color: var(--text-muted); margin-bottom: 2rem;">Réplica visual no funcional de la página utilizada en el laboratorio — los campos están deshabilitados y el botón no realiza ninguna acción real.</p>
+                <p data-aos="fade-up" style="text-align:center; font-size:0.85rem; color: var(--text-muted); margin-bottom: 2rem;">Réplica visual no funcional de la página utilizada en el laboratorio — los campos están deshabilitados y el botón no realiza ninguna acción real.</p>
  
-                <h2 class="section-heading" style="margin-top: 3rem;"><i class="fa-solid fa-terminal"></i> Ejecución y Evidencias</h2>
-                <p>El servidor de Credential Harvester se levantó en el puerto 80 sobre la IP host-only de Kali. Desde el navegador del equipo host se accedió a la página ficticia de WatchLF y se envió un formulario con datos de prueba, los cuales fueron capturados en tiempo real por SET.</p>
+                <h2 class="section-heading" data-aos="fade-up" style="margin-top: 3rem;"><i class="fa-solid fa-terminal"></i> Ejecución y Evidencias</h2>
+                <p data-aos="fade-up">El servidor de Credential Harvester se levantó en el puerto 80 sobre la IP host-only de Kali. Desde el navegador del equipo host se accedió a la página ficticia de WatchLF y se envió un formulario con datos de prueba, los cuales fueron capturados en tiempo real por SET.</p>
  
                 <!-- Galería de Evidencias -->
-                <div class="evidence-grid">
+                <div class="evidence-grid" data-aos="fade-up">
                     <div>
                         <img src="img/evidencia_red_hostonly.png" alt="Configuración de red host-only" class="evidence-img">
                         <p style="text-align: center; font-size: 0.85rem; color: var(--text-muted); margin-top: 5px;">Fig 1: Saber ip de Kali</p>
@@ -189,8 +207,8 @@ ls -la /root/.set/reports/
                     </div>
                 </div>
 
-                <h2 class="section-heading" style="margin-top: 3rem;"><i class="fa-solid fa-list-check"></i> Indicadores de phishing identificados</h2>
-                <ul class="diamond-list">
+                <h2 class="section-heading" data-aos="fade-up" style="margin-top: 3rem;"><i class="fa-solid fa-list-check"></i> Indicadores de phishing identificados</h2>
+                <ul class="diamond-list" data-aos="fade-up">
                     <li><strong>URL / dominio no oficial:</strong> el portal no pertenece al dominio real del servicio.</li>
                     <li><strong>Ausencia de HTTPS válido:</strong> el sitio corre sobre HTTP plano, sin certificado emitido por una autoridad reconocida.</li>
                     <li><strong>Mensaje de urgencia:</strong> el aviso de "sesión expirada" busca una reacción rápida del usuario.</li>
@@ -198,8 +216,8 @@ ls -la /root/.set/reports/
                     <li><strong>Destino de envío no verificado:</strong> el formulario reenvía los datos a una IP interna, no a un servidor institucional conocido.</li>
                 </ul>
 
-                <h2 class="section-heading" style="margin-top: 3rem;"><i class="fa-solid fa-shield-halved"></i> Controles de seguridad propuestos</h2>
-                <ul class="diamond-list">
+                <h2 class="section-heading" data-aos="fade-up" style="margin-top: 3rem;"><i class="fa-solid fa-shield-halved"></i> Controles de seguridad propuestos</h2>
+                <ul class="diamond-list" data-aos="fade-up">
                     <li>Verificación del certificado TLS/SSL antes de introducir credenciales.</li>
                     <li>Autenticación multifactor (MFA) como segunda barrera ante credenciales comprometidas.</li>
                     <li>Capacitación continua en concientización de phishing.</li>
@@ -207,51 +225,51 @@ ls -la /root/.set/reports/
                     <li>Monitoreo y proceso definido de respuesta ante incidentes.</li>
                 </ul>
 
-                <h2 class="section-heading" style="margin-top: 3rem;"><i class="fa-solid fa-lightbulb"></i> Aprendizajes obtenidos</h2>
-                <ul class="diamond-list">
+                <h2 class="section-heading" data-aos="fade-up" style="margin-top: 3rem;"><i class="fa-solid fa-lightbulb"></i> Aprendizajes obtenidos</h2>
+                <ul class="diamond-list" data-aos="fade-up">
                     <li>Comprendí cómo un adaptador host-only aísla completamente la comunicación entre el host y una VM, cumpliendo restricciones de laboratorio sin exponer el entorno a Internet.</li>
                     <li>Aprendí el flujo técnico completo de un Credential Harvester: desde la petición POST del formulario hasta el registro del reporte en SET.</li>
                     <li>Reforcé la diferencia entre ingeniería social y vulneración técnica: la contraseña fue entregada voluntariamente por confianza en la apariencia del portal.</li>
                 </ul>
 
-                <h2 class="section-heading" style="margin-top: 3rem;"><i class="fa-solid fa-flag-checkered"></i> Conclusión</h2>
-                <div class="conclusion-box">
+                <h2 class="section-heading" data-aos="fade-up" style="margin-top: 3rem;"><i class="fa-solid fa-flag-checkered"></i> Conclusión</h2>
+                <div class="conclusion-box" data-aos="fade-up" style="border-left-color: var(--accent-blue); background-color: rgba(88, 166, 255, 0.05);">
                     <p>Esta actividad permitió comprender, de forma directa y controlada, por qué la ingeniería social continúa siendo una de las técnicas de ataque más efectivas dentro de la ciberseguridad, incluso cuando existen controles técnicos robustos. El proceso de captura no depende de vulnerar ningún sistema criptográfico, sino de aprovechar la confianza del usuario en la apariencia visual de un sitio. La concientización constante del usuario final, junto con controles como la autenticación multifactor, sigue siendo la línea de defensa más determinante frente al phishing.</p>
                 </div>
             </div>
 
             <!-- COLUMNA DERECHA (SIDEBAR) -->
             <aside class="sidebar">
-                <div class="card data-card">
-                    <h3 style="text-align: center; margin-bottom: 1.5rem; color: var(--text-main);">Datos de la actividad</h3>
+                <div class="card data-card" data-aos="fade-up" data-aos-delay="100" style="border-color: var(--accent-blue);">
+                    <h3 style="text-align: center; margin-bottom: 1.5rem; color: var(--accent-blue);">Datos de la actividad</h3>
 
                     <div class="data-pill">
-                        <span class="data-label">Fecha de entrega</span>
+                        <span class="data-label" style="color: var(--accent-blue);">Fecha de entrega</span>
                         <span class="data-value">31 de agosto de 2026</span>
                     </div>
 
                     <div class="data-pill">
-                        <span class="data-label">Tecnologías</span>
+                        <span class="data-label" style="color: var(--accent-blue);">Tecnologías</span>
                         <span class="data-value">Kali Linux · SET · VirtualBox</span>
                     </div>
 
                     <div class="data-pill">
-                        <span class="data-label">Entregable</span>
+                        <span class="data-label" style="color: var(--accent-blue);">Entregable</span>
                         <span class="data-value">Informe en PDF y HTML</span>
                     </div>
                 </div>
 
-                <div class="card pdf-card">
-                    <div class="pdf-icon"><i class="fa-regular fa-file-pdf"></i></div>
+                <div class="card pdf-card" data-aos="fade-up" data-aos-delay="200" style="background: linear-gradient(145deg, var(--bg-card) 0%, rgba(88, 166, 255, 0.1) 100%);">
+                    <div class="pdf-icon" style="color: var(--accent-blue);"><i class="fa-regular fa-file-pdf"></i></div>
                     <h3>PDF de la actividad</h3>
-                    <a href="Reporte_Actividad04_WatchLF.pdf" download class="btn-download">
+                    <a href="Reporte_Actividad04_WatchLF.pdf" download class="btn-download" style="border-color: var(--accent-blue);">
                         <i class="fa-solid fa-download"></i> Descargar PDF
                     </a>
                 </div>
-                <div class="card pdf-card">
-                    <div class="html-icon"><i class="fa-regular fa-file-code"></i></div>
+                <div class="card pdf-card" data-aos="fade-up" data-aos-delay="300" style="background: linear-gradient(145deg, var(--bg-card) 0%, rgba(88, 166, 255, 0.1) 100%);">
+                    <div class="html-icon" style="color: var(--accent-blue); font-size: 3rem; margin-bottom: 1rem;"><i class="fa-regular fa-file-code"></i></div>
                     <h3>HTML de la actividad</h3>
-                    <a href="Actividad04_WatchLF.html" download class="btn-download">
+                    <a href="Actividad04_WatchLF.html" download class="btn-download" style="border-color: var(--accent-blue);">
                         <i class="fa-solid fa-download"></i> Descargar HTML
                     </a>
                 </div>
@@ -259,5 +277,14 @@ ls -la /root/.set/reports/
         </div>
     </main>
 
+    <footer style="margin-top: 2rem; border-top: none;">
+        <p>&copy; 2026 Luis Felipe Jaramillo Barajas. Todos los derechos reservados.</p>
+    </footer>
+
+    <!-- SCRIPTS PARA ANIMACIONES -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+    <script>
+        AOS.init({ duration: 700, once: true });
+    </script>
 </body>
 </html>

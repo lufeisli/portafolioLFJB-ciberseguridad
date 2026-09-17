@@ -1,5 +1,5 @@
 /* =========================================
-   VARIABLES DE COLOR 
+   VARIABLES DE COLOR Y TIPOGRAFÍA
    ========================================= */
 :root {
     --bg-dark: #0d1117;
@@ -8,7 +8,10 @@
     --text-muted: #8b949e;
     --accent-color: #2ea043; /* Verde principal */
     --accent-blue: #58a6ff;  /* Azul para textos destacados */
+    --accent-purple: #a371f7; /* Morado saturado para detalles */
     --border-color: #30363d;
+    --font-display: 'Space Grotesk', sans-serif;
+    --font-mono: 'JetBrains Mono', 'Consolas', monospace;
 }
 
 /* =========================================
@@ -67,7 +70,7 @@ h1 { color: var(--text-main); }
     font-weight: bold;
     font-size: 1.2rem;
     color: #fff;
-    font-family: monospace;
+    font-family: var(--font-mono);
 }
 
 nav ul {
@@ -87,22 +90,141 @@ nav a {
 nav a:hover { color: var(--accent-color); }
 
 /* =========================================
-   SECCIÓN HERO Y TARJETAS GLOBALES
+   EFECTOS VISUALES (ORBES Y HERO DECORADO)
    ========================================= */
 .hero-section {
     text-align: center;
     margin: 4rem 0;
 }
 
-.course-title {
+.hero-decorated {
+    position: relative;
+    padding: 5rem 1.5rem 3.5rem 1.5rem;
+}
+
+.hero-decorated::before {
+    content: "";
+    position: absolute;
+    inset: -40px;
+    background-image: radial-gradient(var(--border-color) 1px, transparent 1px);
+    background-size: 22px 22px;
+    -webkit-mask-image: radial-gradient(ellipse at center, black 40%, transparent 75%);
+    mask-image: radial-gradient(ellipse at center, black 40%, transparent 75%);
+    opacity: 0.6;
+    z-index: -2;
+    pointer-events: none;
+}
+
+.orb {
+    position: absolute;
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: -1;
+    animation: float 7s ease-in-out infinite;
+}
+
+.orb-green {
+    width: 320px; height: 320px;
+    background: var(--accent-color);
+    filter: blur(90px);
+    opacity: 0.35;
+    top: -120px; left: -60px;
+}
+
+.orb-blue {
+    width: 240px; height: 240px;
+    background: var(--accent-blue);
+    filter: blur(80px);
+    opacity: 0.32;
+    bottom: -100px; right: -40px;
+    animation-delay: -3.5s;
+}
+
+.orb-purple {
+    width: 170px; height: 170px;
+    background: var(--accent-purple);
+    filter: blur(65px);
+    opacity: 0.3;
+    top: 20%; right: 15%;
+    animation-delay: -1.8s;
+}
+
+.orb-ring {
+    position: absolute;
+    width: 46px; height: 46px;
+    border: 2px solid var(--accent-color);
+    border-radius: 50%;
+    opacity: 0.5;
+    top: 22%; right: 22%;
+    z-index: -1;
+    animation: float 8s ease-in-out infinite;
+    animation-delay: -1s;
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-18px); }
+}
+
+.corner-lines {
+    position: absolute;
+    top: -10px; left: -10px;
+    width: 160px; height: 160px;
+    z-index: -1;
+    opacity: 0.4;
+    pointer-events: none;
+}
+
+.hero-decorated h1 {
+    font-family: var(--font-display);
+    font-size: clamp(1.8rem, 5vw, 2.6rem);
+    background: linear-gradient(90deg, var(--accent-color), var(--accent-blue), var(--accent-purple));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+.course-title { 
     color: var(--accent-blue);
     text-transform: uppercase;
     font-size: 0.9rem;
     letter-spacing: 1px;
+    font-family: var(--font-mono); 
 }
 
-.alias-title { color: var(--accent-blue); }
+.alias-title { 
+    color: var(--accent-blue);
+    font-family: var(--font-display); 
+}
 
+/* Línea de Terminal Animada */
+.terminal-line {
+    position: relative;
+    margin: 3rem auto 0 auto;
+    background: var(--bg-card);
+    border-left: 3px solid var(--accent-color);
+    border-radius: 0 8px 8px 0;
+    padding: 1rem 1.5rem;
+    font-family: var(--font-mono);
+    font-size: 0.9rem;
+    color: var(--text-main);
+    max-width: fit-content;
+    text-align: left;
+}
+
+.terminal-line .cursor {
+    display: inline-block;
+    width: 8px; height: 1em;
+    background: var(--accent-color);
+    vertical-align: text-bottom;
+    animation: blink 1s step-end infinite;
+}
+
+@keyframes blink { 50% { opacity: 0; } }
+
+/* =========================================
+   TARJETAS GLOBALES (CARDS)
+   ========================================= */
 .grid-3-cols {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -115,12 +237,13 @@ nav a:hover { color: var(--accent-color); }
     border: 1px solid var(--border-color);
     border-radius: 8px;
     padding: 2rem;
-    transition: transform 0.2s, border-color 0.2s;
+    transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
 }
 
 .card:hover {
-    transform: translateY(-2px);
+    transform: translateY(-4px) scale(1.03);
     border-color: var(--accent-color);
+    box-shadow: 0 10px 24px rgba(163, 113, 247, 0.18);
 }
 
 .card h2 {
@@ -133,6 +256,10 @@ nav a:hover { color: var(--accent-color); }
     gap: 10px;
 }
 
+.card h2 i { 
+    color: var(--accent-purple); 
+}
+
 /* =========================================
    ESTILOS ESPECÍFICOS PARA LAS ACTIVIDADES
    ========================================= */
@@ -141,7 +268,7 @@ nav a:hover { color: var(--accent-color); }
 .back-link {
     color: var(--accent-color);
     text-decoration: none;
-    font-family: monospace;
+    font-family: var(--font-mono);
     font-size: 0.9rem;
     transition: color 0.3s;
 }
@@ -150,7 +277,7 @@ nav a:hover { color: var(--accent-color); }
 
 .overline {
     color: var(--accent-color);
-    font-family: monospace;
+    font-family: var(--font-mono);
     font-size: 0.85rem;
     letter-spacing: 2px;
     margin: 2rem 0 1rem 0;
@@ -167,7 +294,7 @@ nav a:hover { color: var(--accent-color); }
 }
 
 .activity-title {
-    font-family: 'Courier New', monospace;
+    font-family: var(--font-mono);
     font-size: 3rem;
     color: var(--accent-blue);
     text-shadow: 0 0 15px rgba(88, 166, 255, 0.1);
@@ -179,25 +306,26 @@ nav a:hover { color: var(--accent-color); }
     gap: 2rem;
 }
 
-/* Bloque de Código */
+/* =========================================
+   BLOQUE DE CÓDIGO Y EVIDENCIAS
+   ========================================= */
 .code-block {
     background-color: #0d1117;
     border: 1px solid var(--border-color);
     border-radius: 8px;
     padding: 1.5rem;
     overflow-x: auto;
-    font-family: 'Consolas', 'Courier New', monospace;
+    font-family: var(--font-mono);
     font-size: 0.9rem;
     color: #e6edf3;
     line-height: 1.5;
 }
 
-.code-keyword { color: #ff7b72; } /* Rojo/Rosa */
-.code-function { color: #d2a8ff; } /* Morado */
-.code-string { color: #a5d6ff; } /* Azul claro */
+.code-keyword { color: #ff7b72; } 
+.code-function { color: #d2a8ff; } 
+.code-string { color: #a5d6ff; } 
 .code-comment { color: #8b949e; font-style: italic; }
 
-/* Grid para Fotos de Evidencia */
 .evidence-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -216,6 +344,7 @@ nav a:hover { color: var(--accent-color); }
     transform: scale(1.02);
     border-color: var(--accent-blue);
 }
+
 /* =========================================
    FORMULARIO DE CONTACTO Y FOOTER
    ========================================= */
@@ -279,7 +408,10 @@ footer {
     margin-top: 4rem;
     font-size: 0.9rem;
 }
-/* Sidebar (PDF) */
+
+/* =========================================
+   SIDEBAR (DATOS Y PDF)
+   ========================================= */
 .data-pill {
     background-color: #1c2128;
     border: 1px solid var(--border-color);
@@ -320,8 +452,27 @@ footer {
     color: #fff;
 }
 
+/* =========================================
+   RESPONSIVIDAD (MEDIA QUERIES)
+   ========================================= */
 @media (max-width: 900px) {
     .grid-3-cols, .layout-sidebar, .evidence-grid {
         grid-template-columns: 1fr;
     }
+}
+
+@media (max-width: 700px) {
+    .hero-decorated { padding: 3rem 1rem 2.5rem 1rem; }
+    .orb-green { width: 180px; height: 180px; top: -80px; left: -40px; }
+    .orb-blue { width: 140px; height: 140px; }
+    .orb-purple { display: none; }
+    .orb-ring { display: none; }
+    .corner-lines { width: 100px; height: 100px; }
+    .terminal-line { font-size: 0.78rem; padding: 0.8rem 1rem; }
+    .card:hover { transform: translateY(-2px) scale(1.015); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .orb, .orb-ring, .cursor { animation: none; }
+    .card:hover { transform: none; }
 }

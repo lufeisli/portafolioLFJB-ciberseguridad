@@ -8,6 +8,13 @@
     <link rel="stylesheet" href="../../style.css">
     <!-- Librería de Iconos: FontAwesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Tipografías -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+    
+    <!-- AOS: animaciones al hacer scroll -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" rel="stylesheet">
 </head>
 <body>
     <header class="top-nav">
@@ -22,28 +29,35 @@
                 <li><a href="../index.html" style="color: var(--text-main);">Parcial 1</a></li>
                 <li><a href="../../parcial2/index.html">Parcial 2</a></li>
                 <li><a href="../../parcial3/index.html">Parcial 3</a></li>
+                <li><a href="../../road-to-hall-of-fame/index.html">Road to Hall of Fame</a></li>
             </ul>
         </nav>
     </header>
 
     <main class="activity-main">
         <!-- CABECERA DE LA ACTIVIDAD -->
-        <div class="activity-header">
-            <a href="../index.html" class="back-link"><i class="fa-solid fa-arrow-left"></i> Volver a Parcial 1</a>
-            <p class="overline"><span class="line"></span> PARCIAL 1 · ACTIVIDAD 3</p>
-            <h1 class="activity-title">No presiones Esc... todavía</h1>
+        <div class="activity-header hero-decorated" style="text-align: center;">
+            <!-- Efectos Visuales -->
+            <div class="orb orb-green"></div>
+            <div class="orb orb-blue"></div>
+            <div class="orb orb-purple"></div>
+            <div class="orb-ring"></div>
+
+            <a href="../index.html" class="back-link" style="position: absolute; top: 1rem; left: 1.5rem;"><i class="fa-solid fa-arrow-left"></i> Volver a Parcial 1</a>
+            <p class="overline" style="justify-content: center;"><span class="line"></span> PARCIAL 1 · ACTIVIDAD 3 <span class="line"></span></p>
+            <h1 class="activity-title" style="color: var(--accent-blue);">No presiones Esc... todavía</h1>
         </div>
 
         <!-- INTRODUCCIÓN FULL WIDTH -->
-        <section class="card intro-card">
-            <p>Implementación de un programa basado en <strong style="color: var(--accent-color);">event hooks y callbacks</strong> que registra eventos de teclado y los asocia a una marca temporal dentro de un entorno de laboratorio controlado.</p>
+        <section class="card intro-card" data-aos="fade-up" style="border-left-color: var(--accent-blue);">
+            <p>Implementación de un programa basado en <strong style="color: var(--accent-blue);">event hooks y callbacks</strong> que registra eventos de teclado y los asocia a una marca temporal dentro de un entorno de laboratorio controlado.</p>
             <br>
             <p>El objetivo es comprender el funcionamiento técnico de una técnica de captura de entrada y reconocer sus implicaciones en ciberseguridad, documentando cada paso del proceso.</p>
         </section>
 
         <!-- GRID 2 COLUMNAS (Objetivos y Requisitos) -->
         <div class="grid-2-cols" style="margin-top: 2rem;">
-            <section class="card">
+            <section class="card" data-aos="fade-up" data-aos-delay="100">
                 <h2 class="card-title-icon"><i class="fa-solid fa-bullseye"></i> Objetivos específicos</h2>
                 <ul class="custom-list">
                     <li>Modificar el código base para incorporar persistencia del registro.</li>
@@ -52,7 +66,7 @@
                 </ul>
             </section>
 
-            <section class="card">
+            <section class="card" data-aos="fade-up" data-aos-delay="200">
                 <h2 class="card-title-icon"><i class="fa-solid fa-server"></i> Requisitos técnicos</h2>
                 <ul class="custom-list">
                     <li>Python 3.x con librería <code>pynput</code></li>
@@ -67,127 +81,127 @@
             
             <!-- COLUMNA IZQUIERDA -->
             <div class="main-content">
-                <h2 class="section-heading"><i class="fa-solid fa-layer-group"></i> Conceptos principales</h2>
-                <div class="grid-2-cols">
+                <h2 class="section-heading" data-aos="fade-up"><i class="fa-solid fa-layer-group"></i> Conceptos principales</h2>
+                
+                <div class="grid-2-cols" data-aos="fade-up">
                     <div class="mini-card">
-                        <h3><i class="fa-solid fa-keyboard"></i> Eventos del teclado</h3>
+                        <h3 style="color: var(--accent-blue);"><i class="fa-solid fa-keyboard"></i> Eventos del teclado</h3>
                         <p>Son acciones detectadas cuando una tecla es presionada o liberada. Mediante <code>Listener</code>, el programa ejecuta funciones asociadas.</p>
                     </div>
                     <div class="mini-card">
-                        <h3><i class="fa-solid fa-database"></i> Persistencia de datos</h3>
+                        <h3 style="color: var(--accent-blue);"><i class="fa-solid fa-database"></i> Persistencia de datos</h3>
                         <p>Almacenamiento de los eventos en un archivo local (<code>registro_eventos.txt</code>) para conservar la información tras finalizar el programa.</p>
                     </div>
                 </div>
-                <div class="grid-2-cols" style="margin-top: 1rem;">
+                
+                <div class="grid-2-cols" data-aos="fade-up" style="margin-top: 1rem;">
                     <div class="mini-card">
-                        <h3><i class="fa-solid fa-clock"></i> Asociación temporal</h3>
+                        <h3 style="color: var(--accent-blue);"><i class="fa-solid fa-clock"></i> Asociación temporal</h3>
                         <p>Cada evento se registra con fecha y hora exacta, permitiendo reconstruir la secuencia de acciones y analizar patrones de uso.</p>
                     </div>
                     <div class="mini-card">
-                        <h3><i class="fa-solid fa-shield-halved"></i> Implicaciones de seguridad</h3>
+                        <h3 style="color: var(--accent-blue);"><i class="fa-solid fa-shield-halved"></i> Implicaciones de seguridad</h3>
                         <p>La captura de eventos del teclado puede ser utilizada maliciosamente (keylogging). Este ejercicio resalta la importancia de proteger sistemas y datos sensibles.</p>
                     </div>
                 </div>
-                <h2 class="section-heading" style="margin-top: 3rem;"><i class="fa-solid fa-file-code"></i> Implementación del Código</h2>
-                <p style="margin-bottom: 1rem;">El siguiente script de Python intercepta las pulsaciones y las guarda con su respectiva estampa de tiempo:</p>
 
-                <div class="code-block">
+                <h2 class="section-heading" data-aos="fade-up" style="margin-top: 3rem;"><i class="fa-solid fa-file-code"></i> Implementación del Código</h2>
+                <p data-aos="fade-up" style="margin-bottom: 1rem;">El siguiente script de Python intercepta las pulsaciones y las guarda con su respectiva estampa de tiempo:</p>
+
+                <div class="code-block" data-aos="fade-up">
                 <pre><code><span class="code-keyword">from</span> pynput.keyboard <span class="code-keyword">import</span> Key, Listener
-                <span class="code-keyword">from</span> datetime <span class="code-keyword">import</span> datetime
+<span class="code-keyword">from</span> datetime <span class="code-keyword">import</span> datetime
 
-                <span class="code-comment"># Archivo local para la persistencia del registro</span>
-                archivo_log = <span class="code-string">"registro_eventos.txt"</span>
-                contador_evento = 1
+<span class="code-comment"># Archivo local para la persistencia del registro</span>
+archivo_log = <span class="code-string">"registro_eventos.txt"</span>
+contador_evento = 1
 
-                <span class="code-keyword">def</span> <span class="code-function">registrar_evento</span>(accion, tecla):
-                    <span class="code-keyword">global</span> contador_evento
-                    
-                    <span class="code-comment"># Obtener marca temporal precisa en milisegundos</span>
-                    tiempo_actual = datetime.now().strftime(<span class="code-string">'%Y-%m-%d %H:%M:%S.%f'</span>)[:-3]
-                    entrada = <span class="code-string">f"{tiempo_actual} | {accion} | evento_{contador_evento:03d} | {tecla}\n"</span>
-                    
-                    <span class="code-comment"># Persistencia: Guardar en archivo (Modo append)</span>
-                    <span class="code-keyword">with</span> open(archivo_log, <span class="code-string">"a"</span>, encoding=<span class="code-string">"utf-8"</span>) <span class="code-keyword">as</span> f:
-                        f.write(entrada)
-                        
-                    contador_evento += 1
-                    print(entrada.strip())
+<span class="code-keyword">def</span> <span class="code-function">registrar_evento</span>(accion, tecla):
+    <span class="code-keyword">global</span> contador_evento
+    
+    <span class="code-comment"># Obtener marca temporal precisa en milisegundos</span>
+    tiempo_actual = datetime.now().strftime(<span class="code-string">'%Y-%m-%d %H:%M:%S.%f'</span>)[:-3]
+    entrada = <span class="code-string">f"{tiempo_actual} | {accion} | evento_{contador_evento:03d} | {tecla}\n"</span>
+    
+    <span class="code-comment"># Persistencia: Guardar en archivo (Modo append)</span>
+    <span class="code-keyword">with</span> open(archivo_log, <span class="code-string">"a"</span>, encoding=<span class="code-string">"utf-8"</span>) <span class="code-keyword">as</span> f:
+        f.write(entrada)
+        
+    contador_evento += 1
+    print(entrada.strip())
 
-                <span class="code-keyword">def</span> <span class="code-function">on_press</span>(key):
-                    <span class="code-keyword">try</span>:
-                        <span class="code-comment"># Captura de teclas alfanuméricas</span>
-                        registrar_evento(<span class="code-string">"PRESS"</span>, key.char)
-                    <span class="code-keyword">except</span> AttributeError:
-                        <span class="code-comment"># Captura de teclas especiales</span>
-                        registrar_evento(<span class="code-string">"PRESS"</span>, str(key))
+<span class="code-keyword">def</span> <span class="code-function">on_press</span>(key):
+    <span class="code-keyword">try</span>:
+        <span class="code-comment"># Captura de teclas alfanuméricas</span>
+        registrar_evento(<span class="code-string">"PRESS"</span>, key.char)
+    <span class="code-keyword">except</span> AttributeError:
+        <span class="code-comment"># Captura de teclas especiales</span>
+        registrar_evento(<span class="code-string">"PRESS"</span>, str(key))
 
-                <span class="code-keyword">def</span> <span class="code-function">on_release</span>(key):
-                    registrar_evento(<span class="code-string">"RELEASE"</span>, str(key))
-                    
-                    <span class="code-comment"># Detener el listener al presionar Esc</span>
-                    <span class="code-keyword">if</span> key == Key.esc:
-                        <span class="code-keyword">return</span> False
+<span class="code-keyword">def</span> <span class="code-function">on_release</span>(key):
+    registrar_evento(<span class="code-string">"RELEASE"</span>, str(key))
+    
+    <span class="code-comment"># Detener el listener al presionar Esc</span>
+    <span class="code-keyword">if</span> key == Key.esc:
+        <span class="code-keyword">return</span> False
 
-                <span class="code-comment"># Iniciar el Listener</span>
-                <span class="code-keyword">with</span> Listener(on_press=on_press, on_release=on_release) <span class="code-keyword">as</span> listener:
-                    listener.join()
-                </code></pre>
+<span class="code-comment"># Iniciar el Listener</span>
+<span class="code-keyword">with</span> Listener(on_press=on_press, on_release=on_release) <span class="code-keyword">as</span> listener:
+    listener.join()</code></pre>
                 </div>
 
-                <h2 class="section-heading" style="margin-top: 3rem;"><i class="fa-solid fa-terminal"></i> Ejecución y Evidencias</h2>
-                <p>El programa se ejecutó desde la terminal <code>PowerShell</code> utilizando el intérprete de Python 3. Al detener el <em>listener</em> con la tecla Esc, se comprobó la correcta generación del archivo de texto.</p>
+                <h2 class="section-heading" data-aos="fade-up" style="margin-top: 3rem;"><i class="fa-solid fa-terminal"></i> Ejecución y Evidencias</h2>
+                <p data-aos="fade-up">El programa se ejecutó desde la terminal <code>PowerShell</code> utilizando el intérprete de Python 3. Al detener el <em>listener</em> con la tecla Esc, se comprobó la correcta generación del archivo de texto.</p>
 
                 <!-- Galería de Evidencias -->
-                <div class="evidence-grid">
+                <div class="evidence-grid" data-aos="fade-up">
                     <div>
-                        <!-- Reemplaza src con la ruta de tu foto de la terminal -->
                         <img src="img/evidencia_terminal.png" alt="Ejecución en PowerShell" class="evidence-img">
                         <p style="text-align: center; font-size: 0.85rem; color: var(--text-muted); margin-top: 5px;">Fig 1: Ejecución del script</p>
                     </div>
                     <div>
-                        <!-- Reemplaza src con la ruta de tu foto del bloc de notas -->
                         <img src="img/evidencia_txt.png" alt="Archivo de texto generado" class="evidence-img">
                         <p style="text-align: center; font-size: 0.85rem; color: var(--text-muted); margin-top: 5px;">Fig 2: Persistencia y asociación temporal</p>
                     </div>
                 </div>
                 
-                <h2 class="section-heading" style="margin-top: 3rem;"><i class="fa-solid fa-lightbulb"></i> Aprendizajes obtenidos</h2>
-                <ul class="diamond-list">
+                <h2 class="section-heading" data-aos="fade-up" style="margin-top: 3rem;"><i class="fa-solid fa-lightbulb"></i> Aprendizajes obtenidos</h2>
+                <ul class="diamond-list" data-aos="fade-up">
                     <li>Aprendí a detectar eventos del teclado en Python utilizando las clases Key y Listener.</li>
                     <li>Comprendí cómo almacenar información de manera persistente, agregando fecha, hora e identificadores únicos para mantener trazabilidad.</li>
                 </ul>
 
-                <h2 class="section-heading" style="margin-top: 3rem;"><i class="fa-solid fa-flag-checkered"></i> Conclusión</h2>
-                <div class="conclusion-box">
+                <h2 class="section-heading" data-aos="fade-up" style="margin-top: 3rem;"><i class="fa-solid fa-flag-checkered"></i> Conclusión</h2>
+                <div class="conclusion-box" data-aos="fade-up" style="border-left-color: var(--accent-blue); background-color: rgba(88, 166, 255, 0.05);">
                     <p>Esta actividad me permitió comprender el manejo de eventos a bajo nivel en Python. Desde una perspectiva de ciberseguridad, evidenciar cómo se interceptan los callbacks del sistema operativo subraya la importancia de mantener entornos seguros. Las técnicas de asociación temporal implementadas son vitales para organizar registros y facilitar análisis forenses posteriores.</p>
                 </div>
             </div>
 
             <!-- COLUMNA DERECHA (SIDEBAR) -->
             <aside class="sidebar">
-                <div class="card data-card">
-                    <h3 style="text-align: center; margin-bottom: 1.5rem; color: var(--text-main);">Datos de la actividad</h3>
+                <div class="card data-card" data-aos="fade-up" data-aos-delay="100" style="border-color: var(--accent-blue);">
+                    <h3 style="text-align: center; margin-bottom: 1.5rem; color: var(--accent-blue);">Datos técnicos</h3>
                     
                     <div class="data-pill">
-                        <span class="data-label">Fecha de entrega</span>
+                        <span class="data-label" style="color: var(--accent-blue);">Fecha de entrega</span>
                         <span class="data-value">24/08/2026 – 23:58 horas</span>
                     </div>
                     
                     <div class="data-pill">
-                        <span class="data-label">Tecnologías</span>
+                        <span class="data-label" style="color: var(--accent-blue);">Tecnologías</span>
                         <span class="data-value">Python · pynput · datetime</span>
                     </div>
 
                     <div class="data-pill">
-                        <span class="data-label">Entregable</span>
+                        <span class="data-label" style="color: var(--accent-blue);">Entregable</span>
                         <span class="data-value">Informe en PDF y HTML</span>
                     </div>
                 </div>
 
-                <div class="card pdf-card">
-                    <div class="pdf-icon"><i class="fa-regular fa-file-pdf"></i></div>
+                <div class="card pdf-card" data-aos="fade-up" data-aos-delay="200" style="background: linear-gradient(145deg, var(--bg-card) 0%, rgba(88, 166, 255, 0.1) 100%);">
+                    <div class="pdf-icon" style="color: var(--accent-blue);"><i class="fa-regular fa-file-pdf"></i></div>
                     <h3>PDF de la actividad</h3>
-                    <a href="Reporte_Actividad03_Lufeisli.pdf" download class="btn-download">
+                    <a href="Reporte_Actividad03_Lufeisli.pdf" download class="btn-download" style="border-color: var(--accent-blue);">
                         <i class="fa-solid fa-download"></i> Descargar PDF
                     </a>
                 </div>
@@ -195,5 +209,14 @@
         </div>
     </main>
 
+    <footer style="margin-top: 2rem; border-top: none;">
+        <p>&copy; 2026 Luis Felipe Jaramillo Barajas. Todos los derechos reservados.</p>
+    </footer>
+
+    <!-- SCRIPTS PARA ANIMACIONES -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+    <script>
+        AOS.init({ duration: 700, once: true });
+    </script>
 </body>
 </html>

@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Parcial 2 | Seguridad Informática</title>
+    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Tipografías -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+    
+    <!-- AOS: animaciones al hacer scroll -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" rel="stylesheet">
+</head>
+<body>
+
+    <!-- ENCABEZADO CON LOGO -->
+    <header class="top-nav">
+        <div class="nav-brand">
+            <img src="../assets/img/logo-upslp.png" alt="Logo UPSLP" class="logo">
+            <span class="brand-title">Parcial 2 - Evidencias</span>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="../index.html">Inicio</a></li>
+                <li><a href="../parcial1/index.html">Parcial 1</a></li>
+                <li><a href="index.html"style="color: var(--accent-blue);">Parcial 2</a></li>
+                <li><a href="../parcial3/index.html">Parcial 3</a></li>
+                <li><a href="../road-to-hall-of-fame/index.html">Road to Hall of Fame</a></li>
+                <li><a href="../index.html#contacto">Contacto</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="activity-main">
+        <!-- CABECERA HERO DECORADA -->
+        <div class="activity-header hero-decorated" style="text-align: center;">
+            <!-- Efectos Visuales -->
+            <div class="orb orb-green"></div>
+            <div class="orb orb-blue"></div>
+            <div class="orb orb-purple"></div>
+            <div class="orb-ring"></div>
+
+            <p class="overline" style="justify-content: center;"><span class="line"></span> SISTEMAS DE GESTIÓN DE LA SEGURIDAD<span class="line"></span></p>
+            <h1 class="activity-title" style="color: var(--accent-blue);">Segundo Parcial</h1>
+            <p style="margin-top: 1rem; color: var(--text-muted);">Prácticas, análisis y evidencias del segundo periodo de evaluación.</p>
+        </div>
+
+
+<!-- GRID DE TARJETAS (Actividades animadas en cascada) -->
+        <div class="grid-3-cols" style="margin-top: 2rem;">
+
+            <!-- Tarjeta Actividad 06: Road to Hall of Fame -->
+            <section class="card" data-aos="fade-up" data-aos-delay="0" style="display: flex; flex-direction: column;">
+                <h2 class="card-title-icon"><i class="fa-solid fa-map-location-dot"></i> Actividad 06</h2>
+                <p style="margin-top: 1rem; flex-grow: 1; color: var(--text-main);">
+                    <strong>Descripción:</strong> Diseño e integración del módulo web ROAD TO HALL OF FAME para estructurar y presentar visualmente los laboratorios de seguridad ofensiva.
+                </p>
+                <div style="margin-top: 2rem;">
+                    <!-- Redirige a la sección global de Road to Hall of Fame -->
+                    <a href="../road-to-hall-of-fame/index.html" class="btn-submit" style="text-decoration: none; width: 100%; text-align: center;">
+                        <i class="fa-solid fa-route"></i> Ir al mapa
+                    </a>
+                </div>
+            </section>
+
+            <!-- Tarjeta Actividad 07: File Path Traversal Simple Case -->
+            <section class="card" data-aos="fade-up" data-aos-delay="100" style="display: flex; flex-direction: column;">
+                <h2 class="card-title-icon"><i class="fa-solid fa-folder-tree"></i> Actividad 07</h2>
+                <p style="margin-top: 1rem; flex-grow: 1; color: var(--text-main);">
+                    <strong>Descripción:</strong> Resolución y documentación del laboratorio "File Path Traversal: Simple case", analizando vulnerabilidades de navegación de directorios.
+                </p>
+                <div style="margin-top: 2rem;">
+                    <!-- Redirige a la carpeta específica de la Actividad 07 dentro de parcial1 -->
+                    <a href="actividad07/index.html" class="btn-submit" style="text-decoration: none; width: 100%; text-align: center;">
+                        <i class="fa-solid fa-eye"></i> Ver Evidencia
+                    </a>
+                </div>
+            </section>
+
+        </div>
+    </main>
+
+    <footer style="margin-top: 2rem; border-top: none;">
+        <p>&copy; 2026 Luis Felipe Jaramillo Barajas. Todos los derechos reservados.</p>
+    </footer>
+
+    <!-- SCRIPTS PARA ANIMACIONES -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+    <script>
+        AOS.init({ duration: 700, once: true });
+    </script>
+</body>
+</html>

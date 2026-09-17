@@ -6,6 +6,13 @@
     <title>Actividad 01 | Portafolio LFJB</title>
     <link rel="stylesheet" href="../../style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Tipografías -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+    
+    <!-- AOS: animaciones al hacer scroll -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" rel="stylesheet">
 </head>
 <body>
     <header class="top-nav">
@@ -19,18 +26,27 @@
                 <li><a href="../index.html" style="color: var(--text-main);">Parcial 1</a></li>
                 <li><a href="../../parcial2/index.html">Parcial 2</a></li>
                 <li><a href="../../parcial3/index.html">Parcial 3</a></li>
+                <li><a href="../../road-to-hall-of-fame/index.html">Road to Hall of Fame</a></li>
             </ul>
         </nav>
     </header>
 
     <main class="activity-main">
-        <div class="activity-header">
-            <a href="../index.html" class="back-link"><i class="fa-solid fa-arrow-left"></i> Volver a Parcial 1</a>
-            <p class="overline"><span class="line"></span> ACTIVIDAD 01 · ANÁLISIS DE CIBERATAQUE <span class="line"></span></p>
-            <h1 class="activity-title" style="color: var(--accent-blue);">Análisis del Incidente de Ciberseguridad de Equifax (2017)</h1>
+        
+        <!-- CABECERA DECORADA CON ORBES -->
+        <div class="activity-header hero-decorated" style="text-align: center;">
+            <!-- Efectos Visuales -->
+            <div class="orb orb-green"></div>
+            <div class="orb orb-blue"></div>
+            <div class="orb orb-purple"></div>
+            <div class="orb-ring"></div>
+
+            <a href="../index.html" class="back-link" style="position: absolute; top: 1rem; left: 1.5rem;"><i class="fa-solid fa-arrow-left"></i> Volver a Parcial 1</a>
+            <p class="overline" style="justify-content: center;"><span class="line"></span> ACTIVIDAD 01 · ANÁLISIS DE CIBERATAQUE <span class="line"></span></p>
+            <h1 class="activity-title" style="color: var(--accent-blue);">Análisis del Incidente de Equifax (2017)</h1>
         </div>
 
-        <section class="card intro-card" style="border-left-color: var(--accent-blue);">
+        <section class="card intro-card" data-aos="fade-up" style="border-left-color: var(--accent-blue);">
             <p>Análisis técnico, económico y estratégico de un ciberataque real, con el fin de comprender la importancia de la ciberseguridad y su relación directa con la sostenibilidad económica y operativa de las organizaciones.</p>
             <br>
             <p>Caso asignado: la filtración masiva de datos personales sufrida por <strong style="color: var(--accent-blue);">Equifax Inc.</strong> en 2017, una de las brechas más significativas en la historia del sector financiero.</p>
@@ -42,23 +58,27 @@
             <div class="main-content">
 
                 <!-- CONTEXTO -->
-                <h2 class="section-heading"><i class="fa-solid fa-building-shield"></i> Contexto del Ecosistema Financiero</h2>
-                <p>En septiembre de 2017, Equifax reveló públicamente una brecha que comprometió información personal identificable (PII) de aproximadamente 147.9 millones de ciudadanos estadounidenses, 15.2 millones de residentes británicos y cerca de 19,000 ciudadanos canadienses, incluyendo números de Seguro Social, fechas de nacimiento, direcciones y datos de tarjetas de crédito.</p>
-                <p style="margin-top: 1rem;">Como una de las tres principales agencias de crédito en Estados Unidos, Equifax custodiaba registros de más de 820 millones de consumidores. Investigaciones posteriores revelaron deficiencias estructurales graves: ausencia de inventario de activos, retrasos en la aplicación de parches, un modelo de "honor" sin verificación centralizada y una arquitectura de red plana que facilitó el movimiento lateral.</p>
+                <h2 class="section-heading" data-aos="fade-up"><i class="fa-solid fa-building-shield"></i> Contexto del Ecosistema Financiero</h2>
+                <div data-aos="fade-up">
+                    <p>En septiembre de 2017, Equifax reveló públicamente una brecha que comprometió información personal identificable (PII) de aproximadamente 147.9 millones de ciudadanos estadounidenses, 15.2 millones de residentes británicos y cerca de 19,000 ciudadanos canadienses, incluyendo números de Seguro Social, fechas de nacimiento, direcciones y datos de tarjetas de crédito.</p>
+                    <p style="margin-top: 1rem;">Como una de las tres principales agencias de crédito en Estados Unidos, Equifax custodiaba registros de más de 820 millones de consumidores. Investigaciones posteriores revelaron deficiencias estructurales graves: ausencia de inventario de activos, retrasos en la aplicación de parches, un modelo de "honor" sin verificación centralizada y una arquitectura de red plana que facilitó el movimiento lateral.</p>
+                </div>
 
                 <!-- VECTOR DE ATAQUE -->
-                <h2 class="section-heading" style="margin-top: 3rem;"><i class="fa-solid fa-bug"></i> Vector de Entrada y Explotación</h2>
-                <p>El vector de entrada fue la vulnerabilidad <code>CVE-2017-5638</code> (CVSS 10.0), una falla crítica de ejecución remota de código (RCE) en Apache Struts 2, específicamente en el componente Jakarta Multipart Parser. Permitía ejecutar comandos arbitrarios mediante la manipulación del encabezado HTTP <em>Content-Type</em>.</p>
-                <p style="margin-top: 1rem;">El sistema comprometido fue el <strong>Automated Consumer Interview System (ACIS)</strong>, un portal público expuesto directamente a Internet sin segmentación adecuada, lo que permitió a los atacantes pivotar hacia la red interna.</p>
+                <h2 class="section-heading" data-aos="fade-up" style="margin-top: 3rem;"><i class="fa-solid fa-bug"></i> Vector de Entrada y Explotación</h2>
+                <div data-aos="fade-up">
+                    <p>El vector de entrada fue la vulnerabilidad <code>CVE-2017-5638</code> (CVSS 10.0), una falla crítica de ejecución remota de código (RCE) en Apache Struts 2, específicamente en el componente Jakarta Multipart Parser. Permitía ejecutar comandos arbitrarios mediante la manipulación del encabezado HTTP <em>Content-Type</em>.</p>
+                    <p style="margin-top: 1rem;">El sistema comprometido fue el <strong>Automated Consumer Interview System (ACIS)</strong>, un portal público expuesto directamente a Internet sin segmentación adecuada, lo que permitió a los atacantes pivotar hacia la red interna.</p>
+                </div>
 
-                <div class="conclusion-box" style="margin: 1.5rem 0; border-left-color: var(--accent-blue); background-color: rgba(88, 166, 255, 0.05);">
+                <div class="conclusion-box" data-aos="fade-up" style="margin: 1.5rem 0; border-left-color: var(--accent-blue); background-color: rgba(88, 166, 255, 0.05);">
                     <p><i class="fa-solid fa-triangle-exclamation" style="color: var(--accent-blue);"></i> <strong>Falla en la distribución de parches</strong><br>
                     Apache publicó el parche el 7 de marzo de 2017 y Equifax emitió un aviso interno el 9 de marzo solicitando su aplicación en 48 horas. Sin verificación centralizada del cumplimiento, el portal ACIS nunca fue parchado, dejando la vulnerabilidad expuesta durante más de dos meses hasta la intrusión el 13 de mayo de 2017.</p>
                 </div>
 
                 <!-- CRONOLOGÍA -->
-                <h2 class="section-heading" style="margin-top: 3rem;"><i class="fa-solid fa-timeline"></i> Cronología del Ataque</h2>
-                <ul class="custom-list">
+                <h2 class="section-heading" data-aos="fade-up" style="margin-top: 3rem;"><i class="fa-solid fa-timeline"></i> Cronología del Ataque</h2>
+                <ul class="custom-list" data-aos="fade-up">
                     <li><strong>7 mar 2017:</strong> Divulgación pública de la vulnerabilidad y publicación del parche.</li>
                     <li><strong>13 may 2017:</strong> Incursión exitosa al portal ACIS.</li>
                     <li><strong>May–jul 2017:</strong> 76 días de exfiltración oculta con movimiento lateral a 51 bases de datos.</li>
@@ -68,8 +88,8 @@
                 </ul>
 
                 <!-- MODELO CIA -->
-                <h2 class="section-heading" style="margin-top: 3rem;"><i class="fa-solid fa-shield-halved"></i> Impacto según el Modelo CIA</h2>
-                <div class="evidence-grid">
+                <h2 class="section-heading" data-aos="fade-up" style="margin-top: 3rem;"><i class="fa-solid fa-shield-halved"></i> Impacto según el Modelo CIA</h2>
+                <div class="evidence-grid" data-aos="fade-up">
                     <div class="conclusion-box" style="border-left-color: var(--accent-blue); background-color: rgba(88, 166, 255, 0.05);">
                         <p><strong>Confidencialidad</strong><br>Exfiltración masiva de PII (SSN, fechas de nacimiento, direcciones, ~209,000 tarjetas de crédito) extraída de 51 bases de datos durante 76 días sin detección.</p>
                     </div>
@@ -77,14 +97,14 @@
                         <p><strong>Integridad</strong><br>Implantación de web shells y scripts de persistencia; abuso de credenciales en texto plano para escalar privilegios.</p>
                     </div>
                 </div>
-                <div class="conclusion-box" style="margin-top: 1rem; border-left-color: var(--accent-blue); background-color: rgba(88, 166, 255, 0.05);">
+                <div class="conclusion-box" data-aos="fade-up" style="margin-top: 1rem; border-left-color: var(--accent-blue); background-color: rgba(88, 166, 255, 0.05);">
                     <p><strong>Disponibilidad</strong><br>El portal ACIS fue desconectado como medida de contención, interrumpiendo el servicio de disputas; los canales de atención colapsaron tras la divulgación pública por la demanda de consumidores afectados.</p>
                 </div>
 
                 <!-- COSTO -->
-                <h2 class="section-heading" style="margin-top: 3rem;"><i class="fa-solid fa-money-bill-trend-up"></i> Cálculo del Costo Total del Incidente</h2>
-                <p>Estimación consolidada de costos directos e indirectos (tipo de cambio referencial: 1 USD = 17.5 MXN).</p>
-                <div style="overflow-x: auto; margin-top: 1rem;">
+                <h2 class="section-heading" data-aos="fade-up" style="margin-top: 3rem;"><i class="fa-solid fa-money-bill-trend-up"></i> Cálculo del Costo Total del Incidente</h2>
+                <p data-aos="fade-up">Estimación consolidada de costos directos e indirectos (tipo de cambio referencial: 1 USD = 17.5 MXN).</p>
+                <div style="overflow-x: auto; margin-top: 1rem;" data-aos="fade-up">
                 <table style="width: 100%; border-collapse: collapse; font-size: 0.9rem;">
                     <thead>
                         <tr style="background-color: var(--accent-blue); color: #0d1117;">
@@ -115,21 +135,23 @@
                 </div>
 
                 <!-- CONCLUSIONES -->
-                <h2 class="section-heading" style="margin-top: 3rem;"><i class="fa-solid fa-book"></i> Conclusiones y Lecciones Aprendidas</h2>
-                <p>La brecha de Equifax no fue un evento inevitable, sino el resultado acumulado de negligencia sistémica, fragmentación organizacional y ausencia de cultura de seguridad. Las principales recomendaciones son:</p>
-                <ul class="diamond-list" style="margin-top: 1rem;">
-                    <li>La ciberseguridad debe ser responsabilidad de nivel directivo, con el CISO reportando al consejo de administración.</li>
-                    <li>Adoptar arquitectura Zero Trust: microsegmentación, autenticación continua y mínimo privilegio.</li>
-                    <li>Mantener un inventario exhaustivo y actualizado de activos para priorizar el parcheo.</li>
-                    <li>Gestión automatizada de certificados y monitoreo continuo para evitar puntos ciegos de detección.</li>
-                    <li>Cumplir plazos estrictos de notificación pública ante incidentes.</li>
-                    <li>Controlar de forma automática y preventiva las operaciones bursátiles de ejecutivos con información privilegiada.</li>
-                </ul>
+                <h2 class="section-heading" data-aos="fade-up" style="margin-top: 3rem;"><i class="fa-solid fa-book"></i> Conclusiones y Lecciones Aprendidas</h2>
+                <div data-aos="fade-up">
+                    <p>La brecha de Equifax no fue un evento inevitable, sino el resultado acumulado de negligencia sistémica, fragmentación organizacional y ausencia de cultura de seguridad. Las principales recomendaciones son:</p>
+                    <ul class="diamond-list" style="margin-top: 1rem;">
+                        <li>La ciberseguridad debe ser responsabilidad de nivel directivo, con el CISO reportando al consejo de administración.</li>
+                        <li>Adoptar arquitectura Zero Trust: microsegmentación, autenticación continua y mínimo privilegio.</li>
+                        <li>Mantener un inventario exhaustivo y actualizado de activos para priorizar el parcheo.</li>
+                        <li>Gestión automatizada de certificados y monitoreo continuo para evitar puntos ciegos de detección.</li>
+                        <li>Cumplir plazos estrictos de notificación pública ante incidentes.</li>
+                        <li>Controlar de forma automática y preventiva las operaciones bursátiles de ejecutivos con información privilegiada.</li>
+                    </ul>
+                </div>
             </div>
 
             <!-- SIDEBAR -->
             <aside class="sidebar">
-                <div class="card data-card" style="border-color: var(--accent-blue);">
+                <div class="card data-card" data-aos="fade-up" data-aos-delay="100" style="border-color: var(--accent-blue);">
                     <h3 style="text-align: center; margin-bottom: 1.5rem; color: var(--accent-blue);">Resumen Técnico</h3>
 
                     <div class="data-pill">
@@ -158,7 +180,7 @@
                     </div>
                 </div>
 
-                <div class="card pdf-card" style="background: linear-gradient(145deg, var(--bg-card) 0%, rgba(88, 166, 255, 0.1) 100%);">
+                <div class="card pdf-card" data-aos="fade-up" data-aos-delay="200" style="background: linear-gradient(145deg, var(--bg-card) 0%, rgba(88, 166, 255, 0.1) 100%);">
                     <div class="pdf-icon" style="color: var(--accent-blue);"><i class="fa-regular fa-file-pdf"></i></div>
                     <h3>Informe Completo</h3>
                     <!-- Coloca el PDF con este nombre en esta misma carpeta -->
@@ -173,5 +195,11 @@
     <footer style="margin-top: 2rem; border-top: none;">
         <p>&copy; 2026 Luis Felipe Jaramillo Barajas. Todos los derechos reservados.</p>
     </footer>
+
+    <!-- SCRIPTS PARA ANIMACIONES -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+    <script>
+        AOS.init({ duration: 700, once: true });
+    </script>
 </body>
 </html>

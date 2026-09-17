@@ -6,6 +6,13 @@
     <title>Actividad 05 | Portafolio LFJB</title>
     <link rel="stylesheet" href="../../style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Tipografías -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+    
+    <!-- AOS: animaciones al hacer scroll -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" rel="stylesheet">
 </head>
 <body>
     <header class="top-nav">
@@ -19,18 +26,26 @@
                 <li><a href="../index.html" style="color: var(--text-main);">Parcial 1</a></li>
                 <li><a href="../../parcial2/index.html">Parcial 2</a></li>
                 <li><a href="../../parcial3/index.html">Parcial 3</a></li>
+                <li><a href="../../road-to-hall-of-fame/index.html">Road to Hall of Fame</a></li>
             </ul>
         </nav>
     </header>
 
     <main class="activity-main">
-        <div class="activity-header">
-            <a href="../index.html" class="back-link"><i class="fa-solid fa-arrow-left"></i> Volver a Parcial 1</a>
-            <p class="overline"><span class="line"></span> ACTIVIDAD 05 · INGENIERÍA SOCIAL <span class="line"></span></p>
+        
+        <!-- CABECERA DECORADA CON ORBES -->
+        <div class="activity-header hero-decorated" style="text-align: center;">
+            <div class="orb orb-green"></div>
+            <div class="orb orb-blue"></div>
+            <div class="orb orb-purple"></div>
+            <div class="orb-ring"></div>
+
+            <a href="../index.html" class="back-link" style="position: absolute; top: 1rem; left: 1.5rem;"><i class="fa-solid fa-arrow-left"></i> Volver a Parcial 1</a>
+            <p class="overline" style="justify-content: center;"><span class="line"></span> ACTIVIDAD 05 · INGENIERÍA SOCIAL <span class="line"></span></p>
             <h1 class="activity-title" style="color: var(--accent-blue);">Ingeniería Social: el arte del engaño</h1>
         </div>
 
-        <section class="card intro-card" style="border-left-color: var(--accent-blue);">
+        <section class="card intro-card" data-aos="fade-up" style="border-left-color: var(--accent-blue);">
             <p>Análisis de un caso real de fraude ejecutado mediante <strong style="color: var(--accent-blue);">ingeniería social</strong>, combinando vishing, suplantación telefónica y de identidad corporativa para sustraer fondos de una víctima mediante engaño y presión psicológica.</p>
         </section>
 
@@ -38,22 +53,24 @@
 
             <div class="main-content">
 
-                <h2 class="section-heading"><i class="fa-solid fa-video"></i> Video Explicativo</h2>
-                <div class="card" style="padding: 0; overflow: hidden; aspect-ratio: 16/9;">
-                <iframe width="560" height="315" src="https://www.youtube.com/embed/AzGj5q5Fm80?si=9G7DRbPIv1KY4n-8" 
-                    title="YouTube video player" frameborder="0" 
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
-                    referrerpolicy="strict-origin-when-cross-origin" allowfullscreen>
-                </iframe>
+                <h2 class="section-heading" data-aos="fade-up"><i class="fa-solid fa-video"></i> Video Explicativo</h2>
+                <div class="card" data-aos="fade-up" style="padding: 0; overflow: hidden; aspect-ratio: 16/9; margin-bottom: 3rem;">
+                    <iframe width="100%" height="100%" src="https://www.youtube.com/embed/AzGj5q5Fm80?si=9G7DRbPIv1KY4n-8" 
+                        title="YouTube video player" frameborder="0" 
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                        referrerpolicy="strict-origin-when-cross-origin" allowfullscreen style="border: none;">
+                    </iframe>
                 </div>
 
-                <h2 class="section-heading" style="margin-top: 3rem;"><i class="fa-solid fa-user-secret"></i> Resumen del Caso</h2>
-                <p>El atacante, <strong>Lam Malone</strong>, utilizó datos filtrados del exchange <strong>Genesis</strong> como punto de partida para un ataque de <em>vishing</em> y <em>phone spoofing</em>, explotando el miedo, la urgencia y la falsa confianza de la víctima. El ataque fue reforzado por dos cómplices: <strong>Chetal Veer</strong>, quien suplantó a Google para robar accesos de correo y nube, y <strong>Serrano Jeandiel</strong>, quien suplantó a Gemini para exigir transferencias e instalar software de acceso remoto (<strong>AnyDesk</strong>) en el equipo de la víctima.</p>
-                <p style="margin-top: 1rem;">El fraude resultó en pérdidas superiores a <strong>230 millones de dólares (4,100 Bitcoins)</strong>, lavados rápidamente mediante múltiples intercambios entre criptomonedas (Bitcoin, Ethereum, Litecoin, Monero). El caso salió a la luz cuando los propios atacantes grabaron el robo en video y uno de ellos lo filtró para presumirlo, lo que llevó a acusaciones de fraude electrónico, lavado de dinero, incautación de bienes y cargos migratorios.</p>
+                <h2 class="section-heading" data-aos="fade-up"><i class="fa-solid fa-user-secret"></i> Resumen del Caso</h2>
+                <div data-aos="fade-up">
+                    <p>El atacante, <strong>Lam Malone</strong>, utilizó datos filtrados del exchange <strong>Genesis</strong> como punto de partida para un ataque de <em>vishing</em> y <em>phone spoofing</em>, explotando el miedo, la urgencia y la falsa confianza de la víctima. El ataque fue reforzado por dos cómplices: <strong>Chetal Veer</strong>, quien suplantó a Google para robar accesos de correo y nube, y <strong>Serrano Jeandiel</strong>, quien suplantó a Gemini para exigir transferencias e instalar software de acceso remoto (<strong>AnyDesk</strong>) en el equipo de la víctima.</p>
+                    <p style="margin-top: 1rem;">El fraude resultó en pérdidas superiores a <strong>230 millones de dólares (4,100 Bitcoins)</strong>, lavados rápidamente mediante múltiples intercambios entre criptomonedas (Bitcoin, Ethereum, Litecoin, Monero). El caso salió a la luz cuando los propios atacantes grabaron el robo en video y uno de ellos lo filtró para presumirlo, lo que llevó a acusaciones de fraude electrónico, lavado de dinero, incautación de bienes y cargos migratorios.</p>
+                </div>
 
-                <h2 class="section-heading" style="margin-top: 3rem;"><i class="fa-solid fa-list-check"></i> Cuestionario</h2>
+                <h2 class="section-heading" data-aos="fade-up" style="margin-top: 3rem;"><i class="fa-solid fa-list-check"></i> Cuestionario</h2>
 
-                <ol class="custom-list">
+                <ol class="custom-list" data-aos="fade-up">
                     <li><strong>¿Cuál fue el principal vector de ataque utilizado por Lam Malone?</strong><br>Ingeniería social utilizando datos filtrados del exchange Genesis.</li>
                     <li><strong>¿Qué principio psicológico explotó para lograr transferencias millonarias?</strong><br>Miedo, urgencia y falsa confianza.</li>
                     <li><strong>¿Qué tipo de ataque de ingeniería social se identifica en este caso?</strong><br>Vishing y phone spoofing (suplantación telefónica).</li>
@@ -71,8 +88,8 @@
                     <li><strong>¿Cuál fue el detallito que tuvo con Skylar Harrison?</strong><br>Le regaló un costoso bolso Hermès (modelo Kelly) en una discoteca.</li>
                 </ol>
 
-                <h2 class="section-heading" style="margin-top: 3rem;"><i class="fa-solid fa-shield-halved"></i> Lecciones Aprendidas</h2>
-                <ul class="diamond-list" style="margin-top: 1rem;">
+                <h2 class="section-heading" data-aos="fade-up" style="margin-top: 3rem;"><i class="fa-solid fa-shield-halved"></i> Lecciones Aprendidas</h2>
+                <ul class="diamond-list" data-aos="fade-up" style="margin-top: 1rem;">
                     <li>El eslabón más débil de la ciberseguridad suele ser el factor humano, no la tecnología.</li>
                     <li>La verificación fuera de banda (llamar de vuelta a un número oficial conocido) neutraliza el vishing y el phone spoofing.</li>
                     <li>Nunca instalar software de acceso remoto a petición de un tercero que contactó primero.</li>
@@ -82,7 +99,7 @@
 
             <!-- SIDEBAR -->
             <aside class="sidebar">
-                <div class="card data-card" style="border-color: var(--accent-blue);">
+                <div class="card data-card" data-aos="fade-up" data-aos-delay="100" style="border-color: var(--accent-blue);">
                     <h3 style="text-align: center; margin-bottom: 1.5rem; color: var(--accent-blue);">Resumen Técnico</h3>
 
                     <div class="data-pill">
@@ -112,5 +129,11 @@
     <footer style="margin-top: 2rem; border-top: none;">
         <p>&copy; 2026 Luis Felipe Jaramillo Barajas. Todos los derechos reservados.</p>
     </footer>
+
+    <!-- SCRIPTS PARA ANIMACIONES -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+    <script>
+        AOS.init({ duration: 700, once: true });
+    </script>
 </body>
 </html>

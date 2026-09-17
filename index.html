@@ -5,64 +5,82 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Portafolio | Seguridad Informática</title>
     <link rel="stylesheet" href="style.css">
-    <!-- FontAwesome para iconos -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Tipografías -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+
+    <!-- AOS: animaciones al hacer scroll -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" rel="stylesheet">
 </head>
 <body>
 
     <header class="top-nav">
         <div class="nav-brand">
-            <!-- Logo de la universidad-->
             <img src="assets/img/logo-upslp.png" alt="Logo UPSLP" class="logo">
             <span class="brand-title">Portafolio CNO IV</span>
         </div>
         <nav>
             <ul>
-                <li><a href="index.html">Inicio</a></li>
+                <li><a href="index.html"style="color: var(--accent-blue);">Inicio</a></li>
                 <li><a href="parcial1/index.html">Parcial 1</a></li>
                 <li><a href="parcial2/index.html">Parcial 2</a></li>
                 <li><a href="parcial3/index.html">Parcial 3</a></li>
+                <li><a href="road-to-hall-of-fame/index.html">Road to Hall of Fame</a></li>
                 <li><a href="#contacto">Contacto</a></li>
             </ul>
         </nav>
     </header>
 
     <main>
-        <div class="hero-section">
+        <div class="hero-section hero-decorated">
+            <div class="orb orb-green"></div>
+            <div class="orb orb-blue"></div>
+            <div class="orb orb-purple"></div>
+            <div class="orb-ring"></div>
+            <svg class="corner-lines" viewBox="0 0 160 160" fill="none">
+                <path d="M0,140 C40,120 40,60 100,40" stroke="var(--accent-color)" stroke-width="1.5"/>
+                <path d="M0,110 C30,95 30,50 80,25" stroke="var(--accent-blue)" stroke-width="1.5"/>
+            </svg>
+
             <h3 class="course-title">CNO IV – SEGURIDAD INFORMÁTICA</h3>
             <h1>Luis Felipe Jaramillo Barajas</h1>
             <h2 class="alias-title">Alias: Lufeisli</h2>
             <p class="hero-details">Universidad Politécnica de San Luis Potosí<br>Periodo: Otoño 2026</p>
+
+            <div class="terminal-line">
+                <span id="typed-text"></span><span class="cursor"></span>
+            </div>
         </div>
 
-        <div class="grid-3-cols">
-            <section class="card">
+        <div class="grid-3-cols" style="margin-top: 3rem;">
+            <section class="card" data-aos="fade-up" data-aos-delay="0">
                 <h2><i class="fa-solid fa-bullseye"></i> Presentación</h2>
                 <p><strong>Propósito:</strong> Contenedor oficial de las evidencias académicas del curso.</p>
                 <p><strong>Enfoque:</strong> Seguridad informática, pruebas de penetración y análisis de vulnerabilidades.</p>
-                <!-- ¡NUEVO! Punto obligatorio de la rúbrica agregado aquí abajo -->
                 <p><strong>Importancia:</strong> Documentar este proceso es fundamental para evidenciar la evolución, madurez técnica y el aprendizaje adquirido durante el semestre.</p>
             </section>
 
-            <section class="card">
+            <section class="card" data-aos="fade-up" data-aos-delay="150">
                 <h2><i class="fa-solid fa-user-shield"></i> Mi Perfil</h2>
                 <p><strong>Semblanza:</strong> Estudiante de Ingeniería en Tecnologías de la Información enfocado en ciberseguridad y bases de datos.</p>
                 <p><strong>Intereses:</strong> Ciberseguridad, Análisis de Datos, Ingeniería de Software.</p>
             </section>
 
-            <section class="card">
+            <section class="card" data-aos="fade-up" data-aos-delay="300">
                 <h2><i class="fa-solid fa-code"></i> Ficha Técnica</h2>
-                <p><strong>Lenguajes/Tecnologías:</strong> HTML5, CSS</p>
+                <p><strong>Lenguajes/Tecnologías:</strong> HTML5, CSS, JavaScript.</p>
                 <p><strong>Plataforma:</strong> GitHub Pages.</p>
                 <p><strong>Control de versiones:</strong> Git / GitHub.</p>
             </section>
         </div>
 
         <!-- SECCIÓN DE CONTACTO -->
-        <section id="contacto" class="card form-section" style="margin-top: 4rem; border-top: 4px solid var(--accent-color);">
+        <section id="contacto" class="card form-section" data-aos="fade-up" style="margin-top: 4rem; border-top: 4px solid var(--accent-color);">
             <h2><i class="fa-solid fa-envelope"></i> Contacto</h2>
             <p style="margin-bottom: 1.5rem; color: var(--text-muted);">¿Tienes alguna duda, comentario o propuesta? Envíame un mensaje y me pondré en contacto contigo.</p>
-            
+
             <form action="https://formsubmit.co/lufeislijaramillo@gmail.com" method="POST" class="contact-form">
                 <div class="form-group">
                     <input type="text" name="name" placeholder="Nombre completo" required>
@@ -73,21 +91,34 @@
                 <div class="form-group">
                     <textarea name="message" placeholder="Tu mensaje..." rows="4" required></textarea>
                 </div>
-                
-                <!-- Truco para cumplir la rúbrica: Activa el autoresponder al usuario -->
+
                 <input type="hidden" name="_autoresponse" value="Gracias por tu mensaje. He recibido tu solicitud en mi portafolio de Seguridad Informática. - Luis Felipe.">
-                
-                <!-- Desactiva el captcha visual para que luzca más profesional (opcional) -->
                 <input type="hidden" name="_captcha" value="false">
-                
+
                 <button type="submit" class="btn-submit"><i class="fa-solid fa-paper-plane"></i> Enviar Mensaje</button>
             </form>
         </section>
     </main>
 
-    <!-- PIE DE PÁGINA (FOOTER) -->
     <footer>
         <p>&copy; 2026 Luis Felipe Jaramillo Barajas. Todos los derechos reservados.</p>
     </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/typed.js/2.1.0/typed.umd.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+    <script>
+        new Typed('#typed-text', {
+            strings: [
+                '&gt; whoami: estudiante de Ingeniería en Tecnologías de la Información.',
+                '&gt; enfoque:  Ciberseguridad y Análisis de Datos.',
+                '&gt; status: portafolio en construcción... Versión 3.0'
+            ],
+            typeSpeed: 35,
+            backSpeed: 15,
+            backDelay: 1800,
+            loop: true
+        });
+        AOS.init({ duration: 700, once: true });
+    </script>
 </body>
 </html>
