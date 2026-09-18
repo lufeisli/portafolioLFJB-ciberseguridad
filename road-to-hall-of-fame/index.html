@@ -163,14 +163,22 @@
         }
         .legend span { display: inline-flex; align-items: center; gap: 0.5rem; }
         .dot { width: 14px; height: 14px; border-radius: 50%; display: inline-block; }
-        /* Animación de flujo de datos en la línea */
-
+        
+        /* Animaciones de flujo de datos en la línea */
         @keyframes dataFlow {
             to { stroke-dashoffset: -1000; }
         }
 
+        /* Camino Gris (Bloqueado) */
         .inactive-path {
             animation: dataFlow 80s linear infinite;
+        }
+
+        /* Camino Activo (Progreso) */
+        .active-path {
+            animation: dataFlow 35s linear infinite;
+            filter: drop-shadow(0 0 8px rgba(46, 160, 67, 0.6)); /* Brillo verde sutil */
+            stroke-linecap: round;
         }
     </style>
 </head>
@@ -212,34 +220,45 @@
             <span><span class="dot" style="background: #2a2f3a;"></span> Próximamente / Bloqueado</span>
         </div>
 
-        <!-- MAPA DE NIVELES (Solo 6 nodos) -->
+        <!-- MAPA DE NIVELES -->
         <div class="path-wrap">
             <svg class="path-svg" viewBox="0 0 100 1050" preserveAspectRatio="none">
-                <!-- Camino inactivo general (Gris) -->
+                <defs>
+                    <!-- Gradiente que va de Verde (completado) a Azul (en progreso) -->
+                    <linearGradient id="activeGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                        <stop offset="0%" stop-color="var(--accent-color)" />
+                        <stop offset="100%" stop-color="var(--accent-blue)" />
+                    </linearGradient>
+                </defs>
+
+                <!-- Camino Inactivo (Nodos 2 al 6) - Gris y lento -->
                 <path class="inactive-path"
-                    d="M 20,70 C 20,155 50,155 50,240 C 50,325 80,325 80,410 C 80,495 50,495 50,580 C 50,665 20,665 20,750 C 20,835 50,835 50,920"
+                    d="M 50,240 C 50,325 80,325 80,410 C 80,495 50,495 50,580 C 50,665 20,665 20,750 C 20,835 50,835 50,920"
                     fill="none" stroke="#2a2f3a" stroke-width="1.5" stroke-dasharray="6,6" vector-effect="non-scaling-stroke" />
+
+                <!-- Camino Activo (Nodo 1 al 2) - Color y rápido -->
+                <path class="active-path"
+                    d="M 20,70 C 20,155 50,155 50,240"
+                    fill="none" stroke="url(#activeGradient)" stroke-width="2.5" stroke-dasharray="14,14" vector-effect="non-scaling-stroke" />
             </svg>
 
-            <!-- NIVEL 1: EN PROGRESO (Azul) -->
-            <!-- Puedes cambiar la clase "progress" a "completed" cuando lo termines -->
-            <div class="node progress" data-aos="zoom-in" style="left:20%; top:70px;">
+            <!-- NIVEL 1: COMPLETADO (Verde) -->
+            <div class="node completed" data-aos="zoom-in" style="left:20%; top:70px;">
                 <details>
                     <summary>1</summary>
                     <div class="node-popup">
                         <h4>Simple Case</h4>
-                        <a href="#"><i class="fa-solid fa-eye"></i> Ver práctica</a>
-                        <a href="#" onclick="return false;" download><i class="fa-solid fa-download"></i> Descargar</a>
-                        <!-- <a href="#" download><i class="fa-solid fa-download"></i> Descargar</a> -->
+                        <a href="../parcial2/actividad07/index.html"><i class="fa-solid fa-eye"></i> Ver práctica</a>
+                        <a href="../parcial2/actividad07/Informe_Path_Traversal.pdf" download><i class="fa-solid fa-download"></i> Descargar</a>
                     </div>
                 </details>
                 <div class="node-label">File Path Traversal: Simple Case</div>
             </div>
 
-            <!-- NIVEL 2: BLOQUEADO (Gris) -->
-            <div class="node locked" data-aos="zoom-in" style="left:50%; top:240px;">
+            <!-- NIVEL 2: EN PROGRESO (Azul) -->
+            <div class="node progress" data-aos="zoom-in" style="left:50%; top:240px;">
                 <details>
-                    <summary><i class="fa-solid fa-lock"></i></summary>
+                    <summary>2</summary>
                     <div class="node-popup">
                         <h4>Absolute Path Bypass</h4>
                         <a href="#" onclick="return false;"><i class="fa-solid fa-eye"></i> Ver práctica</a>

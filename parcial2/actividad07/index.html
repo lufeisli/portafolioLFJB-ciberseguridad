@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Path Traversal | Portafolio LFJB</title>
+    <link rel="stylesheet" href="../../style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Tipografías -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+
+    <!-- AOS: animaciones al hacer scroll -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" rel="stylesheet">
+</head>
+<body>
+    <header class="top-nav">
+        <div class="nav-brand">
+            <img src="../../assets/img/logo-upslp.png" alt="Logo UPSLP" class="logo">
+            <span class="brand-title">Portafolio CNO IV</span>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="../../index.html">Inicio</a></li>
+                <li><a href="../../parcial1/index.html">Parcial 1</a></li>
+                <li><a href="../index.html" style="color: var(--text-main);">Parcial 2</a></li>
+                <li><a href="../../parcial3/index.html">Parcial 3</a></li>
+                <li><a href="../../road-to-hall-of-fame/index.html">Road to Hall of Fame</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="activity-main">
+        <!-- CABECERA DECORADA CON ORBES -->
+        <div class="activity-header hero-decorated" style="text-align: center;">
+            <div class="orb orb-green"></div>
+            <div class="orb orb-blue"></div>
+            <div class="orb orb-purple"></div>
+            <div class="orb-ring"></div>
+
+            <a href="../../road-to-hall-of-fame/index.html" class="back-link" style="position: absolute; top: 1rem; left: 1.5rem;"><i class="fa-solid fa-arrow-left"></i> Volver a Road to Hall of Fame</a>
+            <p class="overline" style="justify-content: center;"><span class="line"></span> Actividad 7: LABORATORIO ESPECIALIZADO · PATH TRAVERSAL <span class="line"></span></p>
+            <h1 class="activity-title" style="color: var(--accent-blue);">File Path Traversal: rompiendo el directorio de imágenes</h1>
+        </div>
+
+        <section class="card intro-card" data-aos="fade-up" style="border-left-color: var(--accent-blue);">
+            <p>Práctica de laboratorio especializado sobre el reto <strong style="color: var(--accent-blue);">"File path traversal, simple case"</strong> de PortSwigger Web Security Academy, realizada sobre la tienda de prueba "We Like To Shop".</p>
+            <br>
+            <p>Este informe documenta el proceso completo: interceptación de tráfico con Burp Suite, identificación del parámetro <code>filename</code> vulnerable, construcción manual del payload de traversal y extracción del archivo <code>/etc/passwd</code> del servidor.</p>
+        </section>
+
+        <!-- LAYOUT ASIMÉTRICO (Contenido Izquierda / Sidebar Derecha) -->
+        <div class="layout-sidebar" style="margin-top: 3rem;">
+
+            <div class="main-content">
+
+                <!-- PREPARACIÓN DEL LABORATORIO -->
+                <h2 class="section-heading" data-aos="fade-up"><i class="fa-solid fa-flask"></i> Preparación del Laboratorio</h2>
+                <p data-aos="fade-up">El laboratorio es proporcionado por PortSwigger a través de su plataforma <strong>Web Security Academy</strong>, en su nivel <em>Apprentice</em>. Contiene una vulnerabilidad de path traversal en la funcionalidad que muestra las imágenes de producto de la tienda ficticia "We Like To Shop", con el objetivo de recuperar el contenido de <code>/etc/passwd</code>.</p>
+                <p data-aos="fade-up">Como herramienta de interceptación se utilizó <strong>Burp Suite Community Edition</strong>, iniciando un proyecto temporal en memoria con la configuración por defecto.</p>
+
+                <div class="evidence-grid" data-aos="fade-up">
+                    <div>
+                        <img src="img/figura_1.jpg" alt="Descripción del laboratorio en PortSwigger" class="evidence-img">
+                        <p style="text-align: center; font-size: 0.85rem; color: var(--text-muted); margin-top: 5px;">Fig 1: Descripción del laboratorio "File path traversal, simple case"</p>
+                    </div>
+                    <div>
+                        <img src="img/figura_2.jpg" alt="Pantalla de bienvenida de Burp Suite" class="evidence-img">
+                        <img src="img/figura_3.jpg" alt="Configuración por defecto de Burp Suite" class="evidence-img" style="margin-top: 1rem;">
+                        <p style="text-align: center; font-size: 0.85rem; color: var(--text-muted); margin-top: 5px;">Fig 2 y 3: Inicio de proyecto temporal con configuración por defecto</p>
+                    </div>
+                </div>
+
+                <div class="conclusion-box" data-aos="fade-up" style="margin: 1.5rem 0; border-left-color: var(--accent-blue); background-color: rgba(88, 166, 255, 0.05);">
+                    <p><i class="fa-solid fa-circle-info" style="color: var(--accent-blue);"></i> <strong>Concepto Teórico: Burp Suite como proxy</strong><br>
+                    El componente Proxy de Burp Suite actúa como intermediario (man-in-the-middle) entre el navegador y el servidor, permitiendo interceptar y modificar peticiones HTTP antes de que lleguen a su destino, incluso parámetros que la interfaz web no permite editar directamente.</p>
+                </div>
+
+                <!-- FASE 1: ACCESO -->
+                <h2 class="section-heading" data-aos="fade-up" style="margin-top: 3rem;"><i class="fa-solid fa-shop"></i> Fase 1: Acceso a la Aplicación Objetivo</h2>
+                <p data-aos="fade-up">Utilizando el navegador integrado de Burp Suite, se accedió a la URL única asignada por PortSwigger para esta instancia del laboratorio, correspondiente a la tienda en línea "We Like To Shop", la cual muestra un catálogo de productos con sus respectivas imágenes.</p>
+
+                <div class="evidence-grid" data-aos="fade-up">
+                    <div>
+                        <img src="img/figura_5.jpg" alt="URL única del laboratorio" class="evidence-img">
+                        <p style="text-align: center; font-size: 0.85rem; color: var(--text-muted); margin-top: 5px;">Fig 5: URL única del laboratorio asignada por PortSwigger</p>
+                    </div>
+                    <div>
+                        <img src="img/figura_6.jpg" alt="Catálogo de la tienda We Like To Shop" class="evidence-img">
+                        <p style="text-align: center; font-size: 0.85rem; color: var(--text-muted); margin-top: 5px;">Fig 6: Catálogo de productos de "We Like To Shop"</p>
+                    </div>
+                </div>
+
+                <!-- FASE 2: INTERCEPTACIÓN -->
+                <h2 class="section-heading" data-aos="fade-up" style="margin-top: 3rem;"><i class="fa-solid fa-satellite-dish"></i> Fase 2: Interceptación de la Petición de Imagen</h2>
+                <p data-aos="fade-up">Con el proxy activo, se navegó por el catálogo mientras se registraba el tráfico. En el historial de peticiones se identificó un patrón repetido en cada imagen:</p>
+
+                <div class="code-block" data-aos="fade-up" style="margin: 1.5rem 0;">
+                <pre><code><span class="code-comment"># Patrón identificado para cada imagen del catálogo</span>
+GET /image?filename=45.jpg HTTP/2</code></pre>
+                </div>
+
+                <p data-aos="fade-up">El valor numérico del parámetro <code>filename</code> era lo único que cambiaba entre peticiones, confirmando que el servidor lo utiliza directamente para localizar y devolver un archivo. Se envió una de estas peticiones a <strong>Repeater</strong> para modificarla manualmente.</p>
+
+                <div class="evidence-grid" data-aos="fade-up">
+                    <div>
+                        <img src="img/figura_7.jpg" alt="Historial de peticiones en Burp Proxy" class="evidence-img">
+                        <p style="text-align: center; font-size: 0.85rem; color: var(--text-muted); margin-top: 5px;">Fig 7: Historial de peticiones GET /image?filename=N.jpg</p>
+                    </div>
+                    <div>
+                        <img src="img/figura_8.jpg" alt="Envío a Burp Repeater" class="evidence-img">
+                        <p style="text-align: center; font-size: 0.85rem; color: var(--text-muted); margin-top: 5px;">Fig 8: Envío de la petición a Repeater</p>
+                    </div>
+                </div>
+
+                <!-- FASE 3: CONFIRMACIÓN -->
+                <h2 class="section-heading" data-aos="fade-up" style="margin-top: 3rem;"><i class="fa-solid fa-magnifying-glass"></i> Fase 3: Confirmación del Parámetro Vulnerable</h2>
+                <p data-aos="fade-up">Dentro de Repeater se confirmó que el valor de <code>filename</code> correspondía exactamente al nombre del archivo solicitado (<code>30.jpg</code>), sin codificación adicional ni token de validación. Esto sustenta la hipótesis de que la aplicación concatena directamente esta entrada a una ruta base en el servidor.</p>
+
+                <div class="evidence-grid" data-aos="fade-up">
+                    <div>
+                        <img src="img/figura_9.jpg" alt="Petición original en Repeater" class="evidence-img">
+                        <p style="text-align: center; font-size: 0.85rem; color: var(--text-muted); margin-top: 5px;">Fig 9: Petición original resaltada en el Inspector de Burp</p>
+                    </div>
+                </div>
+
+                <!-- FASE 4: EXPLOTACIÓN -->
+                <h2 class="section-heading" data-aos="fade-up" style="margin-top: 3rem;"><i class="fa-solid fa-bug"></i> Fase 4: Explotación — Construcción del Payload</h2>
+                <p data-aos="fade-up">Se modificó el parámetro <code>filename</code> con la siguiente cadena de traversal, y el servidor respondió con el contenido íntegro de <code>/etc/passwd</code>:</p>
+
+                <div class="code-block" data-aos="fade-up" style="margin: 1.5rem 0;">
+                <pre><code><span class="code-comment"># Payload de path traversal enviado vía Repeater</span>
+GET /image?filename=../../../../etc/passwd HTTP/2</code></pre>
+                </div>
+
+                <div class="conclusion-box" data-aos="fade-up" style="margin: 1.5rem 0; border-left-color: var(--accent-blue); background-color: rgba(88, 166, 255, 0.05);">
+                    <p><i class="fa-solid fa-triangle-exclamation" style="color: var(--accent-blue);"></i> <strong>Concepto Teórico: Path Traversal (A01:2021 – Broken Access Control)</strong><br>
+                    Cada secuencia <code>../</code> instruye subir un nivel en la jerarquía de directorios; encadenadas, garantizan llegar a la raíz del sistema de archivos sin importar la profundidad real del directorio de imágenes. Al concatenarse con la ruta base de la aplicación, el resultado final equivale a <code>/etc/passwd</code>, fuera del directorio que la aplicación pretendía exponer.</p>
+                </div>
+
+                <div class="evidence-grid" data-aos="fade-up">
+                    <div>
+                        <img src="img/figura_10.jpg" alt="Petición modificada con el payload" class="evidence-img">
+                        <p style="text-align: center; font-size: 0.85rem; color: var(--text-muted); margin-top: 5px;">Fig 10: Petición modificada con el payload de traversal</p>
+                    </div>
+                    <div>
+                        <img src="img/figura_11.jpg" alt="Respuesta con el contenido de /etc/passwd" class="evidence-img">
+                        <p style="text-align: center; font-size: 0.85rem; color: var(--text-muted); margin-top: 5px;">Fig 11: Respuesta del servidor con el contenido de /etc/passwd</p>
+                    </div>
+                </div>
+
+                <p data-aos="fade-up">Al reenviar la petición modificada y confirmar la exposición de <code>/etc/passwd</code>, PortSwigger marcó automáticamente el laboratorio como resuelto.</p>
+
+                <div class="evidence-grid" data-aos="fade-up">
+                    <div>
+                        <img src="img/figura_12.jpg" alt="Laboratorio resuelto" class="evidence-img">
+                        <p style="text-align: center; font-size: 0.85rem; color: var(--text-muted); margin-top: 5px;">Fig 12: Confirmación — "Congratulations, you solved the lab!"</p>
+                    </div>
+                </div>
+
+                <!-- CONCLUSIONES Y MITIGACIÓN -->
+                <h2 class="section-heading" data-aos="fade-up" style="margin-top: 3rem;"><i class="fa-solid fa-shield-halved"></i> Conclusiones y Mitigación</h2>
+                <p data-aos="fade-up">A partir de la simple observación del patrón de una petición HTTP fue posible formular y confirmar una hipótesis de explotación usando únicamente Burp Suite Community Edition, sin herramientas de explotación automatizadas. Las recomendaciones principales para prevenir esta vulnerabilidad son:</p>
+                <ul class="diamond-list" data-aos="fade-up" style="margin-top: 1rem;">
+                    <li>Sustituir el parámetro <code>filename</code> por un identificador indirecto resuelto contra una lista de archivos permitidos.</li>
+                    <li>Validar y sanitizar la entrada, rechazando secuencias <code>../</code>, <code>..\</code> y sus variantes codificadas en URL.</li>
+                    <li>Ejecutar el servicio con mínimo privilegio, aislando el proceso mediante chroot jail o contenedores.</li>
+                    <li>Utilizar funciones seguras del framework para servir archivos estáticos, en vez de concatenar rutas manualmente.</li>
+                    <li>Reforzar la defensa en profundidad con un WAF que detecte patrones de path traversal.</li>
+                </ul>
+            </div>
+
+            <!-- SIDEBAR -->
+            <aside class="sidebar">
+                <div class="card data-card" data-aos="fade-up" data-aos-delay="100" style="border-color: var(--accent-blue);">
+                    <h3 style="text-align: center; margin-bottom: 1.5rem; color: var(--accent-blue);">Resumen Técnico</h3>
+
+                    <div class="data-pill">
+                        <span class="data-label" style="color: var(--accent-blue);">Plataforma</span>
+                        <span class="data-value">PortSwigger Web Security Academy</span>
+                    </div>
+
+                    <div class="data-pill">
+                        <span class="data-label" style="color: var(--accent-blue);">Herramientas Ofensivas</span>
+                        <span class="data-value">Burp Suite Community Edition (Proxy, Repeater)</span>
+                    </div>
+
+                    <div class="data-pill">
+                        <span class="data-label" style="color: var(--accent-blue);">Vulnerabilidad</span>
+                        <span class="data-value">Path Traversal (A01:2021 – Broken Access Control)</span>
+                    </div>
+                </div>
+
+                <div class="card pdf-card" data-aos="fade-up" data-aos-delay="200" style="background: linear-gradient(145deg, var(--bg-card) 0%, rgba(88, 166, 255, 0.1) 100%);">
+                    <div class="pdf-icon" style="color: var(--accent-blue);"><i class="fa-regular fa-file-pdf"></i></div>
+                    <h3>Reporte Completo</h3>
+                    <a href="Informe_Path_Traversal.pdf" download class="btn-download" style="border-color: var(--accent-blue);">
+                        <i class="fa-solid fa-download"></i> Descargar PDF
+                    </a>
+                </div>
+            </aside>
+        </div>
+    </main>
+
+    <footer style="margin-top: 2rem; border-top: none;">
+        <p>&copy; 2026 Luis Felipe Jaramillo Barajas. Todos los derechos reservados.</p>
+    </footer>
+
+    <!-- SCRIPTS PARA ANIMACIONES -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+    <script>
+        AOS.init({ duration: 700, once: true });
+    </script>
+</body>
+</html>
