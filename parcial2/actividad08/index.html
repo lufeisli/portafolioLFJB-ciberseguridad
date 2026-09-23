@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Absolute Path Bypass | Portafolio LFJB</title>
+    <link rel="stylesheet" href="../../style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Tipografías -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+
+    <!-- AOS: animaciones al hacer scroll -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" rel="stylesheet">
+</head>
+<body>
+    <header class="top-nav">
+        <div class="nav-brand">
+            <img src="../../assets/img/logo-upslp.png" alt="Logo UPSLP" class="logo">
+            <span class="brand-title">Portafolio CNO IV</span>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="../../index.html">Inicio</a></li>
+                <li><a href="../../parcial1/index.html">Parcial 1</a></li>
+                <li><a href="../index.html" style="color: var(--text-main);">Parcial 2</a></li>
+                <li><a href="../../parcial3/index.html">Parcial 3</a></li>
+                <li><a href="../../road-to-hall-of-fame/index.html">Road to Hall of Fame</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="activity-main">
+        <!-- CABECERA DECORADA CON ORBES -->
+        <div class="activity-header hero-decorated" style="text-align: center;">
+            <div class="orb orb-green"></div>
+            <div class="orb orb-blue"></div>
+            <div class="orb orb-purple"></div>
+            <div class="orb-ring"></div>
+
+            <a href="../../road-to-hall-of-fame/index.html" class="back-link" style="position: absolute; top: 1rem; left: 1.5rem;"><i class="fa-solid fa-arrow-left"></i> Volver a Road to Hall of Fame</a>
+            <p class="overline" style="justify-content: center;"><span class="line"></span> Actividad 8: LABORATORIO ESPECIALIZADO · PATH TRAVERSAL <span class="line"></span></p>
+            <h1 class="activity-title" style="color: var(--accent-blue);">Absolute Path Bypass: evadiendo el filtro de traversal</h1>
+        </div>
+
+        <section class="card intro-card" data-aos="fade-up" style="border-left-color: var(--accent-blue);">
+            <p>Práctica de laboratorio especializado sobre el reto <strong style="color: var(--accent-blue);">"File path traversal, traversal sequences blocked with absolute path bypass"</strong> de PortSwigger Web Security Academy (nivel Practitioner), realizada sobre la misma tienda de prueba "We Like To Shop".</p>
+            <br>
+            <p>A diferencia del caso simple, aquí la aplicación filtra activamente las secuencias <code>../</code>. Este informe documenta cómo se evadió ese filtro aprovechando que el servidor trata el nombre de archivo como una ruta relativa a un directorio por defecto, lo que permite un bypass enviando directamente una ruta absoluta.</p>
+        </section>
+
+        <!-- LAYOUT ASIMÉTRICO (Contenido Izquierda / Sidebar Derecha) -->
+        <div class="layout-sidebar" style="margin-top: 3rem;">
+
+            <div class="main-content">
+
+                <!-- PREPARACIÓN DEL LABORATORIO -->
+                <h2 class="section-heading" data-aos="fade-up"><i class="fa-solid fa-flask"></i> Preparación del Laboratorio</h2>
+                <p data-aos="fade-up">El laboratorio es proporcionado por PortSwigger a través de su plataforma <strong>Web Security Academy</strong>, en su nivel <em>Practitioner</em>. Al igual que en el caso simple, contiene una vulnerabilidad de path traversal en la visualización de imágenes de producto, pero la aplicación ahora <strong>bloquea las secuencias de traversal</strong> y trata el nombre de archivo recibido como una ruta relativa a un directorio de trabajo por defecto. El objetivo sigue siendo recuperar el contenido de <code>/etc/passwd</code>.</p>
+
+                <div class="evidence-grid" data-aos="fade-up">
+                    <div>
+                        <img src="img/figura_1.jpg" alt="Descripción del laboratorio en PortSwigger" class="evidence-img">
+                        <p style="text-align: center; font-size: 0.85rem; color: var(--text-muted); margin-top: 5px;">Fig 1: Descripción del laboratorio "Traversal sequences blocked with absolute path bypass"</p>
+                    </div>
+                </div>
+
+                <div class="conclusion-box" data-aos="fade-up" style="margin: 1.5rem 0; border-left-color: var(--accent-blue); background-color: rgba(88, 166, 255, 0.05);">
+                    <p><i class="fa-solid fa-circle-info" style="color: var(--accent-blue);"></i> <strong>Concepto Teórico: filtrado de secuencias de traversal</strong><br>
+                    Una defensa habitual elimina del valor recibido las subcadenas <code>../</code> antes de construir la ruta final. Sin embargo, esto solo neutraliza el retroceso de directorios; no evita que la aplicación reciba y procese una ruta ya absoluta, lo cual es una vía de evasión distinta.</p>
+                </div>
+
+                <!-- FASE 1 -->
+                <h2 class="section-heading" data-aos="fade-up" style="margin-top: 3rem;"><i class="fa-solid fa-satellite-dish"></i> Fase 1: Interceptación de la Petición de Imagen</h2>
+                <p data-aos="fade-up">Con el proxy activo, se navegó por el catálogo de "We Like To Shop" mientras se registraba el tráfico. Se identificó de nuevo el mismo patrón de petición para cargar cada imagen:</p>
+
+                <div class="code-block" data-aos="fade-up" style="margin: 1.5rem 0;">
+                <pre><code><span class="code-comment"># Patrón identificado para cada imagen del catálogo</span>
+GET /image?filename=37.jpg HTTP/2</code></pre>
+                </div>
+
+                <div class="evidence-grid" data-aos="fade-up">
+                    <div>
+                        <img src="img/figura_2.jpg" alt="Historial de peticiones en Burp Proxy" class="evidence-img">
+                        <p style="text-align: center; font-size: 0.85rem; color: var(--text-muted); margin-top: 5px;">Fig 2: Historial de peticiones GET /image?filename=N.jpg</p>
+                    </div>
+                    <div>
+                        <img src="img/figura_3.jpg" alt="Envío a Burp Repeater" class="evidence-img">
+                        <p style="text-align: center; font-size: 0.85rem; color: var(--text-muted); margin-top: 5px;">Fig 3: Envío de la petición a Repeater</p>
+                    </div>
+                </div>
+
+                <!-- FASE 2 -->
+                <h2 class="section-heading" data-aos="fade-up" style="margin-top: 3rem;"><i class="fa-solid fa-magnifying-glass"></i> Fase 2: Confirmación del Filtro de Traversal</h2>
+                <p data-aos="fade-up">Dentro de Repeater se confirmó la petición original con <code>filename=37.jpg</code>. Un intento inicial con el payload clásico (<code>../../../../etc/passwd</code>) resultaría bloqueado, ya que la aplicación elimina activamente las secuencias <code>../</code> antes de resolver la ruta, obligando a plantear una hipótesis de evasión distinta.</p>
+
+                <div class="evidence-grid" data-aos="fade-up">
+                    <div>
+                        <img src="img/figura_4.jpg" alt="Petición original en Repeater" class="evidence-img">
+                        <p style="text-align: center; font-size: 0.85rem; color: var(--text-muted); margin-top: 5px;">Fig 4: Petición original GET /image?filename=37.jpg en Repeater</p>
+                    </div>
+                </div>
+
+                <!-- FASE 3 -->
+                <h2 class="section-heading" data-aos="fade-up" style="margin-top: 3rem;"><i class="fa-solid fa-bug"></i> Fase 3: Explotación — Bypass Mediante Ruta Absoluta</h2>
+                <p data-aos="fade-up">Se modificó el parámetro <code>filename</code> por una ruta absoluta directa, sin ninguna secuencia de retroceso de directorio, y el servidor respondió con el contenido íntegro de <code>/etc/passwd</code>:</p>
+
+                <div class="code-block" data-aos="fade-up" style="margin: 1.5rem 0;">
+                <pre><code><span class="code-comment"># Payload de ruta absoluta (sin secuencias ../) enviado vía Repeater</span>
+GET /image?filename=/etc/passwd HTTP/2</code></pre>
+                </div>
+
+                <div class="conclusion-box" data-aos="fade-up" style="margin: 1.5rem 0; border-left-color: var(--accent-blue); background-color: rgba(88, 166, 255, 0.05);">
+                    <p><i class="fa-solid fa-triangle-exclamation" style="color: var(--accent-blue);"></i> <strong>Concepto Teórico: Absolute Path Bypass</strong><br>
+                    Al unir una ruta base (por ejemplo <code>/var/www/images/</code>) con una ruta ya absoluta proporcionada por el usuario, muchas funciones de manejo de rutas del sistema operativo descartan la ruta base y devuelven únicamente la ruta absoluta recibida. Así, aunque la aplicación cree restringir el acceso a un directorio, basta con enviar la ruta absoluta del archivo deseado para evadir la restricción, sin usar <code>../</code>.</p>
+                </div>
+
+                <div class="evidence-grid" data-aos="fade-up">
+                    <div>
+                        <img src="img/figura_5.jpg" alt="Petición modificada con el payload de ruta absoluta" class="evidence-img">
+                        <p style="text-align: center; font-size: 0.85rem; color: var(--text-muted); margin-top: 5px;">Fig 5: Petición modificada con filename=/etc/passwd</p>
+                    </div>
+                    <div>
+                        <img src="img/figura_6.jpg" alt="Respuesta con el contenido de /etc/passwd" class="evidence-img">
+                        <p style="text-align: center; font-size: 0.85rem; color: var(--text-muted); margin-top: 5px;">Fig 6: Respuesta del servidor con el contenido de /etc/passwd</p>
+                    </div>
+                </div>
+
+                <p data-aos="fade-up">Al confirmar la exposición de <code>/etc/passwd</code>, PortSwigger marcó automáticamente el laboratorio como resuelto.</p>
+
+                <div class="evidence-grid" data-aos="fade-up">
+                    <div>
+                        <img src="img/figura_7.jpg" alt="Laboratorio resuelto" class="evidence-img">
+                        <p style="text-align: center; font-size: 0.85rem; color: var(--text-muted); margin-top: 5px;">Fig 7: Confirmación — "Congratulations, you solved the lab!"</p>
+                    </div>
+                </div>
+
+                <!-- CONCLUSIONES Y MITIGACIÓN -->
+                <h2 class="section-heading" data-aos="fade-up" style="margin-top: 3rem;"><i class="fa-solid fa-shield-halved"></i> Conclusiones y Mitigación</h2>
+                <p data-aos="fade-up">Este laboratorio demostró que filtrar únicamente secuencias <code>../</code> es una defensa insuficiente: la vulnerabilidad de fondo no desaparece, solo cambia la forma de explotarla. Las recomendaciones específicas para este caso son:</p>
+                <ul class="diamond-list" data-aos="fade-up" style="margin-top: 1rem;">
+                    <li>No basarse únicamente en eliminar <code>../</code>; rechazar también cualquier entrada que comience con <code>/</code> o con una letra de unidad (ej. <code>C:</code>).</li>
+                    <li>Resolver la ruta final a su forma canónica y verificar explícitamente que quede dentro del directorio base permitido antes de acceder al archivo.</li>
+                    <li>Sustituir <code>filename</code> por un identificador indirecto resuelto contra una lista de archivos permitidos.</li>
+                    <li>Ejecutar el servicio con mínimo privilegio, aislando el proceso mediante chroot jail o contenedores.</li>
+                    <li>Reforzar la defensa en profundidad con un WAF que detecte también patrones de ruta absoluta, no solo de traversal clásico.</li>
+                </ul>
+            </div>
+
+            <!-- SIDEBAR -->
+            <aside class="sidebar">
+                <div class="card data-card" data-aos="fade-up" data-aos-delay="100" style="border-color: var(--accent-blue);">
+                    <h3 style="text-align: center; margin-bottom: 1.5rem; color: var(--accent-blue);">Resumen Técnico</h3>
+
+                    <div class="data-pill">
+                        <span class="data-label" style="color: var(--accent-blue);">Plataforma</span>
+                        <span class="data-value">PortSwigger Web Security Academy</span>
+                    </div>
+
+                    <div class="data-pill">
+                        <span class="data-label" style="color: var(--accent-blue);">Nivel</span>
+                        <span class="data-value">Practitioner</span>
+                    </div>
+
+                    <div class="data-pill">
+                        <span class="data-label" style="color: var(--accent-blue);">Herramientas Ofensivas</span>
+                        <span class="data-value">Burp Suite Community Edition (Proxy, Repeater)</span>
+                    </div>
+
+                    <div class="data-pill">
+                        <span class="data-label" style="color: var(--accent-blue);">Vulnerabilidad</span>
+                        <span class="data-value">Path Traversal — Absolute Path Bypass (A01:2021)</span>
+                    </div>
+                </div>
+
+                <div class="card pdf-card" data-aos="fade-up" data-aos-delay="200" style="background: linear-gradient(145deg, var(--bg-card) 0%, rgba(88, 166, 255, 0.1) 100%);">
+                    <div class="pdf-icon" style="color: var(--accent-blue);"><i class="fa-regular fa-file-pdf"></i></div>
+                    <h3>Reporte Completo</h3>
+                    <a href="Informe_Absolute_Path_Bypass.pdf" download class="btn-download" style="border-color: var(--accent-blue);">
+                        <i class="fa-solid fa-download"></i> Descargar PDF
+                    </a>
+                </div>
+            </aside>
+        </div>
+    </main>
+
+    <footer style="margin-top: 2rem; border-top: none;">
+        <p>&copy; 2026 Luis Felipe Jaramillo Barajas. Todos los derechos reservados.</p>
+    </footer>
+
+    <!-- SCRIPTS PARA ANIMACIONES -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+    <script>
+        AOS.init({ duration: 700, once: true });
+    </script>
+</body>
+</html>
