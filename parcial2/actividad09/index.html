@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stripped Non-Recursively | Portafolio LFJB</title>
+    <link rel="stylesheet" href="../../style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" rel="stylesheet">
+</head>
+<body>
+    <header class="top-nav">
+        <div class="nav-brand">
+            <img src="../../assets/img/logo-upslp.png" alt="Logo UPSLP" class="logo">
+            <span class="brand-title">Portafolio CNO IV</span>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="../../index.html">Inicio</a></li>
+                <li><a href="../../parcial1/index.html">Parcial 1</a></li>
+                <li><a href="../index.html" style="color: var(--text-main);">Parcial 2</a></li>
+                <li><a href="../../parcial3/index.html">Parcial 3</a></li>
+                <li><a href="../../road-to-hall-of-fame/index.html">Road to Hall of Fame</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="activity-main">
+        <div class="activity-header hero-decorated" style="text-align: center;">
+            <div class="orb orb-green"></div>
+            <div class="orb orb-blue"></div>
+            <div class="orb orb-purple"></div>
+            <div class="orb-ring"></div>
+
+            <a href="../../road-to-hall-of-fame/index.html" class="back-link" style="position: absolute; top: 1rem; left: 1.5rem;"><i class="fa-solid fa-arrow-left"></i> Volver a Road to Hall of Fame</a>
+            <p class="overline" style="justify-content: center;"><span class="line"></span> Actividad 9: LABORATORIO ESPECIALIZADO · PATH TRAVERSAL <span class="line"></span></p>
+            <h1 class="activity-title" style="color: var(--accent-blue);">Stripped Non-Recursively: reconstruyendo el traversal</h1>
+        </div>
+
+        <section class="card intro-card" data-aos="fade-up" style="border-left-color: var(--accent-blue);">
+            <p>Práctica de laboratorio especializado sobre el reto <strong style="color: var(--accent-blue);">"File path traversal, traversal sequences stripped non-recursively"</strong> de PortSwigger Web Security Academy (nivel Practitioner).</p>
+            <br>
+            <p>La aplicación elimina las secuencias <code>../</code> del parámetro, pero solo en una pasada. Este informe documenta cómo se construyó un payload que, tras esa única eliminación, reconstruye la secuencia de traversal y permite leer <code>/etc/passwd</code>.</p>
+        </section>
+
+        <div class="layout-sidebar" style="margin-top: 3rem;">
+            <div class="main-content">
+
+                <h2 class="section-heading" data-aos="fade-up"><i class="fa-solid fa-flask"></i> Preparación del Laboratorio</h2>
+                <p data-aos="fade-up">El laboratorio es de nivel <em>Practitioner</em> y contiene una vulnerabilidad de path traversal en la visualización de imágenes de producto de "We Like To Shop". La aplicación elimina las secuencias <code>../</code> del nombre de archivo, pero en una sola pasada no recursiva, antes de usarlo. El objetivo es recuperar <code>/etc/passwd</code>.</p>
+
+                <div class="evidence-grid" data-aos="fade-up">
+                    <div>
+                        <img src="img/figura_1.jpg" alt="Descripción del laboratorio en PortSwigger" class="evidence-img">
+                        <p style="text-align: center; font-size: 0.85rem; color: var(--text-muted); margin-top: 5px;">Fig 1: Descripción del laboratorio "Traversal sequences stripped non-recursively"</p>
+                    </div>
+                </div>
+
+                <div class="conclusion-box" data-aos="fade-up" style="margin: 1.5rem 0; border-left-color: var(--accent-blue); background-color: rgba(88, 166, 255, 0.05);">
+                    <p><i class="fa-solid fa-circle-info" style="color: var(--accent-blue);"></i> <strong>Concepto Teórico: filtrado no recursivo</strong><br>
+                    Un filtro no recursivo elimina un patrón en una única pasada. Si tras eliminar una ocurrencia los caracteres restantes se recombinan formando una nueva ocurrencia, esta ya no vuelve a examinarse. Un filtro correcto debe repetirse hasta alcanzar un punto fijo.</p>
+                </div>
+
+                <h2 class="section-heading" data-aos="fade-up" style="margin-top: 3rem;"><i class="fa-solid fa-satellite-dish"></i> Fase 1: Interceptación y Confirmación</h2>
+                <p data-aos="fade-up">Con el proxy activo se navegó por el catálogo, observando el tráfico WebSocket inicial del laboratorio y confirmando el patrón habitual de peticiones <code>GET /image?filename=N.jpg</code>.</p>
+
+                <div class="evidence-grid" data-aos="fade-up">
+                    <div>
+                        <img src="img/figura_2.jpg" alt="Tráfico WebSocket inicial" class="evidence-img">
+                        <p style="text-align: center; font-size: 0.85rem; color: var(--text-muted); margin-top: 5px;">Fig 2: Tráfico inicial capturado, incluyendo el WebSocket del laboratorio</p>
+                    </div>
+                    <div>
+                        <img src="img/figura_3.jpg" alt="Historial de peticiones" class="evidence-img">
+                        <p style="text-align: center; font-size: 0.85rem; color: var(--text-muted); margin-top: 5px;">Fig 3: Historial de peticiones GET /image?filename=N.jpg</p>
+                    </div>
+                </div>
+
+                <h2 class="section-heading" data-aos="fade-up" style="margin-top: 3rem;"><i class="fa-solid fa-bug"></i> Fase 2: Construcción del Payload</h2>
+                <p data-aos="fade-up">Se envió una petición a Repeater y se construyó un payload diseñado para evadir un filtro de una sola pasada:</p>
+
+                <div class="code-block" data-aos="fade-up" style="margin: 1.5rem 0;">
+                <pre><code><span class="code-comment"># Payload que reconstruye ../ tras el filtrado</span>
+GET /image?filename=....//....//....//etc/passwd HTTP/2</code></pre>
+                </div>
+
+                <div class="evidence-grid" data-aos="fade-up">
+                    <div>
+                        <img src="img/figura_4.jpg" alt="Envío a Repeater" class="evidence-img">
+                        <p style="text-align: center; font-size: 0.85rem; color: var(--text-muted); margin-top: 5px;">Fig 4: Envío de la petición a Burp Repeater</p>
+                    </div>
+                    <div>
+                        <img src="img/figura_5.jpg" alt="Petición original en Repeater" class="evidence-img">
+                        <p style="text-align: center; font-size: 0.85rem; color: var(--text-muted); margin-top: 5px;">Fig 5: Petición original filename=29.jpg en Repeater</p>
+                    </div>
+                </div>
+
+                <div class="conclusion-box" data-aos="fade-up" style="margin: 1.5rem 0; border-left-color: var(--accent-blue); background-color: rgba(88, 166, 255, 0.05);">
+                    <p><i class="fa-solid fa-triangle-exclamation" style="color: var(--accent-blue);"></i> <strong>Concepto Teórico: bypass de filtros de una sola pasada</strong><br>
+                    Al escribir <code>....//</code>, el filtro detecta y elimina los tres caracteres centrales que coinciden con <code>../</code>, pero los caracteres restantes se recombinan en una nueva secuencia <code>../</code> válida. Repetido varias veces, el resultado tras el filtrado es <code>../../../</code>.</p>
+                </div>
+
+                <h2 class="section-heading" data-aos="fade-up" style="margin-top: 3rem;"><i class="fa-solid fa-unlock"></i> Fase 3: Explotación y Confirmación</h2>
+                <p data-aos="fade-up">Al enviar la petición modificada, el servidor respondió con el contenido íntegro de <code>/etc/passwd</code>, confirmando la evasión del filtro.</p>
+
+                <div class="evidence-grid" data-aos="fade-up">
+                    <div>
+                        <img src="img/figura_6.jpg" alt="Petición modificada" class="evidence-img">
+                        <p style="text-align: center; font-size: 0.85rem; color: var(--text-muted); margin-top: 5px;">Fig 6: Petición modificada con el payload ....//....//....//etc/passwd</p>
+                    </div>
+                    <div>
+                        <img src="img/figura_7.jpg" alt="Respuesta con /etc/passwd" class="evidence-img">
+                        <p style="text-align: center; font-size: 0.85rem; color: var(--text-muted); margin-top: 5px;">Fig 7: Respuesta del servidor con el contenido de /etc/passwd</p>
+                    </div>
+                </div>
+
+                <div class="evidence-grid" data-aos="fade-up">
+                    <div>
+                        <img src="img/figura_8.jpg" alt="Laboratorio resuelto" class="evidence-img">
+                        <p style="text-align: center; font-size: 0.85rem; color: var(--text-muted); margin-top: 5px;">Fig 8: Confirmación — "Congratulations, you solved the lab!"</p>
+                    </div>
+                    <div>
+                        <img src="img/figura_9.jpg" alt="Estado Solved" class="evidence-img">
+                        <p style="text-align: center; font-size: 0.85rem; color: var(--text-muted); margin-top: 5px;">Fig 9: Estado final del laboratorio marcado como "Solved"</p>
+                    </div>
+                </div>
+
+                <h2 class="section-heading" data-aos="fade-up" style="margin-top: 3rem;"><i class="fa-solid fa-shield-halved"></i> Conclusiones y Mitigación</h2>
+                <p data-aos="fade-up">El patrón <code>....//</code> es suficiente para evadir un filtro que no se aplica de forma iterativa. Recomendaciones principales:</p>
+                <ul class="diamond-list" data-aos="fade-up" style="margin-top: 1rem;">
+                    <li>Aplicar la eliminación de <code>../</code> de forma recursiva, repitiendo hasta que una pasada no produzca cambios.</li>
+                    <li>Preferir rechazar la entrada sospechosa en vez de intentar sanearla o reescribirla.</li>
+                    <li>Resolver la ruta a su forma canónica y verificar que quede dentro del directorio base permitido.</li>
+                    <li>Sustituir <code>filename</code> por un identificador indirecto validado contra una lista de archivos permitidos.</li>
+                </ul>
+            </div>
+
+            <aside class="sidebar">
+                <div class="card data-card" data-aos="fade-up" data-aos-delay="100" style="border-color: var(--accent-blue);">
+                    <h3 style="text-align: center; margin-bottom: 1.5rem; color: var(--accent-blue);">Resumen Técnico</h3>
+                    <div class="data-pill">
+                        <span class="data-label" style="color: var(--accent-blue);">Plataforma</span>
+                        <span class="data-value">PortSwigger Web Security Academy</span>
+                    </div>
+                    <div class="data-pill">
+                        <span class="data-label" style="color: var(--accent-blue);">Nivel</span>
+                        <span class="data-value">Practitioner</span>
+                    </div>
+                    <div class="data-pill">
+                        <span class="data-label" style="color: var(--accent-blue);">Herramientas Ofensivas</span>
+                        <span class="data-value">Burp Suite Community Edition (Proxy, Repeater)</span>
+                    </div>
+                    <div class="data-pill">
+                        <span class="data-label" style="color: var(--accent-blue);">Vulnerabilidad</span>
+                        <span class="data-value">Path Traversal — Filtro no recursivo (A01:2021)</span>
+                    </div>
+                </div>
+
+                <div class="card pdf-card" data-aos="fade-up" data-aos-delay="200" style="background: linear-gradient(145deg, var(--bg-card) 0%, rgba(88, 166, 255, 0.1) 100%);">
+                    <div class="pdf-icon" style="color: var(--accent-blue);"><i class="fa-regular fa-file-pdf"></i></div>
+                    <h3>Reporte Completo</h3>
+                    <a href="Informe_Stripped_Non_Recursively.pdf" download class="btn-download" style="border-color: var(--accent-blue);">
+                        <i class="fa-solid fa-download"></i> Descargar PDF
+                    </a>
+                </div>
+            </aside>
+        </div>
+    </main>
+
+    <footer style="margin-top: 2rem; border-top: none;">
+        <p>&copy; 2026 Luis Felipe Jaramillo Barajas. Todos los derechos reservados.</p>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+    <script>AOS.init({ duration: 700, once: true });</script>
+</body>
+</html>

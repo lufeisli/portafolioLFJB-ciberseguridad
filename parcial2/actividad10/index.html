@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Superfluous URL-Decode | Portafolio LFJB</title>
+    <link rel="stylesheet" href="../../style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" rel="stylesheet">
+</head>
+<body>
+    <header class="top-nav">
+        <div class="nav-brand">
+            <img src="../../assets/img/logo-upslp.png" alt="Logo UPSLP" class="logo">
+            <span class="brand-title">Portafolio CNO IV</span>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="../../index.html">Inicio</a></li>
+                <li><a href="../../parcial1/index.html">Parcial 1</a></li>
+                <li><a href="../index.html" style="color: var(--text-main);">Parcial 2</a></li>
+                <li><a href="../../parcial3/index.html">Parcial 3</a></li>
+                <li><a href="../../road-to-hall-of-fame/index.html">Road to Hall of Fame</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="activity-main">
+        <div class="activity-header hero-decorated" style="text-align: center;">
+            <div class="orb orb-green"></div>
+            <div class="orb orb-blue"></div>
+            <div class="orb orb-purple"></div>
+            <div class="orb-ring"></div>
+
+            <a href="../../road-to-hall-of-fame/index.html" class="back-link" style="position: absolute; top: 1rem; left: 1.5rem;"><i class="fa-solid fa-arrow-left"></i> Volver a Road to Hall of Fame</a>
+            <p class="overline" style="justify-content: center;"><span class="line"></span> Actividad 10: LABORATORIO ESPECIALIZADO · PATH TRAVERSAL <span class="line"></span></p>
+            <h1 class="activity-title" style="color: var(--accent-blue);">Superfluous URL-Decode: el filtro que llega tarde</h1>
+        </div>
+
+        <section class="card intro-card" data-aos="fade-up" style="border-left-color: var(--accent-blue);">
+            <p>Práctica de laboratorio especializado sobre el reto <strong style="color: var(--accent-blue);">"File path traversal, traversal sequences stripped with superfluous URL-decode"</strong> de PortSwigger Web Security Academy (nivel Practitioner).</p>
+            <br>
+            <p>La aplicación bloquea secuencias de traversal explícitas, pero luego decodifica la URL una segunda vez (superflua). Este informe documenta cómo un payload doblemente codificado evade el filtro y se revela como <code>../</code> justo antes de usarse.</p>
+        </section>
+
+        <div class="layout-sidebar" style="margin-top: 3rem;">
+            <div class="main-content">
+
+                <h2 class="section-heading" data-aos="fade-up"><i class="fa-solid fa-flask"></i> Preparación del Laboratorio</h2>
+                <p data-aos="fade-up">El laboratorio es de nivel <em>Practitioner</em>. La aplicación bloquea la entrada que contiene secuencias de traversal, pero después realiza una decodificación URL adicional del valor antes de usarlo. El objetivo es recuperar <code>/etc/passwd</code>.</p>
+
+                <div class="evidence-grid" data-aos="fade-up">
+                    <div>
+                        <img src="img/figura_1.jpg" alt="Descripción del laboratorio en PortSwigger" class="evidence-img">
+                        <p style="text-align: center; font-size: 0.85rem; color: var(--text-muted); margin-top: 5px;">Fig 1: Descripción del laboratorio "Traversal sequences stripped with superfluous URL-decode"</p>
+                    </div>
+                </div>
+
+                <div class="conclusion-box" data-aos="fade-up" style="margin: 1.5rem 0; border-left-color: var(--accent-blue); background-color: rgba(88, 166, 255, 0.05);">
+                    <p><i class="fa-solid fa-circle-info" style="color: var(--accent-blue);"></i> <strong>Concepto Teórico: decodificación URL superflua</strong><br>
+                    El servidor ya decodifica una vez la URL antes de que el código la reciba. Si la aplicación decodifica una segunda vez de forma innecesaria, y lo hace después de validar la entrada, un valor codificado dos veces puede pasar el filtro y revelarse como secuencia de traversal justo antes de usarse.</p>
+                </div>
+
+                <h2 class="section-heading" data-aos="fade-up" style="margin-top: 3rem;"><i class="fa-solid fa-satellite-dish"></i> Fase 1: Interceptación de la Petición</h2>
+                <p data-aos="fade-up">Con el proxy activo se navegó por el catálogo de "We Like To Shop", confirmando el patrón habitual <code>GET /image?filename=N.jpg</code>, y se envió una petición a Repeater para su análisis.</p>
+
+                <div class="evidence-grid" data-aos="fade-up">
+                    <div>
+                        <img src="img/figura_2.jpg" alt="Historial de peticiones" class="evidence-img">
+                        <p style="text-align: center; font-size: 0.85rem; color: var(--text-muted); margin-top: 5px;">Fig 2: Catálogo e historial de peticiones GET /image?filename=N.jpg</p>
+                    </div>
+                    <div>
+                        <img src="img/figura_3.jpg" alt="Detalle del historial" class="evidence-img">
+                        <p style="text-align: center; font-size: 0.85rem; color: var(--text-muted); margin-top: 5px;">Fig 3: Historial de peticiones con código de estado y tipo MIME</p>
+                    </div>
+                </div>
+
+                <div class="evidence-grid" data-aos="fade-up">
+                    <div>
+                        <img src="img/figura_4.jpg" alt="Envío a Repeater" class="evidence-img">
+                        <p style="text-align: center; font-size: 0.85rem; color: var(--text-muted); margin-top: 5px;">Fig 4: Envío de la petición (filename=43.jpg) a Repeater</p>
+                    </div>
+                    <div>
+                        <img src="img/figura_5.jpg" alt="Petición original en Repeater" class="evidence-img">
+                        <p style="text-align: center; font-size: 0.85rem; color: var(--text-muted); margin-top: 5px;">Fig 5: Petición original en Repeater</p>
+                    </div>
+                </div>
+
+                <h2 class="section-heading" data-aos="fade-up" style="margin-top: 3rem;"><i class="fa-solid fa-bug"></i> Fase 2: Payload con Doble Codificación URL</h2>
+                <p data-aos="fade-up">Un intento directo con <code>../../../etc/passwd</code> es bloqueado por el filtro. Para evadirlo, se codificó dos veces la barra de cada secuencia de traversal:</p>
+
+                <div class="code-block" data-aos="fade-up" style="margin: 1.5rem 0;">
+                <pre><code><span class="code-comment"># %252f = "/" codificado dos veces</span>
+GET /image?filename=..%252f..%252f..%252fetc/passwd HTTP/2</code></pre>
+                </div>
+
+                <div class="evidence-grid" data-aos="fade-up">
+                    <div>
+                        <img src="img/figura_6.jpg" alt="Petición con doble codificación" class="evidence-img">
+                        <p style="text-align: center; font-size: 0.85rem; color: var(--text-muted); margin-top: 5px;">Fig 6: Petición modificada con el payload doblemente codificado</p>
+                    </div>
+                    <div>
+                        <img src="img/figura_7.jpg" alt="Respuesta con /etc/passwd" class="evidence-img">
+                        <p style="text-align: center; font-size: 0.85rem; color: var(--text-muted); margin-top: 5px;">Fig 7: Respuesta del servidor con el contenido de /etc/passwd</p>
+                    </div>
+                </div>
+
+                <div class="conclusion-box" data-aos="fade-up" style="margin: 1.5rem 0; border-left-color: var(--accent-blue); background-color: rgba(88, 166, 255, 0.05);">
+                    <p><i class="fa-solid fa-triangle-exclamation" style="color: var(--accent-blue);"></i> <strong>Concepto Teórico: desincronización validación/decodificación</strong><br>
+                    Tras la decodificación automática del servidor, <code>%252f</code> se convierte en <code>%2f</code> (aún codificado): el filtro no ve <code>../</code> literal y deja pasar la entrada. La segunda decodificación, superflua, convierte <code>%2f</code> en <code>/</code>, reconstruyendo <code>../</code> justo después de haber superado el filtro.</p>
+                </div>
+
+                <h2 class="section-heading" data-aos="fade-up" style="margin-top: 3rem;"><i class="fa-solid fa-unlock"></i> Resolución del Laboratorio</h2>
+                <p data-aos="fade-up">Al confirmar la exposición de <code>/etc/passwd</code>, PortSwigger marcó el laboratorio como resuelto.</p>
+
+                <div class="evidence-grid" data-aos="fade-up">
+                    <div>
+                        <img src="img/figura_8.jpg" alt="Laboratorio resuelto" class="evidence-img">
+                        <p style="text-align: center; font-size: 0.85rem; color: var(--text-muted); margin-top: 5px;">Fig 8: Confirmación — "Congratulations, you solved the lab!"</p>
+                    </div>
+                    <div>
+                        <img src="img/figura_9.jpg" alt="Estado Solved" class="evidence-img">
+                        <p style="text-align: center; font-size: 0.85rem; color: var(--text-muted); margin-top: 5px;">Fig 9: Estado final del laboratorio marcado como "Solved"</p>
+                    </div>
+                </div>
+
+                <h2 class="section-heading" data-aos="fade-up" style="margin-top: 3rem;"><i class="fa-solid fa-shield-halved"></i> Conclusiones y Mitigación</h2>
+                <p data-aos="fade-up">El orden de las operaciones en el procesamiento de una entrada es tan importante como las propias operaciones. Recomendaciones principales:</p>
+                <ul class="diamond-list" data-aos="fade-up" style="margin-top: 1rem;">
+                    <li>Realizar todas las decodificaciones necesarias antes de validar, nunca después.</li>
+                    <li>Eliminar decodificaciones redundantes; decodificar una única vez en el punto correcto.</li>
+                    <li>Validar la ruta final (ya decodificada) contra su forma canónica dentro del directorio permitido.</li>
+                    <li>Sustituir <code>filename</code> por un identificador indirecto validado contra una lista de archivos permitidos.</li>
+                </ul>
+            </div>
+
+            <aside class="sidebar">
+                <div class="card data-card" data-aos="fade-up" data-aos-delay="100" style="border-color: var(--accent-blue);">
+                    <h3 style="text-align: center; margin-bottom: 1.5rem; color: var(--accent-blue);">Resumen Técnico</h3>
+                    <div class="data-pill">
+                        <span class="data-label" style="color: var(--accent-blue);">Plataforma</span>
+                        <span class="data-value">PortSwigger Web Security Academy</span>
+                    </div>
+                    <div class="data-pill">
+                        <span class="data-label" style="color: var(--accent-blue);">Nivel</span>
+                        <span class="data-value">Practitioner</span>
+                    </div>
+                    <div class="data-pill">
+                        <span class="data-label" style="color: var(--accent-blue);">Herramientas Ofensivas</span>
+                        <span class="data-value">Burp Suite Community Edition (Proxy, Repeater)</span>
+                    </div>
+                    <div class="data-pill">
+                        <span class="data-label" style="color: var(--accent-blue);">Vulnerabilidad</span>
+                        <span class="data-value">Path Traversal — Double URL-decode (A01:2021)</span>
+                    </div>
+                </div>
+
+                <div class="card pdf-card" data-aos="fade-up" data-aos-delay="200" style="background: linear-gradient(145deg, var(--bg-card) 0%, rgba(88, 166, 255, 0.1) 100%);">
+                    <div class="pdf-icon" style="color: var(--accent-blue);"><i class="fa-regular fa-file-pdf"></i></div>
+                    <h3>Reporte Completo</h3>
+                    <a href="Informe_Superfluous_URL_Decode.pdf" download class="btn-download" style="border-color: var(--accent-blue);">
+                        <i class="fa-solid fa-download"></i> Descargar PDF
+                    </a>
+                </div>
+            </aside>
+        </div>
+    </main>
+
+    <footer style="margin-top: 2rem; border-top: none;">
+        <p>&copy; 2026 Luis Felipe Jaramillo Barajas. Todos los derechos reservados.</p>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+    <script>AOS.init({ duration: 700, once: true });</script>
+</body>
+</html>
