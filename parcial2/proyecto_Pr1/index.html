@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Proyecto PR02 | Portafolio LFJB</title>
+    <link rel="stylesheet" href="../../style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Tipografías -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+    
+    <!-- AOS: animaciones al hacer scroll -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" rel="stylesheet">
+</head>
+<body>
+    <header class="top-nav">
+        <div class="nav-brand">
+            <img src="../../assets/img/logo-upslp.png" alt="Logo UPSLP" class="logo">
+            <span class="brand-title">Portafolio CNO IV</span>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="../../index.html">Inicio</a></li>
+                <li><a href="../../parcial1/index.html">Parcial 1</a></li>
+                <li><a href="../index.html" style="color: var(--text-main);">Parcial 2</a></li>
+                <li><a href="../../parcial3/index.html">Parcial 3</a></li>
+                <li><a href="../../road-to-hall-of-fame/index.html">Road to Hall of Fame</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="activity-main">
+        <!-- CABECERA DECORADA CON ORBES -->
+        <div class="activity-header hero-decorated" style="text-align: center;">
+            <div class="orb orb-green"></div>
+            <div class="orb orb-blue"></div>
+            <div class="orb orb-purple"></div>
+            <div class="orb-ring"></div>
+
+            <a href="../index.html" class="back-link" style="position: absolute; top: 1rem; left: 1.5rem;"><i class="fa-solid fa-arrow-left"></i> Volver a Parcial 2</a>
+            <p class="overline" style="justify-content: center;"><span class="line"></span> PROYECTO 2 · GOBERNANZA Y CUMPLIMIENTO <span class="line"></span></p>
+            <h1 class="activity-title" style="color: var(--accent-blue);">Blindando la información: Estrategia, respuesta e infraestructura crítica</h1>
+        </div>
+
+        <section class="card intro-card" data-aos="fade-up" style="border-left-color: var(--accent-blue);">
+            <p>Evaluación integral de seguridad y diseño de un Sistema de Gestión de Seguridad de la Información (SGSI) para <strong style="color: var(--accent-blue);">INTERAFAS-LAB</strong>, el entorno simulado de un organismo operador de agua metropolitano.</p>
+            <br>
+            <p>Este proyecto trasciende el hackeo tradicional. Aquí documentamos cómo gestionar una crisis informática de alto nivel: desde detectar vulnerabilidades que cruzan el perímetro corporativo hasta la red industrial (OT), hasta la respuesta a incidentes, la comunicación con la prensa y la implementación de controles bajo la norma ISO/IEC 27001:2022.</p>
+        </section>
+
+        <!-- LAYOUT ASIMÉTRICO (Contenido Izquierda / Sidebar Derecha) -->
+        <div class="layout-sidebar" style="margin-top: 3rem;">
+            
+            <div class="main-content">
+                
+                <!-- CONTEXTO DEL LABORATORIO -->
+                <h2 class="section-heading" data-aos="fade-up"><i class="fa-solid fa-city"></i> Contexto del Laboratorio</h2>
+                <p data-aos="fade-up">INTERAFAS simula un ecosistema real que abastece a más de 200,000 cuentas en tres municipios. Lo interesante de esta arquitectura es su convergencia: por un lado, tenemos un portal ciudadano típico para pagos, expedientes y reportes (Entorno IT); por el otro, un Centro de Operaciones que monitorea telemetría, válvulas y presiones físicas de la red hidráulica en tiempo real (Entorno OT).</p>
+                
+                <p data-aos="fade-up" style="margin-top: 1rem;">El reto principal radicó en auditar cómo fallos convencionales en la web pública (como inyecciones SQL, archivos de respaldo olvidados o manipulación de cookies) pueden escalar horizontal y verticalmente. El escenario demuestra el impacto devastador de un perímetro poroso: un atacante no autenticado logró cruzar hacia el segmento industrial, alterar el firmware de los controladores y elevar la presión de la red a niveles críticos (CATASTROPHIC STATE), colapsando el suministro de agua.</p>
+
+                <!-- ENFOQUE DE GOBERNANZA -->
+                <h2 class="section-heading" data-aos="fade-up" style="margin-top: 3rem;"><i class="fa-solid fa-scale-balanced"></i> Abordaje Táctico y Estratégico</h2>
+                <p data-aos="fade-up">Resolver una intrusión de esta magnitud requiere más que parches de código. El proyecto aborda la crisis desde cuatro frentes interconectados:</p>
+                
+                <ul class="custom-list" data-aos="fade-up">
+                    <li><strong>Auditoría Ofensiva:</strong> Identificación de las 20 brechas que permitieron el colapso del sistema, documentando causas raíz y mitigaciones técnicas directas.</li>
+                    <li><strong>Gobernanza (ISO 27001):</strong> Diseño del SGSI con 20 políticas funcionales, matrices de riesgo y estrategias de prevención para blindar el organismo desde la dirección hasta el operador de planta.</li>
+                    <li><strong>Respuesta a Incidentes:</strong> Creación de playbooks operativos basados en lineamientos de CISA para contener la amenaza, recuperar el control de las bombas y erradicar los accesos no autorizados.</li>
+                    <li><strong>Comunicación de Crisis:</strong> Plan institucional para manejar el riesgo reputacional, desmentir desinformación en redes sociales y notificar legalmente las fugas de datos sin generar pánico.</li>
+                </ul>
+            </div>
+
+            <!-- SIDEBAR -->
+            <aside class="sidebar">
+                <div class="card data-card" data-aos="fade-up" data-aos-delay="100" style="border-color: var(--accent-blue);">
+                    <h3 style="text-align: center; margin-bottom: 1.5rem; color: var(--accent-blue);">Resumen del Proyecto</h3>
+                    
+                    <div class="data-pill">
+                        <span class="data-label" style="color: var(--accent-blue);">Entorno Evaluado</span>
+                        <span class="data-value">Híbrido IT / OT (SCADA)</span>
+                    </div>
+                    
+                    <div class="data-pill">
+                        <span class="data-label" style="color: var(--accent-blue);">Estándares y Marcos</span>
+                        <span class="data-value">ISO 27001, CISA, NIST SP 800-82, OWASP</span>
+                    </div>
+
+                    <div class="data-pill">
+                        <span class="data-label" style="color: var(--accent-blue);">Impacto Simulado</span>
+                        <span class="data-value">Catastrófico (DDoS físico a infraestructura hídrica)</span>
+                    </div>
+                </div>
+
+                <!-- DESCARGA PRINCIPAL SOLICITADA -->
+                <div class="card pdf-card" data-aos="fade-up" data-aos-delay="200" style="background: linear-gradient(145deg, var(--bg-card) 0%, rgba(88, 166, 255, 0.15) 100%); border: 1px solid var(--accent-blue);">
+                    <div class="pdf-icon" style="color: var(--accent-blue); font-size: 3rem; margin-bottom: 1rem;"><i class="fa-solid fa-file-zipper"></i></div>
+                    <h3>Entregables del Proyecto</h3>
+                    <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1.5rem; text-align: center;">Contiene el informe de auditoría, ISO 27001, plan de crisis, respuesta a incidentes y logs de banderas.</p>
+                    <a href="JaramilloBarajasLuisFelipe-PR03.zip" download class="btn-download" style="border-color: var(--accent-blue); background-color: var(--accent-blue); color: #fff;">
+                        <i class="fa-solid fa-download"></i> Descargar PR03.zip
+                    </a>
+                </div>
+                
+            </aside>
+        </div>
+    </main>
+
+    <footer style="margin-top: 2rem; border-top: 1px solid rgba(255, 255, 255, 0.1); padding-top: 1.5rem; text-align: center;">
+        <p>&copy; 2026 Luis Felipe Jaramillo Barajas. Todos los derechos reservados.</p>
+    </footer>
+
+    <!-- SCRIPTS PARA ANIMACIONES -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+    <script>
+        AOS.init({ duration: 700, once: true });
+    </script>
+</body>
+</html>
