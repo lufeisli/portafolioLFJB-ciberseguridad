@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Actividad 18 | Portafolio LFJB</title>
+    <link rel="stylesheet" href="../../style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Tipografías -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+    
+    <!-- AOS: animaciones al hacer scroll -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" rel="stylesheet">
+</head>
+<body>
+    <header class="top-nav">
+        <div class="nav-brand">
+            <img src="../../assets/img/logo-upslp.png" alt="Logo UPSLP" class="logo">
+            <span class="brand-title">Portafolio CNO IV</span>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="../../index.html">Inicio</a></li>
+                <li><a href="../../parcial1/index.html">Parcial 1</a></li>
+                <li><a href="../../parcial2/index.html">Parcial 2</a></li>
+                <li><a href="../index.html" style="color: var(--accent-blue);">Parcial 3</a></li>
+                <li><a href="../../road-to-hall-of-fame/index.html">Road to Hall of Fame</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="activity-main">
+        <!-- CABECERA DECORADA CON ORBES -->
+        <div class="activity-header hero-decorated" style="text-align: center;">
+            <div class="orb orb-green"></div>
+            <div class="orb orb-blue"></div>
+            <div class="orb orb-purple"></div>
+            <div class="orb-ring"></div>
+
+            <a href="../index.html" class="back-link" style="position: absolute; top: 1rem; left: 1.5rem;"><i class="fa-solid fa-arrow-left"></i> Volver a Parcial 3</a>
+            <p class="overline" style="justify-content: center;"><span class="line"></span> ACTIVIDAD 18 · INFORMÁTICA CRIMINOLÓGICA <span class="line"></span></p>
+            <h1 class="activity-title" style="color: var(--accent-blue);">La investigación forense: la huella digital de un cibercriminal</h1>
+        </div>
+
+        <section class="card intro-card" data-aos="fade-up" style="border-left-color: var(--accent-blue);">
+            <p>Análisis forense digital de disco sobre el caso de entrenamiento <strong style="color: var(--accent-blue);">NIST CFReDS (Hacking Case)</strong> utilizando la herramienta <strong style="color: var(--accent-blue);">Autopsy 4.23.1</strong>.</p>
+            <br>
+            <p>Este informe documenta la investigación sobre una computadora portátil Dell CPi (S/N VLQLW) vinculada al sospechoso Greg Schardt ("Mr. Evil"), abarcando la verificación criptográfica de la integridad de la evidencia, la inspección de colmenas del registro de Windows XP y la correlación de artefactos de <em>wardriving</em> y <em>sniffing</em>.</p>
+        </section>
+
+        <!-- LAYOUT ASIMÉTRICO (Contenido Izquierda / Sidebar Derecha) -->
+        <div class="layout-sidebar" style="margin-top: 3rem;">
+            
+            <div class="main-content">
+                
+                <!-- PARTE I: CONFIGURACIÓN Y TIPOS DE ORIGEN -->
+                <h2 class="section-heading" data-aos="fade-up"><i class="fa-solid fa-folder-tree"></i> Parte I: Configuración del Caso y Origen de Datos</h2>
+                <p data-aos="fade-up">La evidencia segmentada en 8 bloques (<code class="code-inline">SCHARDT.001</code> a <code class="code-inline">SCHARDT.008</code>) se procesó bajo el caso <code class="code-inline">INV01UPSLP</code>. Para comprender la metodología de ingestión, se analizaron los distintos tipos de orígenes soportados en Autopsy:</p>
+                
+                <ul class="custom-list" data-aos="fade-up">
+                    <li><strong>Logical Files:</strong> Importación de archivos o directorios individuales (ficheros lógicos sueltos) sin procesar una imagen bit a bit. No examina tablas de particiones ni espacio no asignado.</li>
+                    <li><strong>Local Disk:</strong> Análisis directo en vivo de una unidad física o volumen conectado localmente (ej. USB con bloqueador de escritura), leyendo la tabla de particiones directamente del dispositivo.</li>
+                    <li><strong>Disk Image or VM File:</strong> Método seleccionado para la práctica; procesa contenedores de imágenes forenses crudas (<code class="code-inline">.dd</code> / <code class="code-inline">.001</code>) o virtuales manteniendo la estructura completa del medio.</li>
+                </ul>
+
+                <!-- PARTE II: VERIFICACIÓN CRIPTOGRÁFICA Y REGISTRO -->
+                <h2 class="section-heading" data-aos="fade-up" style="margin-top: 3rem;"><i class="fa-solid fa-fingerprint"></i> Parte II: Verificación de Integridad y Cuestionario Forense</h2>
+                <p data-aos="fade-up">Mediante el módulo <em>Data Source Integrity</em> y la inspección del registro de Windows XP, se obtuvieron las respuestas oficiales del caso:</p>
+
+                <div class="code-block" data-aos="fade-up" style="margin: 1.5rem 0;">
+                <pre><code><span class="code-comment"># Hashes criptográficos de verificación (SCHARDT.001)</span>
+MD5:    aee4fcd9301c03b3b054623ca261959a
+SHA-1:  da2fe30fe21711edf42310873af475859a68f300
+SHA-256: 65e2002fed0b286f49541c7e97dcec0dda913d51a063ceeed86782bdacda2312</code></pre>
+                </div>
+
+                <ul class="custom-list" data-aos="fade-up">
+                    <li><strong>¿Coinciden los hashes?</strong> Sí. Al contrastar el hash de adquisición oficial del NIST (CFReDS) contra el calculado por Autopsy, se confirma la inalterabilidad de la evidencia.</li>
+                    <li><strong>Sistema Operativo:</strong> Microsoft Windows XP Professional (32-bit x86, Build 2600, Product ID: <code class="code-inline">55274-640-0147306-23684</code>).</li>
+                    <li><strong>Fecha de instalación:</strong> 19 de agosto de 2004 a las 17:48:27 CDT (Epoch: <code class="code-inline">1092955707</code> en <code class="code-inline">InstallDate</code>).</li>
+                    <li><strong>Zona horaria:</strong> Central Standard Time (CST, UTC-6) con cambio automático a CDT (UTC-5).</li>
+                    <li><strong>Propietario registrado:</strong> Greg Schardt (<code class="code-inline">RegisteredOwner</code>).</li>
+                    <li><strong>Nombre de la computadora:</strong> <code class="code-inline">N-1A9ODN6ZXK4LQ</code> (Usuario interactivo principal: <code class="code-inline">Mr. Evil</code>).</li>
+                    <li><strong>Dominio principal:</strong> <code class="code-inline">EVIL</code> (Obtenido de <code class="code-inline">SECURITY\Policy\PolPrDmN</code> decodificado en UTF-16LE).</li>
+                    <li><strong>Último apagado:</strong> 27 de agosto de 2004 a las 10:46:33 CDT (FILETIME: <code class="code-inline">0x01C48C4D0700FCC4</code>).</li>
+                    <li><strong>Cuentas registradas (Total: 5):</strong> <code class="code-inline">Administrator</code> (500), <code class="code-inline">Guest</code> (501), <code class="code-inline">HelpAssistant</code> (1000), <code class="code-inline">SUPPORT_388945a0</code> (1002) y <code class="code-inline">Mr. Evil</code> (1003).</li>
+                </ul>
+
+                <div class="evidence-grid" data-aos="fade-up">
+                    <div>
+                        <img src="img/evidencia_hashes.png" alt="Hashes de la imagen en Autopsy" class="evidence-img">
+                        <p style="text-align: center; font-size: 0.85rem; color: var(--text-muted); margin-top: 5px;">Fig 1: Validación criptográfica MD5/SHA de la evidencia</p>
+                    </div>
+                    <div>
+                        <img src="img/evidencia_sam.png" alt="Cuentas en colmena SAM" class="evidence-img">
+                        <p style="text-align: center; font-size: 0.85rem; color: var(--text-muted); margin-top: 5px;">Fig 2: Enumeración de las 5 cuentas locales en el registro</p>
+                    </div>
+                </div>
+
+                <!-- PARTE III: ACTIVIDAD MALICIOSA Y CORRELACIÓN -->
+                <h2 class="section-heading" data-aos="fade-up" style="margin-top: 3rem;"><i class="fa-solid fa-user-secret"></i> Parte III: Correlación de Actividad Maliciosa</h2>
+                <p data-aos="fade-up">A través de los artefactos <em>Installed Programs (32)</em> y <em>Run Programs (81 - Prefetch)</em>, se identificó la instalación y ejecución de software ofensivo entre el 19 y el 27 de agosto de 2004:</p>
+                
+                <ul class="custom-list" data-aos="fade-up">
+                    <li><strong>Ethereal v0.10.6 & WinPcap 3.01:</strong> Analizador de protocolos para intercepción de tráfico en texto plano.</li>
+                    <li><strong>Network Stumbler v0.4.0:</strong> Escáner de redes inalámbricas 802.11b para <em>wardriving</em>.</li>
+                    <li><strong>Cain & Abel v2.5 & 123WASP:</strong> Herramientas de recuperación y volcado de contraseñas.</li>
+                    <li><strong>Look@LAN v2.50 (<code class="code-inline">irunin.ini</code>):</strong> Prueba de atribución técnica directa que vincula a <code class="code-inline">%REGOWNER%=Greg Schardt</code> con la sesión <code class="code-inline">%LANUSER%=Mr. Evil</code> y la IP <code class="code-inline">192.168.1.111</code>.</li>
+                </ul>
+
+                <div class="evidence-grid" data-aos="fade-up">
+                    <div>
+                        <img src="img/evidencia_programas.png" alt="Programas instalados y Prefetch" class="evidence-img">
+                        <p style="text-align: center; font-size: 0.85rem; color: var(--text-muted); margin-top: 5px;">Fig 3: Evidencia de herramientas de hacking y sniffing instaladas</p>
+                    </div>
+                </div>
+
+                <!-- CONCLUSIONES Y LÍNEAS DE INVESTIGACIÓN -->
+                <h2 class="section-heading" data-aos="fade-up" style="margin-top: 3rem;"><i class="fa-solid fa-gavel"></i> Conclusiones y Líneas de Investigación</h2>
+                <div class="conclusion-box" data-aos="fade-up" style="margin: 1.5rem 0; border-left-color: var(--accent-blue); background-color: rgba(88, 166, 255, 0.05);">
+                    <p><strong>Cadena de Custodia y Atribución:</strong> La coincidencia del hash MD5 (<code class="code-inline">aee4fcd9301c03b3b054623ca261959a</code>) garantizó la inalterabilidad de la evidencia. La correlación cruzada entre registros, artefactos Prefetch e <code class="code-inline">irunin.ini</code> sustenta técnica y jurídicamente la atribución del equipo al sospechoso Greg Schardt.</p>
+                    <br>
+                    <p><strong>Líneas de Investigación Futuras:</strong> Inspección profunda de capturas de tráfico (<code class="code-inline">pcap</code>) en los documentos de usuario, revisión de comunicaciones en <code class="code-inline">mIRC</code> / correo, y contraste de la dirección MAC física (<code class="code-inline">00:10:A4:93:3E:09</code>) con registros de hotspots públicos.</p>
+                </div>
+
+            </div>
+
+            <!-- SIDEBAR -->
+            <aside class="sidebar">
+                <div class="card data-card" data-aos="fade-up" data-aos-delay="100" style="border-color: var(--accent-blue);">
+                    <h3 style="text-align: center; margin-bottom: 1.5rem; color: var(--accent-blue);">Resumen Técnico</h3>
+                    
+                    <div class="data-pill">
+                        <span class="data-label" style="color: var(--accent-blue);">Herramienta Principal</span>
+                        <span class="data-value">Autopsy 4.23.1</span>
+                    </div>
+                    
+                    <div class="data-pill">
+                        <span class="data-label" style="color: var(--accent-blue);">Técnicas</span>
+                        <span class="data-value">Disk Forensics, Registry Analysis, Hash Verification</span>
+                    </div>
+
+                    <div class="data-pill">
+                        <span class="data-label" style="color: var(--accent-blue);">Evidencia</span>
+                        <span class="data-value">NIST CFReDS Hacking Case (SCHARDT.001-008)</span>
+                    </div>
+                </div>
+
+                <div class="card pdf-card" data-aos="fade-up" data-aos-delay="200" style="background: linear-gradient(145deg, var(--bg-card) 0%, rgba(88, 166, 255, 0.1) 100%);">
+                    <div class="pdf-icon" style="color: var(--accent-blue);"><i class="fa-regular fa-file-pdf"></i></div>
+                    <h3>Reporte Completo</h3>
+                    <a href="JaramilloBarajasLuisFelipe_ACT18.PDF" download class="btn-download" style="border-color: var(--accent-blue);">
+                        <i class="fa-solid fa-download"></i> Descargar PDF
+                    </a>
+                </div>
+            </aside>
+        </div>
+    </main>
+
+    <footer style="margin-top: 2rem; border-top: none;">
+        <p>&copy; 2026 Luis Felipe Jaramillo Barajas. Todos los derechos reservados.</p>
+    </footer>
+
+    <!-- SCRIPTS PARA ANIMACIONES -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+    <script>
+        AOS.init({ duration: 700, once: true });
+    </script>
+</body>
+</html>
