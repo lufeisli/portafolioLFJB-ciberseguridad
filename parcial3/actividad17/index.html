@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Actividad 17 | Portafolio LFJB</title>
+    <link rel="stylesheet" href="../../style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Tipografías -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+    
+    <!-- AOS: animaciones al hacer scroll -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" rel="stylesheet">
+
+    <style>
+        /* Corrección de ancho para el sidebar */
+        .layout-sidebar {
+            display: grid;
+            grid-template-columns: 1fr 320px;
+            gap: 2.5rem;
+            align-items: start;
+        }
+        @media (max-width: 1024px) {
+            .layout-sidebar {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="top-nav">
+        <div class="nav-brand">
+            <img src="../../assets/img/logo-upslp.png" alt="Logo UPSLP" class="logo">
+            <span class="brand-title">Portafolio CNO IV</span>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="../../index.html">Inicio</a></li>
+                <li><a href="../../parcial1/index.html">Parcial 1</a></li>
+                <li><a href="../../parcial2/index.html">Parcial 2</a></li>
+                <li><a href="../index.html" style="color: var(--accent-blue);">Parcial 3</a></li>
+                <li><a href="../../road-to-hall-of-fame/index.html">Road to Hall of Fame</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="activity-main">
+        <!-- CABECERA DECORADA CON ORBES -->
+        <div class="activity-header hero-decorated" style="text-align: center;">
+            <div class="orb orb-green"></div>
+            <div class="orb orb-blue"></div>
+            <div class="orb orb-purple"></div>
+            <div class="orb-ring"></div>
+
+            <a href="../index.html" class="back-link" style="position: absolute; top: 1rem; left: 1.5rem;"><i class="fa-solid fa-arrow-left"></i> Volver a Parcial 3</a>
+            <p class="overline" style="justify-content: center;"><span class="line"></span> ACTIVIDAD 17 · INFORMÁTICA FORENSE <span class="line"></span></p>
+            <h1 class="activity-title" style="color: var(--accent-blue);">La memoria del crimen: Extracción de evidencia de un volcado RAM</h1>
+        </div>
+
+        <section class="card intro-card" data-aos="fade-up" style="border-left-color: var(--accent-blue);">
+            <p>Análisis forense de memoria volátil centrado en la extracción, correlación y reconstrucción de artefactos digitales a partir de un volcado de memoria RAM (<code>OtterCTF.vmem</code>) utilizando <strong style="color: var(--accent-blue);">Volatility Framework 2.6</strong>.</p>
+            <br>
+            <p>Este peritaje documenta la identificación del sistema operativo comprometido, extracción de hashes y credenciales en texto claro, inspección de colmenas del Registro de Windows, rastreo de conexiones de red maliciosas, recuperación de cuentas de correo empleadas en ingeniería social y el análisis de un proceso de ransomware junto con su cartera de Bitcoin asociada.</p>
+        </section>
+
+        <!-- LAYOUT ASIMÉTRICO (Contenido Izquierda / Sidebar Derecha) -->
+        <div class="layout-sidebar" style="margin-top: 3rem;">
+            
+            <div class="main-content">
+                
+                <!-- FASE 1: PERFIL DEL SISTEMA, CREDENCIALES Y REGISTRO -->
+                <h2 class="section-heading" data-aos="fade-up"><i class="fa-solid fa-microchip"></i> Fase I: Identificación del Sistema, Credenciales y Registro</h2>
+                <p data-aos="fade-up">Se analizó la imagen forense <code>OtterCTF.vmem</code> (2 GB) para determinar la arquitectura del sistema operativo, la marca de tiempo exacta del volcado, las credenciales del perfil activo y el nombre del equipo comprometido dentro de la colmena <code>SYSTEM</code>.</p>
+                
+                <div class="code-block" data-aos="fade-up" style="margin: 1.5rem 0;">
+                <pre><code><span class="code-comment"># Identificación del perfil del sistema y marca de tiempo</span>
+.\volatility.exe -f OtterCTF.vmem imageinfo
+
+<span class="code-comment"># Extracción de hashes NTLM y secretos LSA en texto plano</span>
+.\volatility.exe -f OtterCTF.vmem --profile=Win7SP1x64 hashdump
+.\volatility.exe -f OtterCTF.vmem --profile=Win7SP1x64 lsadump
+
+<span class="code-comment"># Listado de colmenas del Registro y extracción del ComputerName</span>
+.\volatility.exe -f OtterCTF.vmem --profile=Win7SP1x64 hivelist
+.\volatility.exe -f OtterCTF.vmem --profile=Win7SP1x64 printkey -o 0xfffff8a000024010 -K "ControlSet001\Control\ComputerName\ComputerName"</code></pre>
+                </div>
+
+                <ul class="custom-list" data-aos="fade-up">
+                    <li><strong>Marca de tiempo local (Image local date and time):</strong> <em>2018-08-04 22:34:22 +0300 (UTC+3)</em></li>
+                    <li><strong>Sistema Operativo y Arquitectura:</strong> <em>Windows 7 Service Pack 1 x64 (Perfil: Win7SP1x64)</em></li>
+                    <li><strong>Usuario y Hash NTLM:</strong> <em>Rick (RID 1000) · 518172d012f97d3a8fcc089615283940</em></li>
+                    <li><strong>Contraseña recuperada (DefaultPassword LSA):</strong> <em>MortyIsReallyAnOtter</em></li>
+                    <li><strong>Nombre del Ordenador (ComputerName):</strong> <em>WIN-LO6FAF3DTFE (Vincula las iniciales FAF3 de SEDENE y TFE de CNDI)</em></li>
+                </ul>
+
+                <div class="evidence-grid" data-aos="fade-up">
+                    <div>
+                        <img src="img/evidencia_imageinfo.png" alt="Resultado de imageinfo" class="evidence-img">
+                        <p style="text-align: center; font-size: 0.85rem; color: var(--text-muted); margin-top: 5px;">Fig 1: Identificación del perfil Win7SP1x64 y marca de tiempo</p>
+                    </div>
+                    <div>
+                        <img src="img/evidencia_credenciales.png" alt="Extracción de credenciales con hashdump y lsadump" class="evidence-img">
+                        <p style="text-align: center; font-size: 0.85rem; color: var(--text-muted); margin-top: 5px;">Fig 2: Obtención de contraseña en texto claro (MortyIsReallyAnOtter)</p>
+                    </div>
+                    <div>
+                        <img src="img/evidencia_registro.png" alt="Nombre del ordenador en el Registro" class="evidence-img">
+                        <p style="text-align: center; font-size: 0.85rem; color: var(--text-muted); margin-top: 5px;">Fig 3: Identificación del equipo WIN-LO6FAF3DTFE mediante printkey</p>
+                    </div>
+                </div>
+
+                <!-- FASE 2: PROCESOS, CONEXIONES DE RED Y GEOLOCALIZACIÓN -->
+                <h2 class="section-heading" data-aos="fade-up" style="margin-top: 3rem;"><i class="fa-solid fa-network-wired"></i> Fase II: Análisis de Procesos, Red y Geolocalización</h2>
+                <p data-aos="fade-up">Mediante el árbol de procesos y el escaneo de sockets en memoria se identificó el direccionamiento IP local, el uso de clientes BitTorrent y la comunicación establecida con los servidores externos de <code>LunarMS.exe</code>.</p>
+                
+                <div class="code-block" data-aos="fade-up" style="margin: 1.5rem 0;">
+                <pre><code><span class="code-comment"># Escaneo de conexiones de red e identificación de IP local</span>
+.\volatility.exe -f OtterCTF.vmem --profile=Win7SP1x64 netscan
+
+<span class="code-comment"># Árbol de procesos en ejecución</span>
+.\volatility.exe -f OtterCTF.vmem --profile=Win7SP1x64 pstree
+
+<span class="code-comment"># Filtrado de conexión hacia el servidor malicioso LunarMS</span>
+.\volatility.exe -f OtterCTF.vmem --profile=Win7SP1x64 netscan | Select-String "LunarMS"</code></pre>
+                </div>
+
+                <ul class="custom-list" data-aos="fade-up">
+                    <li><strong>Dirección IP local del sistema (EV455FGM):</strong> <em>192.168.202.131</em></li>
+                    <li><strong>Proceso A — LunarMS.exe (PID 708):</strong> <em>Cliente conectado al servidor externo 77.102.199.102 en el puerto TCP 7575.</em></li>
+                    <li><strong>Proceso B — BitTorrent.exe (PID 2836) y Rick And Morty (PID 3820):</strong> <em>Cliente P2P utilizado para descargar el ejecutable señuelo desde C:\Torrents\.</em></li>
+                    <li><strong>Proceso C — vmware-tray.ex (PID 3720):</strong> <em>Proceso hijo de Rick And Morty que suplanta a VMware y ejecuta el ransomware desde una carpeta temporal.</em></li>
+                </ul>
+
+                <div class="conclusion-box" data-aos="fade-up" style="margin: 1.5rem 0; border-left-color: var(--accent-blue); background-color: rgba(88, 166, 255, 0.05);">
+                    <p><i class="fa-solid fa-location-dot" style="color: var(--accent-blue);"></i> <strong>Geolocalización del Servidor Remoto (77.102.199.102:7575)</strong><br>
+                    El rastreo de la dirección IP externa conectada al proceso <code>LunarMS.exe</code> ubica el nodo en <strong>Londres, Inglaterra, Reino Unido</strong> (Código Postal WC2N, Latitud <strong>51.50853</strong>, Longitud <strong>-0.12574</strong>), asignado al proveedor de servicios <strong>Virgin Media Limited (AS5089)</strong>.</p>
+                </div>
+
+                <div class="evidence-grid" data-aos="fade-up">
+                    <div>
+                        <img src="img/evidencia_pstree.png" alt="Árbol de procesos pstree" class="evidence-img">
+                        <p style="text-align: center; font-size: 0.85rem; color: var(--text-muted); margin-top: 5px;">Fig 4: Procesos sospechosos identificados con pstree</p>
+                    </div>
+                    <div>
+                        <img src="img/evidencia_netscan.png" alt="Conexión de LunarMS en netscan" class="evidence-img">
+                        <p style="text-align: center; font-size: 0.85rem; color: var(--text-muted); margin-top: 5px;">Fig 5: Conexión TCP hacia 77.102.199.102:7575</p>
+                    </div>
+                    <div>
+                        <img src="img/evidencia_geolocalizacion.png" alt="Geolocalización de la IP" class="evidence-img">
+                        <p style="text-align: center; font-size: 0.85rem; color: var(--text-muted); margin-top: 5px;">Fig 6: Ubicación geográfica del servidor remoto</p>
+                    </div>
+                </div>
+
+                <!-- FASE 3: CORREOS ELECTRÓNICOS Y CARTERA BITCOIN (PROCESO 3720) -->
+                <h2 class="section-heading" data-aos="fade-up" style="margin-top: 3rem;"><i class="fa-brands fa-bitcoin"></i> Fase III: Ingeniería Social y Análisis del Ransomware (PID 3720)</h2>
+                <p data-aos="fade-up">Se inspeccionó el portapapeles y las cadenas en memoria vinculadas al navegador <code>chrome.exe</code> (PID 4076) para extraer las cuentas de correo electrónico utilizadas. Finalmente, se volcó el proceso <code>3720</code> (<code>vmware-tray.exe</code>) para revelar la nota de rescate y la billetera de criptomoneda.</p>
+
+                <div class="code-block" data-aos="fade-up" style="margin: 1.5rem 0;">
+                <pre><code><span class="code-comment"># Extracción de credenciales en el portapapeles y correos en memoria</span>
+.\volatility.exe -f OtterCTF.vmem --profile=Win7SP1x64 clipboard
+Select-String -Path .\OtterCTF.vmem -Pattern "RickoPicko@mail.com"
+
+<span class="code-comment"># Análisis de ruta de ejecución y volcado de memoria del proceso 3720</span>
+.\volatility.exe -f OtterCTF.vmem --profile=Win7SP1x64 cmdline -p 3720,3820
+.\volatility.exe -f OtterCTF.vmem --profile=Win7SP1x64 memdump -p 3720 -D .
+
+<span class="code-comment"># Extracción de la cartera de Bitcoin desde el volcado 3720.dmp</span>
+Select-String -Path .\3720.dmp -Pattern "Send 0.5 Bitcoin|1MmpEmebJkqXG8nQv4cjJSmxZQFVmFo63M" -Encoding Unicode | ForEach-Object { $_.Matches.Value }</code></pre>
+                </div>
+                
+                <ul class="custom-list" data-aos="fade-up">
+                    <li><strong>Correos electrónicos identificados:</strong> <em>rickopicko@mail.com y rickypinky@mail.com</em></li>
+                    <li><strong>Contraseña en portapapeles (EV456FGM):</strong> <em>M@il_Pr0vid0rs</em></li>
+                    <li><strong>Plataforma y Navegador:</strong> <em>Webmail mail.com abierto desde Google Chrome (chrome.exe, PID 4076)</em></li>
+                    <li><strong>Ruta falsa del malware (PID 3720):</strong> <em>C:\Users\Rick\AppData\Local\Temp\RarSFX0\vmware-tray.exe</em></li>
+                    <li><strong>Cartera de Criptomoneda (BTC):</strong> <em>1MmpEmebJkqXG8nQv4cjJSmxZQFVmFo63M (Verificada como NOT blacklisted en BTC Black)</em></li>
+                </ul>
+
+                <div class="evidence-grid" data-aos="fade-up">
+                    <div>
+                        <img src="img/evidencia_correos.png" alt="Extracción de correos y clipboard" class="evidence-img">
+                        <p style="text-align: center; font-size: 0.85rem; color: var(--text-muted); margin-top: 5px;">Fig 7: Cuentas de correo en mail.com y contraseña en clipboard</p>
+                    </div>
+                    <div>
+                        <img src="img/evidencia_cartera.png" alt="Extracción de cartera BTC del proceso 3720" class="evidence-img">
+                        <p style="text-align: center; font-size: 0.85rem; color: var(--text-muted); margin-top: 5px;">Fig 8: Extracción de la cartera BTC desde 3720.dmp</p>
+                    </div>
+                    <div>
+                        <img src="img/evidencia_btcblack.png" alt="Verificación en BTC Black" class="evidence-img">
+                        <p style="text-align: center; font-size: 0.85rem; color: var(--text-muted); margin-top: 5px;">Fig 9: Consulta de la dirección BTC en listas negras (btcblack.it)</p>
+                    </div>
+                </div>
+
+                <!-- CONCLUSIÓN -->
+                <div class="conclusion-box" data-aos="fade-up" style="margin-top: 2.5rem; border-left-color: var(--accent-blue); background-color: rgba(88, 166, 255, 0.05);">
+                    <p><i class="fa-solid fa-shield-halved" style="color: var(--accent-blue);"></i> <strong>Conclusión Forense</strong><br>
+                    El análisis forense del volcado de memoria RAM (<code>OtterCTF.vmem</code>) mediante Volatility Framework 2.6 permitió reconstruir el incidente y confirmar las hipótesis de inteligencia. Se demostró que la memoria volátil resguarda evidencia crítica que no suele persistir en el disco duro, logrando identificar el sistema operativo (Windows 7 SP1 x64), la dirección IP local (<code>192.168.202.131</code>) y el nombre del equipo (<code>WIN-LO6FAF3DTFE</code>), vinculando directamente las iniciales proporcionadas por SEDENE (<code>FAF3</code>) y CNDI (<code>TFE</code>). Asimismo, se recuperaron las credenciales del usuario Rick (<code>MortyIsReallyAnOtter</code>), las cuentas de correo en <code>mail.com</code> y la cartera de Bitcoin (<code>1MmpEmebJkqXG8nQv4cjJSmxZQFVmFo63M</code>) oculta en el proceso malicioso <code>3720</code>.</p>
+                </div>
+
+            </div>
+
+            <!-- SIDEBAR -->
+            <aside class="sidebar">
+                <div class="card data-card" data-aos="fade-up" data-aos-delay="100" style="border-color: var(--accent-blue);">
+                    <h3 style="text-align: center; margin-bottom: 1.5rem; color: var(--accent-blue);">Resumen Técnico</h3>
+                    
+                    <div class="data-pill">
+                        <span class="data-label" style="color: var(--accent-blue);">Herramienta Principal</span>
+                        <span class="data-value">Volatility Framework 2.6</span>
+                    </div>
+                    
+                    <div class="data-pill">
+                        <span class="data-label" style="color: var(--accent-blue);">Técnicas</span>
+                        <span class="data-value">Forense de Memoria RAM, Extracción LSA/NTLM, Análisis de Procesos y Red, Rastreo de Ransomware</span>
+                    </div>
+
+                    <div class="data-pill">
+                        <span class="data-label" style="color: var(--accent-blue);">Evidencia Analizada</span>
+                        <span class="data-value">OtterCTF.vmem (2 GB · Win7SP1x64)</span>
+                    </div>
+                </div>
+
+                <div class="card pdf-card" data-aos="fade-up" data-aos-delay="200" style="background: linear-gradient(145deg, var(--bg-card) 0%, rgba(88, 166, 255, 0.1) 100%);">
+                    <div class="pdf-icon" style="color: var(--accent-blue);"><i class="fa-regular fa-file-pdf"></i></div>
+                    <h3>Reporte Completo</h3>
+                    <a href="JaramilloBarajasLuisFelipe-ACT17.pdf" download class="btn-download" style="border-color: var(--accent-blue);">
+                        <i class="fa-solid fa-download"></i> Descargar PDF
+                    </a>
+                </div>
+            </aside>
+        </div>
+    </main>
+
+    <footer style="margin-top: 2rem; border-top: none;">
+        <p>&copy; 2026 Luis Felipe Jaramillo Barajas. Todos los derechos reservados.</p>
+    </footer>
+
+    <!-- SCRIPTS PARA ANIMACIONES -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+    <script>
+        AOS.init({ duration: 700, once: true });
+    </script>
+</body>
+</html>
