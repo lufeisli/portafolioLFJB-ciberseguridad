@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PR03: Operación Narcos | Portafolio LFJB</title>
+    <link rel="stylesheet" href="../../style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Tipografías -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+    
+    <!-- AOS: animaciones al hacer scroll -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" rel="stylesheet">
+</head>
+<body>
+    <header class="top-nav">
+        <div class="nav-brand">
+            <img src="../../assets/img/logo-upslp.png" alt="Logo UPSLP" class="logo">
+            <span class="brand-title">Portafolio CNO IV</span>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="../../index.html">Inicio</a></li>
+                <li><a href="../../parcial1/index.html">Parcial 1</a></li>
+                <li><a href="../../parcial2/index.html">Parcial 2</a></li>
+                <li><a href="../index.html" style="color: var(--accent-blue);">Parcial 3</a></li>
+                <li><a href="../../road-to-hall-of-fame/index.html">Road to Hall of Fame</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="activity-main">
+        <!-- CABECERA DECORADA CON ORBES -->
+        <div class="activity-header hero-decorated" style="text-align: center;">
+            <div class="orb orb-green"></div>
+            <div class="orb orb-blue"></div>
+            <div class="orb orb-purple"></div>
+            <div class="orb-ring"></div>
+
+            <a href="../index.html" class="back-link" style="position: absolute; top: 1rem; left: 1.5rem;"><i class="fa-solid fa-arrow-left"></i> Volver a Parcial 3</a>
+            <p class="overline" style="justify-content: center;"><span class="line"></span> PRÁCTICA 03 · INFORMÁTICA FORENSE <span class="line"></span></p>
+            <h1 class="activity-title" style="color: var(--accent-blue);">Operación Narcos: Expediente Kowhai</h1>
+        </div>
+
+        <section class="card intro-card" data-aos="fade-up" style="border-left-color: var(--accent-blue);">
+            <p>Investigación forense digital sobre la imagen de disco <strong style="color: var(--accent-blue);">Narcos-1</strong> (<em>SK-DESKTOP</em>), incautada en un inmueble de Petone, Nueva Zelanda, vinculado a <strong>Steve Kowhai</strong> tras la intercepción de dos pasajeros procedentes de Brisbane, Australia, en el aeropuerto de Wellington.</p>
+            <br>
+            <p>Utilizando <strong style="color: var(--accent-blue);">7-Zip</strong> y <strong style="color: var(--accent-blue);">Autopsy 4.23.1</strong> bajo la zona horaria oficial <strong>NZDT (Pacific/Auckland)</strong>, se reconstruyó la línea de tiempo del sistema, el registro de ejecución de aplicaciones, los historiales de navegación y los indicios logísticos y de ocultamiento de información.</p>
+        </section>
+
+        <!-- LAYOUT ASIMÉTRICO (Contenido Izquierda / Sidebar Derecha) -->
+        <div class="layout-sidebar" style="margin-top: 3rem;">
+            
+            <div class="main-content">
+                
+                <!-- PARTE I: EXTRACCIÓN E IDENTIFICACIÓN -->
+                <h2 class="section-heading" data-aos="fade-up"><i class="fa-solid fa-hard-drive"></i> Parte I: Extracción e Identificación de Evidencia</h2>
+                <p data-aos="fade-up">Se reconstruyó la imagen forense dividida en 15 segmentos (<code>Narcos1.zip.001</code> – <code>.015</code>) y se montó <code>Narcos-1.001</code> en Autopsy configurando la visualización horaria en <strong>NZDT (UTC+13)</strong> para preservar la cronología local de los eventos.</p>
+
+                <h3 style="color: var(--accent-blue); margin-top: 1.8rem; margin-bottom: 0.8rem;" data-aos="fade-up">1. Sistema Operativo, Registro y Navegación</h3>
+                <ul class="custom-list" data-aos="fade-up">
+                    <li><strong>Sistema Operativo (P1):</strong> <em>Windows 10 Pro</em> (Build 17763 / versión 1809, arquitectura AMD64, equipo <code>SK-DESKTOP</code>), extraído de los hives <code>SYSTEM</code> y <code>SOFTWARE\Microsoft\Windows NT\CurrentVersion</code>.</li>
+                    <li><strong>Perfil Principal (P2):</strong> Usuario <code>Steve</code> ubicado en <code>C:\Users\Steve</code>.</li>
+                    <li><strong>Clave UserAssist (P3):</strong> <code>C:\Users\Steve\NTUSER.DAT</code> &rarr; <code>Software\Microsoft\Windows\CurrentVersion\Explorer\UserAssist</code>. Al alojarse en <code>NTUSER.DAT</code> (<code>HKEY_CURRENT_USER</code>), aísla la autoría a la sesión de Steve y registra ejecuciones interactivas en el shell (<code>explorer.exe</code>) con marcas <code>FILETIME</code> y ofuscación ROT13.</li>
+                    <li><strong>Navegadores y Bases de Datos (P4 y P5):</strong>
+                        <br>&bull; <em>Google Chrome:</em> <code>C:\Users\Steve\AppData\Local\Google\Chrome\User Data\Default\History</code> (SQLite). <strong>MD5:</strong> <code>f3f979c6dee9fbb7cbdf5818aaa4b723</code>.
+                        <br>&bull; <em>Internet Explorer / Edge:</em> <code>C:\Users\Steve\AppData\Local\Microsoft\Windows\WebCache\WebCacheV01.dat</code> (base de datos ESE).
+                    </li>
+                </ul>
+
+                <div class="evidence-grid" data-aos="fade-up">
+                    <div>
+                        <img src="img/pr03_os_userassist.png" alt="Información del SO y Registro UserAssist" class="evidence-img">
+                        <p style="text-align: center; font-size: 0.85rem; color: var(--text-muted); margin-top: 5px;">Fig 1: Identificación de Windows 10 Pro y clave UserAssist en NTUSER.DAT</p>
+                    </div>
+                    <div>
+                        <img src="img/pr03_navegadores_md5.png" alt="Bases de datos de navegadores y hash MD5" class="evidence-img">
+                        <p style="text-align: center; font-size: 0.85rem; color: var(--text-muted); margin-top: 5px;">Fig 2: Verificación de History (Chrome), WebCacheV01.dat y hash MD5</p>
+                    </div>
+                </div>
+
+                <h3 style="color: var(--accent-blue); margin-top: 2.2rem; margin-bottom: 0.8rem;" data-aos="fade-up">2. Documentos, Imágenes y Metadatos (NZDT)</h3>
+                <ul class="custom-list" data-aos="fade-up">
+                    <li><strong>airport crystals.jpg (P6 y P7):</strong> Ubicado en <code>C:\Users\Steve\Documents\Misc\airport crystals.jpg</code>. Creación registrada el <strong>2019-01-31 10:25:18 NZDT</strong>.</li>
+                    <li><strong>dropoff.jpg (P8 y P9):</strong> Hash MD5 <code>7feb763bebe42c3a3464c9ee3bb1d3e8</code>. Última modificación: <strong>2019-02-02 14:06:06 NZDT</strong>. Muestra captura de Google Maps de <em>Eastbourne Library</em> (38 Rimu St, Lower Hutt).</li>
+                    <li><strong>flightbookings.PNG (P10):</strong> Ubicado en <code>C:\Users\Steve\Documents\Misc\flightbookings.PNG</code>. Cotización de vuelos para 2 adultos entre Brisbane (BNE) y Wellington (WLG) del 16 al 23 de febrero de 2019.</li>
+                    <li><strong>Method run.jpg (P11):</strong> Hash MD5 <code>69b225bc0ef5a0c003f1e2a6646aaf92</code>. Mapa de ruta vehicular de 54 min (42.5 km) desde Eastbourne (anotado en rojo como <em>"Home"</em>) hacia Wainuiomata, Naenae y Stokes Valley.</li>
+                </ul>
+
+                <div class="evidence-grid" data-aos="fade-up">
+                    <div>
+                        <img src="img/pr03_flightbookings_dropoff.png" alt="Evidencia de vuelos y punto de entrega" class="evidence-img">
+                        <p style="text-align: center; font-size: 0.85rem; color: var(--text-muted); margin-top: 5px;">Fig 3: Capturas flightbookings.PNG y dropoff.jpg (Eastbourne Library)</p>
+                    </div>
+                    <div>
+                        <img src="img/pr03_method_run.png" alt="Mapa de ruta Method run" class="evidence-img">
+                        <p style="text-align: center; font-size: 0.85rem; color: var(--text-muted); margin-top: 5px;">Fig 4: Ruta trazada en Method run.jpg con anotación "Home"</p>
+                    </div>
+                </div>
+
+                <h3 style="color: var(--accent-blue); margin-top: 2.2rem; margin-bottom: 0.8rem;" data-aos="fade-up">3. Programas de Ocultamiento y Artefactos de Actividad</h3>
+                <ul class="custom-list" data-aos="fade-up">
+                    <li><strong>BNE.png (P12):</strong> Ubicado en <code>C:\Users\Steve\Downloads\Misc\BNE.png</code>. <strong>MD5:</strong> <code>dffa98bdd7371d1806adb09db27ba283</code> (fotografía panorámica de Brisbane, Australia).</li>
+                    <li><strong>Esteganografía (P13):</strong> <code>Image Steganography 1.5.2 Setup.exe</code> en <code>C:\Users\Steve\Downloads\</code>. <strong>MD5:</strong> <code>c9b7c382dea6d7f45ae1bf437860cb69</code>.</li>
+                    <li><strong>Cifrado (P14):</strong> <code>TrueCrypt Setup 7.1a.exe</code> en <code>C:\Users\Steve\Downloads\</code>.</li>
+                    <li><strong>Discord y Windows Timeline (P15):</strong>
+                        <br>&bull; <em>Caché de Discord:</em> <code>C:\Users\Steve\AppData\Roaming\Discord\Cache</code> (130 archivos activos hasta el 2019-02-02 15:39:21 NZDT).
+                        <br>&bull; <em>Windows Timeline:</em> <code>C:\Users\Steve\AppData\Local\ConnectedDevicesPlatform\2418c0082017486a\ActivitiesCache.db</code>.
+                    </li>
+                </ul>
+
+                <div class="evidence-grid" data-aos="fade-up">
+                    <div>
+                        <img src="img/pr03_herramientas_downloads.png" alt="Instaladores de esteganografía y cifrado" class="evidence-img">
+                        <p style="text-align: center; font-size: 0.85rem; color: var(--text-muted); margin-top: 5px;">Fig 5: Instaladores de Image Steganography 1.5.2 y TrueCrypt 7.1a</p>
+                    </div>
+                    <div>
+                        <img src="img/pr03_discord_timeline.png" alt="Caché de Discord y ActivitiesCache.db" class="evidence-img">
+                        <p style="text-align: center; font-size: 0.85rem; color: var(--text-muted); margin-top: 5px;">Fig 6: Artefactos de Discord Cache y base de datos ActivitiesCache.db</p>
+                    </div>
+                </div>
+
+                <!-- PARTE II: INVESTIGACIÓN E INTERPRETACIÓN -->
+                <h2 class="section-heading" data-aos="fade-up" style="margin-top: 3rem;"><i class="fa-solid fa-magnifying-glass-chart"></i> Parte II: Investigación e Interpretación Forense</h2>
+                
+                <ul class="custom-list" data-aos="fade-up">
+                    <li><strong>Coincidencias Logísticas (P16):</strong> <code>flightbookings.PNG</code> (2 adultos BNE &rarr; WLG el 16/02/2019), <code>BNE.png</code> (Brisbane) y <code>dropoff.jpg</code> (Biblioteca de Eastbourne) coinciden directamente con los dos pasajeros interceptados procedentes de Australia y el punto de entrega reportado. <em>Límite:</em> La captura muestra una cotización previa al pago, por lo que no prueba la compra desde ese equipo ni identifica nominativamente a los viajeros.</li>
+                    <li><strong>Correlación de Actividad (P17):</strong> <code>airport crystals.jpg</code> y <code>Method run.jpg</code> fueron creados el <code>2019-01-31</code> (10:21–10:25 NZDT) y abiertos nuevamente a las <code>16:04:13 NZDT</code>, quedando registrados en <code>ActivitiesCache.db</code> y <code>Recent Docs</code>. La marca <em>"Home"</em> en Eastbourne sugiere planeación de distribución local, aunque no confirma el desplazamiento físico sin datos GPS externos.</li>
+                    <li><strong>Actividad en Discord (P18):</strong> El instalador <code>DiscordSetup.exe</code>, la carpeta en <code>AppData\Roaming\Discord</code> y 130 archivos de caché actualizados hasta el <code>2019-02-02 15:39:21 NZDT</code> prueban instalación y uso activo. Sin embargo, al alojarse los chats en servidores remotos, sin volcado de RAM o requerimiento legal no se puede confirmar el texto de las conversaciones ni la identidad real de los interlocutores.</li>
+                    <li><strong>Niveles de Evidencia en Esteganografía y Cifrado (P19):</strong>
+                        <br>&bull; <em>Descarga:</em> Instaladores en <code>Downloads</code> y registros en Chrome <code>History</code>.
+                        <br>&bull; <em>Instalación:</em> Carpetas de configuración <code>Image_Steganography</code>, <code>Image_Steganography_Setup</code> y <code>TrueCrypt</code> en <code>AppData\Roaming</code>.
+                        <br>&bull; <em>Ejecución:</em> Contadores en <code>UserAssist</code> (<code>NTUSER.DAT</code>) y entradas en <code>ActivitiesCache.db</code>.
+                        <br>&bull; <em>Uso efectivo:</em> <strong>No confirmable</strong> sin hallar un volumen cifrado montado en <code>SYSTEM\MountedDevices</code> o detectar mediante estegoanálisis carga oculta en archivos como <code>BNE.png</code>.
+                    </li>
+                </ul>
+
+                <div class="conclusion-box" data-aos="fade-up" style="margin: 1.5rem 0; border-left-color: var(--accent-blue); background-color: rgba(88, 166, 255, 0.05);">
+                    <p><i class="fa-solid fa-scale-balanced" style="color: var(--accent-blue);"></i> <strong>Hipótesis del Caso y Explicación Alternativa (P20)</strong><br>
+                    <strong>Hipótesis Principal:</strong> El equipo <code>SK-DESKTOP</code> funcionó como nodo de coordinación logística en Nueva Zelanda para recibir el cargamento procedente de Brisbane y distribuirlo en la zona de Eastbourne/Lower Hutt, sustentado por: (1) cotización de vuelos BNE–WLG, (2) mapa de la Biblioteca de Eastbourne, (3) ruta marcada como <em>"Home"</em> en Eastbourne abierta en Windows Timeline, y (4) actividad concurrente en Discord, TrueCrypt e Image Steganography.<br><br>
+                    <strong>Explicación Alternativa:</strong> Las herramientas de cifrado pudieron instalarse por privacidad o curiosidad técnica sin uso ilícito, y las imágenes corresponder a búsquedas turísticas o a un tercero con acceso físico al equipo.<br><br>
+                    <strong>Evidencias Adicionales Requeridas:</strong> (1) Volcado de memoria RAM volátil (para recuperar claves de TrueCrypt y chats en memoria); (2) Peritaje a los teléfonos móviles de John Fredricksen y Jane Esteban y registros financieros/aeroportuarios.</p>
+                </div>
+
+                <!-- REFERENCIAS BIBLIOGRÁFICAS -->
+                <h2 class="section-heading" data-aos="fade-up" style="margin-top: 3rem;"><i class="fa-solid fa-book-bookmark"></i> Referencias Bibliográficas</h2>
+                <ul class="custom-list" data-aos="fade-up">
+                    <li><strong>Referencia Académica Obligatoria:</strong> Garfinkel, S., Farrell, P., Roussev, V., &amp; Dinolt, G. (2009). <em>Bringing Science to Digital Forensics with Standardized Forensic Corpora</em>. Digital Forensic Research Workshop (DFRWS), Montreal, Canadá. <a href="https://simson.net/clips/academic/2009.DFRWS.Corpora.pdf" target="_blank" style="color: var(--accent-blue);">https://simson.net/clips/academic/2009.DFRWS.Corpora.pdf</a></li>
+                    <li><strong>Conjunto de Datos Utilizado:</strong> Digital Corpora. (2019). <em>2019 Narcos Scenario (Narcos-1 Disk Image)</em> [Conjunto de datos]. Digital Corpora Forensics Datasets. <a href="https://digitalcorpora.org/corpora/scenarios/2019-narcos/" target="_blank" style="color: var(--accent-blue);">https://digitalcorpora.org/corpora/scenarios/2019-narcos/</a></li>
+                    <li><strong>Documentación Técnica:</strong> Microsoft Learn. (2023). <em>Windows Registry information for advanced users</em>. Microsoft Documentation.</li>
+                    <li><strong>Referencia de Artefactos:</strong> SANS Institute. (2021). <em>Windows Forensic Analysis Poster &amp; Artifact Reference (FOR500)</em>. SANS DFIR.</li>
+                </ul>
+
+            </div>
+
+            <!-- SIDEBAR -->
+            <aside class="sidebar">
+                <div class="card data-card" data-aos="fade-up" data-aos-delay="100" style="border-color: var(--accent-blue);">
+                    <h3 style="text-align: center; margin-bottom: 1.5rem; color: var(--accent-blue);">Resumen Técnico</h3>
+                    
+                    <div class="data-pill">
+                        <span class="data-label" style="color: var(--accent-blue);">Herramientas</span>
+                        <span class="data-value">Autopsy 4.23.1, 7-Zip</span>
+                    </div>
+                    
+                    <div class="data-pill">
+                        <span class="data-label" style="color: var(--accent-blue);">Evidencia Analizada</span>
+                        <span class="data-value">Narcos-1.001 (Windows 10 Pro / SK-DESKTOP)</span>
+                    </div>
+
+                    <div class="data-pill">
+                        <span class="data-label" style="color: var(--accent-blue);">Zona Horaria</span>
+                        <span class="data-value">NZDT (UTC+13 / Pacific/Auckland)</span>
+                    </div>
+
+                    <div class="data-pill">
+                        <span class="data-label" style="color: var(--accent-blue);">Artefactos Clave</span>
+                        <span class="data-value">NTUSER.DAT (UserAssist), History, WebCacheV01.dat, ActivitiesCache.db, Discord Cache</span>
+                    </div>
+                </div>
+
+                <div class="card pdf-card" data-aos="fade-up" data-aos-delay="200" style="background: linear-gradient(145deg, var(--bg-card) 0%, rgba(88, 166, 255, 0.1) 100%);">
+                    <div class="pdf-icon" style="color: var(--accent-blue);"><i class="fa-regular fa-file-pdf"></i></div>
+                    <h3>Reporte Completo</h3>
+                    <a href="JaramilloBarajasLuisFelipe_PR03.pdf" download class="btn-download" style="border-color: var(--accent-blue);">
+                        <i class="fa-solid fa-download"></i> Descargar PDF
+                    </a>
+                </div>
+            </aside>
+        </div>
+    </main>
+
+    <footer style="margin-top: 2rem; border-top: none;">
+        <p>&copy; 2026 Luis Felipe Jaramillo Barajas. Todos los derechos reservados.</p>
+    </footer>
+
+    <!-- SCRIPTS PARA ANIMACIONES -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+    <script>
+        AOS.init({ duration: 700, once: true });
+    </script>
+</body>
+</html>
